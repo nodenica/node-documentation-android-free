@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>process Node.js v4.0.0 Manual &amp; Documentation</title>
+  <title>process Node.js v4.1.1 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="process" class="interior">
       <header>
-        <h1>Node.js v4.0.0 Documentation</h1>
+        <h1>Node.js v4.1.1 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -78,6 +78,7 @@
 <li><a href="#process_process">process</a><ul>
 <li><a href="#process_exit_codes">Exit Codes</a></li>
 <li><a href="#process_event_exit">Event: &#39;exit&#39;</a></li>
+<li><a href="#process_event_message">Event: &#39;message&#39;</a></li>
 <li><a href="#process_event_beforeexit">Event: &#39;beforeExit&#39;</a></li>
 <li><a href="#process_event_uncaughtexception">Event: &#39;uncaughtException&#39;</a></li>
 <li><a href="#process_event_unhandledrejection">Event: &#39;unhandledRejection&#39;</a></li>
@@ -120,6 +121,11 @@
 <li><a href="#process_process_umask_mask">process.umask([mask])</a></li>
 <li><a href="#process_process_uptime">process.uptime()</a></li>
 <li><a href="#process_process_hrtime">process.hrtime()</a></li>
+<li><a href="#process_process_send_message_sendhandle_callback">process.send(message[, sendHandle][, callback])</a></li>
+<li><a href="#process_process_disconnect">process.disconnect()</a><ul>
+<li><a href="#process_process_connected">process.connected</a></li>
+</ul>
+</li>
 <li><a href="#process_process_mainmodule">process.mainModule</a></li>
 </ul>
 </li>
@@ -190,6 +196,10 @@ checks on the module&#39;s state (like for unit tests). The callback takes one
 argument, the code the process is exiting with.
 
 </p>
+<p>This event is only emitted when node exits explicitly by process.exit() or
+implicitly by the event loop draining.
+
+</p>
 <p>Example of listening for <code>exit</code>:
 
 </p>
@@ -200,6 +210,17 @@ argument, the code the process is exiting with.
   }, 0);
   console.log(&#39;About to exit with code:&#39;, code);
 });</code></pre>
+<h2>Event: &#39;message&#39;<span><a class="mark" href="#process_event_message" id="process_event_message">#</a></span></h2>
+<div class="signature"><ul>
+<li><code>message</code> <span class="type">Object</span> a parsed JSON object or primitive value</li>
+<li><code>sendHandle</code> <span class="type">Handle object</span> a <a href="net.html#net_class_net_socket">net.Socket</a> or <a href="net.html#net_class_net_server">net.Server</a> object, or
+undefined.</li>
+</div></ul>
+<p>Messages sent by <a href="child_process.html#child_process_child_send_message_sendhandle_callback">ChildProcess.send()</a> are obtained using the <code>&#39;message&#39;</code>
+event on the child&#39;s process object.
+
+
+</p>
 <h2>Event: &#39;beforeExit&#39;<span><a class="mark" href="#process_event_beforeexit" id="process_event_beforeexit">#</a></span></h2>
 <p>This event is emitted when Node.js empties its event loop and has nothing else to
 schedule. Normally, Node.js exits when there is no work scheduled, but a listener
@@ -349,15 +370,15 @@ programs.
 install a listener but that won&#39;t stop the debugger from starting.</li>
 <li><code>SIGTERM</code> and <code>SIGINT</code> have default handlers on non-Windows platforms that resets
 the terminal mode before exiting with code <code>128 + signal number</code>. If one of
-these signals has a listener installed, its default behaviour will be removed
+these signals has a listener installed, its default behavior will be removed
 (Node.js will no longer exit).</li>
-<li><code>SIGPIPE</code> is ignored by default, it can have a listener installed.</li>
+<li><code>SIGPIPE</code> is ignored by default. It can have a listener installed.</li>
 <li><code>SIGHUP</code> is generated on Windows when the console window is closed, and on other
 platforms under various similar conditions, see signal(7). It can have a
 listener installed, however Node.js will be unconditionally terminated by
 Windows about 10 seconds later. On non-Windows platforms, the default
-behaviour of <code>SIGHUP</code> is to terminate Node.js, but once a listener has been
-installed its default behaviour will be removed.</li>
+behavior of <code>SIGHUP</code> is to terminate Node.js, but once a listener has been
+installed its default behavior will be removed.</li>
 <li><code>SIGTERM</code> is not supported on Windows, it can be listened on.</li>
 <li><code>SIGINT</code> from the terminal is supported on all platforms, and can usually be
 generated with <code>CTRL+C</code> (though this may be configurable). It is not generated
@@ -372,10 +393,10 @@ Node.js on all platforms.</li>
 <li><code>SIGSTOP</code> cannot have a listener installed.</li>
 </ul>
 <p>Note that Windows does not support sending Signals, but Node.js offers some
-emulation with <code>process.kill()</code>, and <code>child_process.kill()</code>:
-- Sending signal <code>0</code> can be used to search for the existence of a process
-- Sending <code>SIGINT</code>, <code>SIGTERM</code>, and <code>SIGKILL</code> cause the unconditional exit of the
-  target process.
+emulation with <code>process.kill()</code>, and <code>child_process.kill()</code>. Sending signal <code>0</code>
+can be used to test for the existence of a process. Sending <code>SIGINT</code>,
+<code>SIGTERM</code>, and <code>SIGKILL</code> cause the unconditional termination of the target
+process.
 
 </p>
 <h2>process.stdout<span><a class="mark" href="#process_process_stdout" id="process_process_stdout">#</a></span></h2>
@@ -390,18 +411,9 @@ emulation with <code>process.kill()</code>, and <code>child_process.kill()</code
 };</code></pre>
 <p><code>process.stderr</code> and <code>process.stdout</code> are unlike other streams in Node.js in
 that they cannot be closed (<code>end()</code> will throw), they never emit the <code>finish</code>
-event and that writes are usually blocking.
+event and that writes are always blocking.
 
 </p>
-<ul>
-<li>They are blocking in the case that they refer to regular files or TTY file
-descriptors.</li>
-<li>In the case they refer to pipes:<ul>
-<li>They are blocking in Linux/Unix.</li>
-<li>They are non-blocking like other streams in Windows.</li>
-</ul>
-</li>
-</ul>
 <p>To check if Node.js is being run in a TTY context, read the <code>isTTY</code> property
 on <code>process.stderr</code>, <code>process.stdout</code>, or <code>process.stdin</code>:
 
@@ -854,13 +866,13 @@ string describing the signal to send.  Signal names are strings like
 See <a href="#process_signal_events">Signal Events</a> and kill(2) for more information.
 
 </p>
-<p>Will throw an error if target does not exist, and as a special case, a signal of
-<code>0</code> can be used to test for the existence of a process.
+<p>Will throw an error if target does not exist, and as a special case, a signal
+of <code>0</code> can be used to test for the existence of a process.
 
 </p>
-<p>Note that just because the name of this function is <code>process.kill</code>, it is
-really just a signal sender, like the <code>kill</code> system call.  The signal sent
-may do something other than kill the target process.
+<p>Note that even though the name of this function is <code>process.kill</code>, it is really
+just a signal sender, like the <code>kill</code> system call.  The signal sent may do
+something other than kill the target process.
 
 </p>
 <p>Example of sending a signal to yourself:
@@ -1048,6 +1060,43 @@ setTimeout(function() {
   console.log(&#39;benchmark took %d nanoseconds&#39;, diff[0] * 1e9 + diff[1]);
   // benchmark took 1000000527 nanoseconds
 }, 1000);</code></pre>
+<h2>process.send(message[, sendHandle][, callback])<span><a class="mark" href="#process_process_send_message_sendhandle_callback" id="process_process_send_message_sendhandle_callback">#</a></span></h2>
+<div class="signature"><ul>
+<li><code>message</code> <span class="type">Object</span></li>
+<li><code>sendHandle</code> <span class="type">Handle object</span></li>
+</div></ul>
+<p>When Node.js is spawned with an IPC channel attached, it can send messages to its
+parent process using <code>process.send()</code>. Each will be received as a
+<a href="child_process.html#child_process_event_message">&#39;message&#39;</a>
+event on the parent&#39;s <code>ChildProcess</code> object.
+
+</p>
+<p>If Node.js was not spawned with an IPC channel, <code>process.send()</code> will be undefined.
+
+
+</p>
+<h2>process.disconnect()<span><a class="mark" href="#process_process_disconnect" id="process_process_disconnect">#</a></span></h2>
+<p>Close the IPC channel to the parent process, allowing this child to exit
+gracefully once there are no other connections keeping it alive.
+
+</p>
+<p>Identical to the parent process&#39;s
+<a href="child_process.html#child_process_child_disconnect">ChildProcess.disconnect()</a>.
+
+</p>
+<p>If Node.js was not spawned with an IPC channel, <code>process.disconnect()</code> will be
+undefined.
+
+
+</p>
+<h3>process.connected<span><a class="mark" href="#process_process_connected" id="process_process_connected">#</a></span></h3>
+<div class="signature"><ul>
+<li><span class="type">Boolean</span> Set to false after <code>process.disconnect()</code> is called</li>
+</div></ul>
+<p>If <code>process.connected</code> is false, it is no longer possible to send messages.
+
+
+</p>
 <h2>process.mainModule<span><a class="mark" href="#process_process_mainmodule" id="process_process_mainmodule">#</a></span></h2>
 <p>Alternate way to retrieve
 <a href="modules.html#modules_accessing_the_main_module"><code>require.main</code></a>.

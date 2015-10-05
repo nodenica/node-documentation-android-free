@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Child Process Node.js v4.0.0 Manual &amp; Documentation</title>
+  <title>Child Process Node.js v4.1.1 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="child_process" class="interior">
       <header>
-        <h1>Node.js v4.0.0 Documentation</h1>
+        <h1>Node.js v4.1.1 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -175,7 +175,7 @@ calling your function twice.
 
 </p>
 <p>See also <a href="#child_process_child_kill_signal"><code>ChildProcess#kill()</code></a> and
-<a href="#child_process_child_send_message_sendhandle"><code>ChildProcess#send()</code></a>.
+<a href="#child_process_child_send_message_sendhandle_callback"><code>ChildProcess#send()</code></a>.
 
 </p>
 <h3>Event:  &#39;exit&#39;<span><a class="mark" href="#child_process_event_exit" id="child_process_event_exit">#</a></span></h3>
@@ -220,8 +220,9 @@ and the <code>.connected</code> property is false.
 </p>
 <h3>Event: &#39;message&#39;<span><a class="mark" href="#child_process_event_message" id="child_process_event_message">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>message</code> <span class="type">Object</span> a parsed JSON object or primitive value</li>
-<li><code>sendHandle</code> <span class="type">Handle object</span> a Socket or Server object</li>
+<li><code>message</code> <span class="type">Object</span> a parsed JSON object or primitive value.</li>
+<li><code>sendHandle</code> <span class="type">Handle object</span> a <a href="net.html#net_class_net_socket">net.Socket</a> or <a href="net.html#net_class_net_server">net.Server</a> object, or
+undefined.</li>
 </div></ul>
 <p>Messages sent by <code>.send(message, [sendHandle])</code> are obtained using the
 <code>message</code> event.
@@ -526,7 +527,8 @@ callback or returning an EventEmitter).
 <li><code>env</code> <span class="type">Object</span> Environment key-value pairs</li>
 <li><code>stdio</code> <span class="type">Array|String</span> Child&#39;s stdio configuration. (See
 <a href="#child_process_options_stdio">below</a>)</li>
-<li><code>detached</code> <span class="type">Boolean</span> The child will be a process group leader.  (See
+<li><code>detached</code> <span class="type">Boolean</span> Prepare child to run independently of its parent
+process. Specific behavior depends on the platform, see
 <a href="#child_process_options_detached">below</a>)</li>
 <li><code>uid</code> <span class="type">Number</span> Sets the user identity of the process. (See setuid(2).)</li>
 <li><code>gid</code> <span class="type">Number</span> Sets the group identity of the process. (See setgid(2).)</li>
@@ -670,9 +672,15 @@ spawn(&#39;prg&#39;, [], { stdio: [&#39;pipe&#39;, &#39;pipe&#39;, process.stder
 // startd-style interface.
 spawn(&#39;prg&#39;, [], { stdio: [&#39;pipe&#39;, null, null, null, &#39;pipe&#39;] });</code></pre>
 <h4>options.detached<span><a class="mark" href="#child_process_options_detached" id="child_process_options_detached">#</a></span></h4>
-<p>If the <code>detached</code> option is set, the child process will be made the leader of a
-new process group.  This makes it possible for the child to continue running
-after the parent exits.
+<p>On Windows, this makes it possible for the child to continue running after the
+parent exits. The child will have a new console window (this cannot be
+disabled).
+
+</p>
+<p>On non-Windows, if the <code>detached</code> option is set, the child process will be made
+the leader of a new process group and session. Note that child processes may
+continue running after the parent exits whether they are detached or not.  See
+<code>setsid(2)</code> for more information.
 
 </p>
 <p>By default, the parent will wait for the detached child to exit.  To prevent

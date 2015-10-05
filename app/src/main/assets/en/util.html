@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>util Node.js v4.0.0 Manual &amp; Documentation</title>
+  <title>util Node.js v4.1.1 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="util" class="interior">
       <header>
-        <h1>Node.js v4.0.0 Documentation</h1>
+        <h1>Node.js v4.1.1 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -502,13 +502,13 @@ through the <code>constructor.super_</code> property.
 
 </p>
 <pre><code>var util = require(&quot;util&quot;);
-var events = require(&quot;events&quot;);
+var EventEmitter = require(&quot;events&quot;);
 
 function MyStream() {
-    events.EventEmitter.call(this);
+    EventEmitter.call(this);
 }
 
-util.inherits(MyStream, events.EventEmitter);
+util.inherits(MyStream, EventEmitter);
 
 MyStream.prototype.write = function(data) {
     this.emit(&quot;data&quot;, data);
@@ -516,8 +516,8 @@ MyStream.prototype.write = function(data) {
 
 var stream = new MyStream();
 
-console.log(stream instanceof events.EventEmitter); // true
-console.log(MyStream.super_ === events.EventEmitter); // true
+console.log(stream instanceof EventEmitter); // true
+console.log(MyStream.super_ === EventEmitter); // true
 
 stream.on(&quot;data&quot;, function(data) {
     console.log(&#39;Received data: &quot;&#39; + data + &#39;&quot;&#39;);
