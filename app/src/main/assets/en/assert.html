@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Assert Node.js v4.1.1 Manual &amp; Documentation</title>
+  <title>Assert Node.js v4.2.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="assert" class="interior">
       <header>
-        <h1>Node.js v4.1.1 Documentation</h1>
+        <h1>Node.js v4.2.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -87,7 +87,7 @@
 <li><a href="#assert_assert_deepstrictequal_actual_expected_message">assert.deepStrictEqual(actual, expected[, message])</a></li>
 <li><a href="#assert_assert_notdeepstrictequal_actual_expected_message">assert.notDeepStrictEqual(actual, expected[, message])</a></li>
 <li><a href="#assert_assert_throws_block_error_message">assert.throws(block[, error][, message])</a></li>
-<li><a href="#assert_assert_doesnotthrow_block_message">assert.doesNotThrow(block[, message])</a></li>
+<li><a href="#assert_assert_doesnotthrow_block_error_message">assert.doesNotThrow(block[, error][, message])</a></li>
 <li><a href="#assert_assert_iferror_value">assert.ifError(value)</a></li>
 </ul>
 </li>
@@ -97,16 +97,18 @@
 
       <div id="apicontent">
         <h1>Assert<span><a class="mark" href="#assert_assert" id="assert_assert">#</a></span></h1>
-<pre class="api_stability_2">Stability: 2 - Stable</pre><p>This module is used for writing unit tests for your applications. You can
-access it with <code>require(&#39;assert&#39;)</code>.
+<pre class="api_stability_2">Stability: 2 - Stable</pre><p>This module is used for writing assertion tests. You can access it with
+<code>require(&#39;assert&#39;)</code>.
 
 </p>
 <h2>assert.fail(actual, expected, message, operator)<span><a class="mark" href="#assert_assert_fail_actual_expected_message_operator" id="assert_assert_fail_actual_expected_message_operator">#</a></span></h2>
-<p>Throws an exception that displays the values for <code>actual</code> and <code>expected</code> separated by the provided operator.
+<p>Throws an exception that displays the values for <code>actual</code> and <code>expected</code>
+separated by the provided operator.
 
 </p>
 <h2>assert(value[, message]), assert.ok(value[, message])<span><a class="mark" href="#assert_assert_value_message_assert_ok_value_message" id="assert_assert_value_message_assert_ok_value_message">#</a></span></h2>
-<p>Tests if value is truthy. It is equivalent to <code>assert.equal(true, !!value, message)</code>.
+<p>Tests if value is truthy. It is equivalent to
+<code>assert.equal(true, !!value, message)</code>.
 
 </p>
 <h2>assert.equal(actual, expected[, message])<span><a class="mark" href="#assert_assert_equal_actual_expected_message" id="assert_assert_equal_actual_expected_message">#</a></span></h2>
@@ -182,10 +184,32 @@ validation function.
   },
   &quot;unexpected error&quot;
 );</code></pre>
-<h2>assert.doesNotThrow(block[, message])<span><a class="mark" href="#assert_assert_doesnotthrow_block_message" id="assert_assert_doesnotthrow_block_message">#</a></span></h2>
-<p>Expects <code>block</code> not to throw an error. See <code>assert.throws()</code> for details.
+<h2>assert.doesNotThrow(block[, error][, message])<span><a class="mark" href="#assert_assert_doesnotthrow_block_error_message" id="assert_assert_doesnotthrow_block_error_message">#</a></span></h2>
+<p>Expects <code>block</code> not to throw an error. See <a href="#assert_assert_throws_block_error_message">assert.throws()</a> for more details.
 
 </p>
+<p>If <code>block</code> throws an error and if it is of a different type from <code>error</code>, the
+thrown error will get propagated back to the caller. The following call will
+throw the <code>TypeError</code>, since we&#39;re not matching the error types in the
+assertion.
+
+</p>
+<pre><code>assert.doesNotThrow(
+  function() {
+    throw new TypeError(&quot;Wrong value&quot;);
+  },
+  SyntaxError
+);</code></pre>
+<p>In case <code>error</code> matches with the error thrown by <code>block</code>, an <code>AssertionError</code>
+is thrown instead.
+
+</p>
+<pre><code>assert.doesNotThrow(
+  function() {
+    throw new TypeError(&quot;Wrong value&quot;);
+  },
+  TypeError
+);</code></pre>
 <h2>assert.ifError(value)<span><a class="mark" href="#assert_assert_iferror_value" id="assert_assert_iferror_value">#</a></span></h2>
 <p>Throws <code>value</code> if <code>value</code> is truthy. This is useful when testing the <code>error</code>
 argument in callbacks.
