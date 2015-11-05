@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Console Node.js v4.2.0 Manual &amp; Documentation</title>
+  <title>Console Node.js v5.0.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="console" class="interior">
       <header>
-        <h1>Node.js v4.2.0 Documentation</h1>
+        <h1>Node.js v5.0.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -82,8 +82,8 @@
 <li><a href="#console_console_error_data">console.error([data][, ...])</a></li>
 <li><a href="#console_console_warn_data">console.warn([data][, ...])</a></li>
 <li><a href="#console_console_dir_obj_options">console.dir(obj[, options])</a></li>
-<li><a href="#console_console_time_label">console.time(label)</a></li>
-<li><a href="#console_console_timeend_label">console.timeEnd(label)</a></li>
+<li><a href="#console_console_time_timername">console.time(timerName)</a></li>
+<li><a href="#console_console_timeend_timername">console.timeEnd(timerName)</a></li>
 <li><a href="#console_console_trace_message">console.trace(message[, ...])</a></li>
 <li><a href="#console_console_assert_value_message">console.assert(value[, message][, ...])</a></li>
 </ul>
@@ -178,17 +178,17 @@ object. This is useful for inspecting large complicated objects. Defaults to
 Defaults to <code>false</code>. Colors are customizable, see below.</p>
 </li>
 </ul>
-<h3>console.time(label)<span><a class="mark" href="#console_console_time_label" id="console_console_time_label">#</a></span></h3>
-<p>Used to calculate the duration of a specific operation. To start a timer, call
-the <code>console.time()</code> method, giving it a name as only parameter. To stop the
-timer, and to get the elapsed time in milliseconds, just call the
-<a href="#console_console_timeend_label"><code>console.timeEnd()</code></a> method, again passing the
-timer&#39;s name as the parameter.
+<h3>console.time(timerName)<span><a class="mark" href="#console_console_time_timername" id="console_console_time_timername">#</a></span></h3>
+<p>Starts a timer that can be used to compute the duration of an operation. Timers
+are identified by a unique name. Use the same name when you call
+<a href="#console_console_timeend_timername"><code>console.timeEnd()</code></a> to stop the timer and
+output the elapsed time in milliseconds. Timer durations are accurate to the
+sub-millisecond.
 
 </p>
-<h3>console.timeEnd(label)<span><a class="mark" href="#console_console_timeend_label" id="console_console_timeend_label">#</a></span></h3>
+<h3>console.timeEnd(timerName)<span><a class="mark" href="#console_console_timeend_timername" id="console_console_timeend_timername">#</a></span></h3>
 <p>Stops a timer that was previously started by calling
-<a href="#console_console_time_label"><code>console.time()</code></a> and print the result to the
+<a href="#console_console_time_timername"><code>console.time()</code></a> and prints the result to the
 console.
 
 </p>
@@ -200,7 +200,7 @@ for (var i = 0; i &lt; 100; i++) {
   ;
 }
 console.timeEnd(&#39;100-elements&#39;);
-// prints 100-elements: 262ms</code></pre>
+// prints 100-elements: 225.438ms</code></pre>
 <h3>console.trace(message[, ...])<span><a class="mark" href="#console_console_trace_message" id="console_console_trace_message">#</a></span></h3>
 <p>Print to stderr <code>&#39;Trace :&#39;</code>, followed by the formatted message and stack trace
 to the current position.

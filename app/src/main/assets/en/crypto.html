@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Crypto Node.js v4.2.0 Manual &amp; Documentation</title>
+  <title>Crypto Node.js v5.0.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="crypto" class="interior">
       <header>
-        <h1>Node.js v4.2.0 Documentation</h1>
+        <h1>Node.js v5.0.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -838,7 +838,7 @@ var bob_secret = bob.computeSecret(alice.getPublicKey(), null, &#39;hex&#39;);
 console.log(alice_secret == bob_secret);</code></pre>
 <h2>crypto.pbkdf2(password, salt, iterations, keylen[, digest], callback)<span><a class="mark" href="#crypto_crypto_pbkdf2_password_salt_iterations_keylen_digest_callback" id="crypto_crypto_pbkdf2_password_salt_iterations_keylen_digest_callback">#</a></span></h2>
 <p>Asynchronous PBKDF2 function.  Applies the selected HMAC digest function
-(default: SHA1) to derive a key of the requested length from the password,
+(default: SHA1) to derive a key of the requested byte length from the password,
 salt and number of iterations.  The callback gets two arguments:
 <code>(err, derivedKey)</code>.
 
@@ -846,7 +846,7 @@ salt and number of iterations.  The callback gets two arguments:
 <p>Example:
 
 </p>
-<pre><code>crypto.pbkdf2(&#39;secret&#39;, &#39;salt&#39;, 4096, 512, &#39;sha256&#39;, function(err, key) {
+<pre><code>crypto.pbkdf2(&#39;secret&#39;, &#39;salt&#39;, 4096, 64, &#39;sha256&#39;, function(err, key) {
   if (err)
     throw err;
   console.log(key.toString(&#39;hex&#39;));  // &#39;c5e478d...1469e50&#39;

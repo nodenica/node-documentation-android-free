@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Buffer Node.js v4.2.0 Manual &amp; Documentation</title>
+  <title>Buffer Node.js v5.0.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="buffer" class="interior">
       <header>
-        <h1>Node.js v4.2.0 Documentation</h1>
+        <h1>Node.js v5.0.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -182,10 +182,9 @@ Surrogate pairs (U+10000 to U+10FFFF) are supported.</p>
 </li>
 <li><p><code>&#39;base64&#39;</code> - Base64 string encoding.</p>
 </li>
-<li><p><code>&#39;binary&#39;</code> - A way of encoding raw binary data into strings by using only
-the first 8 bits of each character. This encoding method is deprecated and
-should be avoided in favor of <code>Buffer</code> objects where possible. This encoding
-will be removed in future versions of Node.js.</p>
+<li><p><code>&#39;binary&#39;</code> - A way of encoding the buffer into a one-byte (i.e. <code>latin-1</code>)
+encoded string. The string <code>&#39;latin-1&#39;</code> is not supported. Instead simply pass
+<code>&#39;binary&#39;</code> to use <code>&#39;latin-1&#39;</code> encoding.</p>
 </li>
 <li><p><code>&#39;hex&#39;</code> - Encode each byte as two hexadecimal characters.</p>
 </li>
@@ -293,7 +292,7 @@ console.log(str + &quot;: &quot; + str.length + &quot; characters, &quot; +
 <h3>Class Method: Buffer.concat(list[, totalLength])<span><a class="mark" href="#buffer_class_method_buffer_concat_list_totallength" id="buffer_class_method_buffer_concat_list_totallength">#</a></span></h3>
 <div class="signature"><ul>
 <li><code>list</code> <span class="type">Array</span> List of Buffer objects to concat</li>
-<li><code>totalLength</code> <span class="type">Number</span> Total length of the buffers when concatenated</li>
+<li><code>totalLength</code> <span class="type">Number</span> Total length of the buffers in the list when concatenated</li>
 </div></ul>
 <p>Returns a buffer which is the result of concatenating all the buffers in
 the list together.
@@ -308,6 +307,32 @@ However, this adds an additional loop to the function, so it is faster
 to provide the length explicitly.
 
 </p>
+<p>Example: build a single buffer from a list of three buffers:
+
+</p>
+<pre><code>var buf1 = new Buffer(10);
+var buf2 = new Buffer(14);
+var buf3 = new Buffer(18);
+
+buf1.fill(0);
+buf2.fill(0);
+buf3.fill(0);
+
+var buffers = [buf1, buf2, buf3];
+
+var totalLength = 0;
+for (var i = 0; i &lt; buffers.length; i++) {
+  totalLength += buffers[i].length;
+}
+
+console.log(totalLength);
+var bufA = Buffer.concat(buffers, totalLength);
+console.log(bufA);
+console.log(bufA.length);
+
+// 42
+// &lt;Buffer 00 00 00 00 ...&gt;
+// 42</code></pre>
 <h3>Class Method: Buffer.compare(buf1, buf2)<span><a class="mark" href="#buffer_class_method_buffer_compare_buf1_buf2" id="buffer_class_method_buffer_compare_buf1_buf2">#</a></span></h3>
 <div class="signature"><ul>
 <li><code>buf1</code> <span class="type">Buffer</span></li>

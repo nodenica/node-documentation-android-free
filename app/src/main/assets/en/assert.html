@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Assert Node.js v4.2.0 Manual &amp; Documentation</title>
+  <title>Assert Node.js v5.0.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="assert" class="interior">
       <header>
-        <h1>Node.js v4.2.0 Documentation</h1>
+        <h1>Node.js v5.0.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -97,8 +97,9 @@
 
       <div id="apicontent">
         <h1>Assert<span><a class="mark" href="#assert_assert" id="assert_assert">#</a></span></h1>
-<pre class="api_stability_2">Stability: 2 - Stable</pre><p>This module is used for writing assertion tests. You can access it with
-<code>require(&#39;assert&#39;)</code>.
+<pre class="api_stability_3">Stability: 3 - Locked</pre><p>This module is used so that Node.js can test itself. It can be accessed with
+<code>require(&#39;assert&#39;)</code>. However, it is recommended that a userland assertion
+library be used instead.
 
 </p>
 <h2>assert.fail(actual, expected, message, operator)<span><a class="mark" href="#assert_assert_fail_actual_expected_message_operator" id="assert_assert_fail_actual_expected_message_operator">#</a></span></h2>
@@ -121,10 +122,19 @@ separated by the provided operator.
 
 </p>
 <h2>assert.deepEqual(actual, expected[, message])<span><a class="mark" href="#assert_assert_deepequal_actual_expected_message" id="assert_assert_deepequal_actual_expected_message">#</a></span></h2>
-<p>Tests for deep equality. Primitive values are compared with the equal comparison
-operator ( <code>==</code> ). Doesn&#39;t take object prototypes into account.
+<p>Tests for deep equality. Primitive values are compared with the equal
+comparison operator ( <code>==</code> ).
 
 </p>
+<p>This only considers enumerable properties. It does not test object prototypes,
+attached symbols, or non-enumerable properties. This can lead to some
+potentially surprising results. For example, this does not throw an
+<code>AssertionError</code> because the properties on the <code>Error</code> object are
+non-enumerable:
+
+</p>
+<pre><code>// WARNING: This does not throw an AssertionError!
+assert.deepEqual(Error(&#39;a&#39;), Error(&#39;b&#39;));</code></pre>
 <h2>assert.notDeepEqual(actual, expected[, message])<span><a class="mark" href="#assert_assert_notdeepequal_actual_expected_message" id="assert_assert_notdeepequal_actual_expected_message">#</a></span></h2>
 <p>Tests for any deep inequality. Opposite of <code>assert.deepEqual</code>.
 

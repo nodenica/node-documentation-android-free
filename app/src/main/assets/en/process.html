@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>process Node.js v4.2.0 Manual &amp; Documentation</title>
+  <title>process Node.js v5.0.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="process" class="interior">
       <header>
-        <h1>Node.js v4.2.0 Documentation</h1>
+        <h1>Node.js v5.0.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -304,6 +304,25 @@ event:
 <pre><code>somePromise.then(function(res) {
   return reportToUser(JSON.pasre(res)); // note the typo
 }); // no `.catch` or `.then`</code></pre>
+<p>Here is an example of a coding pattern that will also trigger
+<code>&#39;unhandledRejection&#39;</code>:
+
+</p>
+<pre><code>function SomeResource() {
+  // Initially set the loaded status to a rejected promise
+  this.loaded = Promise.reject(new Error(&#39;Resource not yet loaded!&#39;));
+}
+
+var resource = new SomeResource();
+// no .catch or .then on resource.loaded for at least a turn</code></pre>
+<p>In cases like this, you may not want to track the rejection as a developer
+error like you would for other <code>&#39;unhandledRejection&#39;</code> events. To address
+this, you can either attach a dummy <code>.catch(function() { })</code> handler to
+<code>resource.loaded</code>, preventing the <code>&#39;unhandledRejection&#39;</code> event from being
+emitted, or you can use the <code>&#39;rejectionHandled&#39;</code> event. Below is an
+explanation of how to do that.
+
+</p>
 <h2>Event: &#39;rejectionHandled&#39;<span><a class="mark" href="#process_event_rejectionhandled" id="process_event_rejectionhandled">#</a></span></h2>
 <p>Emitted whenever a Promise was rejected and an error handler was attached to it
 (for example with <code>.catch()</code>) later than after an event loop turn. This event
@@ -311,36 +330,42 @@ is emitted with the following arguments:
 
 </p>
 <ul>
-<li><code>p</code> the promise that was previously emitted in an &#39;unhandledRejection&#39;
+<li><code>p</code> the promise that was previously emitted in an <code>&#39;unhandledRejection&#39;</code>
 event, but which has now gained a rejection handler.</li>
 </ul>
 <p>There is no notion of a top level for a promise chain at which rejections can
 always be handled. Being inherently asynchronous in nature, a promise rejection
 can be be handled at a future point in time — possibly much later than the
-event loop turn it takes for the &#39;unhandledRejection&#39; event to be emitted.
+event loop turn it takes for the <code>&#39;unhandledRejection&#39;</code> event to be emitted.
 
 </p>
 <p>Another way of stating this is that, unlike in synchronous code where there is
 an ever-growing list of unhandled exceptions, with promises there is a
 growing-and-shrinking list of unhandled rejections. In synchronous code, the
 &#39;uncaughtException&#39; event tells you when the list of unhandled exceptions
-grows. And in asynchronous code, the &#39;unhandledRejection&#39; event tells you
+grows. And in asynchronous code, the <code>&#39;unhandledRejection&#39;</code> event tells you
 when the list of unhandled rejections grows, while the &#39;rejectionHandled&#39;
 event tells you when the list of unhandled rejections shrinks.
 
 </p>
-<p>For example using the rejection detection hooks in order to keep a list of all
-the rejected promises at a given time:
+<p>For example using the rejection detection hooks in order to keep a map of all
+the rejected promise reasons at a given time:
 
 </p>
-<pre><code>var unhandledRejections = [];
+<pre><code>var unhandledRejections = new Map();
 process.on(&#39;unhandledRejection&#39;, function(reason, p) {
-    unhandledRejections.push(p);
+  unhandledRejections.set(p, reason);
 });
 process.on(&#39;rejectionHandled&#39;, function(p) {
-    var index = unhandledRejections.indexOf(p);
-    unhandledRejections.splice(index, 1);
+  unhandledRejections.delete(p);
 });</code></pre>
+<p>This map will grow and shrink over time, reflecting rejections that start
+unhandled and then become handled. You could record the errors in some error
+log, either periodically (probably best for long-running programs, allowing
+you to clear the map, which in the case of a very buggy program could grow
+indefinitely) or upon process exit (more convenient for scripts).
+
+</p>
 <h2>Signal Events<span><a class="mark" href="#process_signal_events" id="process_signal_events">#</a></span></h2>
 <!--type=event-->
 <!--name=SIGINT, SIGHUP, etc.-->
@@ -837,13 +862,6 @@ for the source tarball and headers-only tarball.
 <ul>
 <li><code>name</code>: a string with a value that will always be <code>&quot;node&quot;</code> for Node.js. For
 legacy io.js releases, this will be <code>&quot;io.js&quot;</code>.</li>
-<li><code>lts</code>: a string with a value indicating the <em>codename</em> of the LTS (Long-term
-Support) line the current release is part of. This property only exists for
-LTS releases and is <code>undefined</code> for all other release types, including stable
-releases. Current valid values are:<ul>
-<li><code>&quot;Argon&quot;</code> for the v4.x LTS line beginning with v4.2.0.</li>
-</ul>
-</li>
 <li><code>sourceUrl</code>: a complete URL pointing to a <em>.tar.gz</em> file containing the
 source of the current release.</li>
 <li><code>headersUrl</code>: a complete URL pointing to a <em>.tar.gz</em> file containing only
