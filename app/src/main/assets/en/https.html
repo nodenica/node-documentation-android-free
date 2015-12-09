@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>HTTPS Node.js v5.0.0 Manual &amp; Documentation</title>
+  <title>HTTPS Node.js v5.2.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="https" class="interior">
       <header>
-        <h1>Node.js v5.0.0 Documentation</h1>
+        <h1>Node.js v5.2.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -76,22 +76,22 @@
         <h2>Table of Contents</h2>
         <ul>
 <li><a href="#https_https">HTTPS</a><ul>
+<li><a href="#https_class_https_agent">Class: https.Agent</a></li>
 <li><a href="#https_class_https_server">Class: https.Server</a><ul>
 <li><a href="#https_server_settimeout_msecs_callback">server.setTimeout(msecs, callback)</a></li>
 <li><a href="#https_server_timeout">server.timeout</a></li>
 </ul>
 </li>
 <li><a href="#https_https_createserver_options_requestlistener">https.createServer(options[, requestListener])</a><ul>
-<li><a href="#https_server_listen_port_host_backlog_callback">server.listen(port[, host][, backlog][, callback])</a></li>
-<li><a href="#https_server_listen_path_callback">server.listen(path[, callback])</a></li>
-<li><a href="#https_server_listen_handle_callback">server.listen(handle[, callback])</a></li>
 <li><a href="#https_server_close_callback">server.close([callback])</a></li>
+<li><a href="#https_server_listen_handle_callback">server.listen(handle[, callback])</a></li>
+<li><a href="#https_server_listen_path_callback">server.listen(path[, callback])</a></li>
+<li><a href="#https_server_listen_port_host_backlog_callback">server.listen(port[, host][, backlog][, callback])</a></li>
 </ul>
 </li>
-<li><a href="#https_https_request_options_callback">https.request(options, callback)</a></li>
 <li><a href="#https_https_get_options_callback">https.get(options, callback)</a></li>
-<li><a href="#https_class_https_agent">Class: https.Agent</a></li>
 <li><a href="#https_https_globalagent">https.globalAgent</a></li>
+<li><a href="#https_https_request_options_callback">https.request(options, callback)</a></li>
 </ul>
 </li>
 </ul>
@@ -104,22 +104,27 @@
 separate module.
 
 </p>
+<h2>Class: https.Agent<span><a class="mark" href="#https_class_https_agent" id="https_class_https_agent">#</a></span></h2>
+<p>An Agent object for HTTPS similar to <a href="http.html#http_class_http_agent"><code>http.Agent</code></a>.  See <a href="#https_https_request_options_callback"><code>https.request()</code></a>
+for more information.
+
+</p>
 <h2>Class: https.Server<span><a class="mark" href="#https_class_https_server" id="https_class_https_server">#</a></span></h2>
 <p>This class is a subclass of <code>tls.Server</code> and emits events same as
-<code>http.Server</code>. See <code>http.Server</code> for more information.
+<a href="http.html#http_class_http_server"><code>http.Server</code></a>. See <a href="http.html#http_class_http_server"><code>http.Server</code></a> for more information.
 
 </p>
 <h3>server.setTimeout(msecs, callback)<span><a class="mark" href="#https_server_settimeout_msecs_callback" id="https_server_settimeout_msecs_callback">#</a></span></h3>
-<p>See <a href="http.html#http_server_settimeout_msecs_callback">http.Server#setTimeout()</a>.
+<p>See <a href="http.html#http_server_settimeout_msecs_callback"><code>http.Server#setTimeout()</code></a>.
 
 </p>
 <h3>server.timeout<span><a class="mark" href="#https_server_timeout" id="https_server_timeout">#</a></span></h3>
-<p>See <a href="http.html#http_server_timeout">http.Server#timeout</a>.
+<p>See <a href="http.html#http_server_timeout"><code>http.Server#timeout</code></a>.
 
 </p>
 <h2>https.createServer(options[, requestListener])<span><a class="mark" href="#https_https_createserver_options_requestlistener" id="https_https_createserver_options_requestlistener">#</a></span></h2>
 <p>Returns a new HTTPS web server object. The <code>options</code> is similar to
-<a href="tls.html#tls_tls_createserver_options_secureconnectionlistener">tls.createServer()</a>.  The <code>requestListener</code> is a function which is
+<a href="tls.html#tls_tls_createserver_options_secureconnectionlistener"><code>tls.createServer()</code></a>.  The <code>requestListener</code> is a function which is
 automatically added to the <code>&#39;request&#39;</code> event.
 
 </p>
@@ -153,14 +158,42 @@ https.createServer(options, function (req, res) {
   res.writeHead(200);
   res.end(&quot;hello world\n&quot;);
 }).listen(8000);</code></pre>
-<h3>server.listen(port[, host][, backlog][, callback])<span><a class="mark" href="#https_server_listen_port_host_backlog_callback" id="https_server_listen_port_host_backlog_callback">#</a></span></h3>
-<h3>server.listen(path[, callback])<span><a class="mark" href="#https_server_listen_path_callback" id="https_server_listen_path_callback">#</a></span></h3>
-<h3>server.listen(handle[, callback])<span><a class="mark" href="#https_server_listen_handle_callback" id="https_server_listen_handle_callback">#</a></span></h3>
-<p>See <a href="http.html#http_server_listen_port_hostname_backlog_callback">http.listen()</a> for details.
+<h3>server.close([callback])<span><a class="mark" href="#https_server_close_callback" id="https_server_close_callback">#</a></span></h3>
+<p>See <a href="http.html#http_server_close_callback"><code>http.close()</code></a> for details.
 
 </p>
-<h3>server.close([callback])<span><a class="mark" href="#https_server_close_callback" id="https_server_close_callback">#</a></span></h3>
-<p>See <a href="http.html#http_server_close_callback">http.close()</a> for details.
+<h3>server.listen(handle[, callback])<span><a class="mark" href="#https_server_listen_handle_callback" id="https_server_listen_handle_callback">#</a></span></h3>
+<h3>server.listen(path[, callback])<span><a class="mark" href="#https_server_listen_path_callback" id="https_server_listen_path_callback">#</a></span></h3>
+<h3>server.listen(port[, host][, backlog][, callback])<span><a class="mark" href="#https_server_listen_port_host_backlog_callback" id="https_server_listen_port_host_backlog_callback">#</a></span></h3>
+<p>See <a href="http.html#http_server_listen_port_hostname_backlog_callback"><code>http.listen()</code></a> for details.
+
+</p>
+<h2>https.get(options, callback)<span><a class="mark" href="#https_https_get_options_callback" id="https_https_get_options_callback">#</a></span></h2>
+<p>Like <a href="http.html#http_http_get_options_callback"><code>http.get()</code></a> but for HTTPS.
+
+</p>
+<p><code>options</code> can be an object or a string. If <code>options</code> is a string, it is
+automatically parsed with <a href="url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost"><code>url.parse()</code></a>.
+
+</p>
+<p>Example:
+
+</p>
+<pre><code>var https = require(&#39;https&#39;);
+
+https.get(&#39;https://encrypted.google.com/&#39;, function(res) {
+  console.log(&quot;statusCode: &quot;, res.statusCode);
+  console.log(&quot;headers: &quot;, res.headers);
+
+  res.on(&#39;data&#39;, function(d) {
+    process.stdout.write(d);
+  });
+
+}).on(&#39;error&#39;, function(e) {
+  console.error(e);
+});</code></pre>
+<h2>https.globalAgent<span><a class="mark" href="#https_https_globalagent" id="https_https_globalagent">#</a></span></h2>
+<p>Global instance of <a href="#https_class_https_agent"><code>https.Agent</code></a> for all HTTPS client requests.
 
 </p>
 <h2>https.request(options, callback)<span><a class="mark" href="#https_https_request_options_callback" id="https_https_request_options_callback">#</a></span></h2>
@@ -168,10 +201,10 @@ https.createServer(options, function (req, res) {
 
 </p>
 <p><code>options</code> can be an object or a string. If <code>options</code> is a string, it is
-automatically parsed with <a href="url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost">url.parse()</a>.
+automatically parsed with <a href="url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost"><code>url.parse()</code></a>.
 
 </p>
-<p>All options from <a href="http.html#http_http_request_options_callback">http.request()</a> are valid.
+<p>All options from <a href="http.html#http_http_request_options_callback"><code>http.request()</code></a> are valid.
 
 </p>
 <p>Example:
@@ -221,17 +254,17 @@ may change in the future.</li>
 <li><code>headers</code>: An object containing request headers.</li>
 <li><code>auth</code>: Basic authentication i.e. <code>&#39;user:password&#39;</code> to compute an
 Authorization header.</li>
-<li><code>agent</code>: Controls <a href="#https_class_https_agent">Agent</a> behavior. When an Agent is used request will
+<li><code>agent</code>: Controls <a href="#https_class_https_agent"><code>Agent</code></a> behavior. When an Agent is used request will
 default to <code>Connection: keep-alive</code>. Possible values:<ul>
-<li><code>undefined</code> (default): use <a href="#https_https_globalagent">globalAgent</a> for this host and port.</li>
+<li><code>undefined</code> (default): use <a href="#https_https_globalagent"><code>globalAgent</code></a> for this host and port.</li>
 <li><code>Agent</code> object: explicitly use the passed in <code>Agent</code>.</li>
 <li><code>false</code>: opts out of connection pooling with an Agent, defaults request to
 <code>Connection: close</code>.</li>
 </ul>
 </li>
 </ul>
-<p>The following options from <a href="tls.html#tls_tls_connect_options_callback">tls.connect()</a> can also be specified. However, a
-<a href="#https_https_globalagent">globalAgent</a> silently ignores these.
+<p>The following options from <a href="tls.html#tls_tls_connect_options_callback"><code>tls.connect()</code></a> can also be specified. However, a
+<a href="#https_https_globalagent"><code>globalAgent</code></a> silently ignores these.
 
 </p>
 <ul>
@@ -242,7 +275,7 @@ default to <code>Connection: keep-alive</code>. Possible values:<ul>
 <li><code>ca</code>: An authority certificate or array of authority certificates to check
 the remote host against.</li>
 <li><code>ciphers</code>: A string describing the ciphers to use or exclude. Consult
-<a href="http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT">http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT</a> for
+<a href="https://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT">https://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT</a> for
 details on the format.</li>
 <li><code>rejectUnauthorized</code>: If <code>true</code>, the server certificate is verified against
 the list of supplied CAs. An <code>&#39;error&#39;</code> event is emitted if verification
@@ -250,9 +283,9 @@ fails. Verification happens at the connection level, <em>before</em> the HTTP
 request is sent. Default <code>true</code>.</li>
 <li><code>secureProtocol</code>: The SSL method to use, e.g. <code>SSLv3_method</code> to force
 SSL version 3. The possible values depend on your installation of
-OpenSSL and are defined in the constant <a href="http://www.openssl.org/docs/ssl/ssl.html#DEALING_WITH_PROTOCOL_METHODS">SSL_METHODS</a>.</li>
+OpenSSL and are defined in the constant <a href="https://www.openssl.org/docs/ssl/ssl.html#DEALING_WITH_PROTOCOL_METHODS"><code>SSL_METHODS</code></a>.</li>
 </ul>
-<p>In order to specify these options, use a custom <code>Agent</code>.
+<p>In order to specify these options, use a custom <a href="#https_class_https_agent"><code>Agent</code></a>.
 
 </p>
 <p>Example:
@@ -271,7 +304,7 @@ options.agent = new https.Agent(options);
 var req = https.request(options, function(res) {
   ...
 }</code></pre>
-<p>Or does not use an <code>Agent</code>.
+<p>Alternatively, opt out of connection pooling by not using an <code>Agent</code>.
 
 </p>
 <p>Example:
@@ -290,40 +323,6 @@ var req = https.request(options, function(res) {
 var req = https.request(options, function(res) {
   ...
 }</code></pre>
-<h2>https.get(options, callback)<span><a class="mark" href="#https_https_get_options_callback" id="https_https_get_options_callback">#</a></span></h2>
-<p>Like <code>http.get()</code> but for HTTPS.
-
-</p>
-<p><code>options</code> can be an object or a string. If <code>options</code> is a string, it is
-automatically parsed with <a href="url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost">url.parse()</a>.
-
-</p>
-<p>Example:
-
-</p>
-<pre><code>var https = require(&#39;https&#39;);
-
-https.get(&#39;https://encrypted.google.com/&#39;, function(res) {
-  console.log(&quot;statusCode: &quot;, res.statusCode);
-  console.log(&quot;headers: &quot;, res.headers);
-
-  res.on(&#39;data&#39;, function(d) {
-    process.stdout.write(d);
-  });
-
-}).on(&#39;error&#39;, function(e) {
-  console.error(e);
-});</code></pre>
-<h2>Class: https.Agent<span><a class="mark" href="#https_class_https_agent" id="https_class_https_agent">#</a></span></h2>
-<p>An Agent object for HTTPS similar to <a href="http.html#http_class_http_agent">http.Agent</a>.  See <a href="#https_https_request_options_callback">https.request()</a>
-for more information.
-
-
-</p>
-<h2>https.globalAgent<span><a class="mark" href="#https_https_globalagent" id="https_https_globalagent">#</a></span></h2>
-<p>Global instance of <a href="#https_class_https_agent">https.Agent</a> for all HTTPS client requests.
-
-</p>
 
       </div>
     </div>

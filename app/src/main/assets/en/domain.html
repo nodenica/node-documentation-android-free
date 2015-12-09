@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Domain Node.js v5.0.0 Manual &amp; Documentation</title>
+  <title>Domain Node.js v5.2.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="domain" class="interior">
       <header>
-        <h1>Node.js v5.0.0 Documentation</h1>
+        <h1>Node.js v5.2.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -117,7 +117,7 @@ in the future.
 </p>
 <p>Domains provide a way to handle multiple different IO operations as a
 single group.  If any of the event emitters or callbacks registered to a
-domain emit an <code>error</code> event, or throw an error, then the domain object
+domain emit an <code>&#39;error&#39;</code> event, or throw an error, then the domain object
 will be notified, rather than losing the context of the error in the
 <code>process.on(&#39;uncaughtException&#39;)</code> handler, or causing the program to
 exit immediately with an error code.
@@ -130,7 +130,7 @@ exit immediately with an error code.
 process when an error occurs.
 
 </p>
-<p>By the very nature of how <code>throw</code> works in JavaScript, there is almost
+<p>By the very nature of how <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw"><code>throw</code></a> works in JavaScript, there is almost
 never any way to safely &quot;pick up where you left off&quot;, without leaking
 references, or creating some other sort of undefined brittle state.
 
@@ -280,13 +280,13 @@ function handleRequest(req, res) {
 <h2>Additions to Error objects<span><a class="mark" href="#domain_additions_to_error_objects" id="domain_additions_to_error_objects">#</a></span></h2>
 <!-- type=misc -->
 
-<p>Any time an Error object is routed through a domain, a few extra fields
+<p>Any time an <code>Error</code> object is routed through a domain, a few extra fields
 are added to it.
 
 </p>
 <ul>
 <li><code>error.domain</code> The domain that first handled the error.</li>
-<li><code>error.domainEmitter</code> The event emitter that emitted an &#39;error&#39; event
+<li><code>error.domainEmitter</code> The event emitter that emitted an <code>&#39;error&#39;</code> event
 with the error object.</li>
 <li><code>error.domainBound</code> The callback function which was bound to the
 domain, and passed an error as its first argument.</li>
@@ -318,8 +318,8 @@ then you must explicitly add them.
 
 </p>
 <p>Implicit binding routes thrown errors and <code>&#39;error&#39;</code> events to the
-Domain&#39;s <code>error</code> event, but does not register the EventEmitter on the
-Domain, so <code>domain.dispose()</code> will not shut down the EventEmitter.
+Domain&#39;s <code>&#39;error&#39;</code> event, but does not register the EventEmitter on the
+Domain, so <a href="#domain_domain_dispose"><code>domain.dispose()</code></a> will not shut down the EventEmitter.
 Implicit binding only takes care of thrown errors and <code>&#39;error&#39;</code> events.
 
 </p>
@@ -377,8 +377,8 @@ serverDomain.run(function() {
 uncaught exceptions to the active Domain object.
 
 </p>
-<p>Domain is a child class of <a href="events.html#events_class_events_eventemitter">EventEmitter</a>.  To handle the errors that it
-catches, listen to its <code>error</code> event.
+<p>Domain is a child class of <a href="events.html#events_class_events_eventemitter"><code>EventEmitter</code></a>.  To handle the errors that it
+catches, listen to its <code>&#39;error&#39;</code> event.
 
 </p>
 <h3>domain.run(fn[, arg][, ...])<span><a class="mark" href="#domain_domain_run_fn_arg" id="domain_domain_run_fn_arg">#</a></span></h3>
@@ -428,13 +428,13 @@ to the domain.
 <li><code>emitter</code> <span class="type">EventEmitter | Timer</span> emitter or timer to be added to the domain</li>
 </div></ul>
 <p>Explicitly adds an emitter to the domain.  If any event handlers called by
-the emitter throw an error, or if the emitter emits an <code>error</code> event, it
-will be routed to the domain&#39;s <code>error</code> event, just like with implicit
+the emitter throw an error, or if the emitter emits an <code>&#39;error&#39;</code> event, it
+will be routed to the domain&#39;s <code>&#39;error&#39;</code> event, just like with implicit
 binding.
 
 </p>
-<p>This also works with timers that are returned from <code>setInterval</code> and
-<code>setTimeout</code>.  If their callback function throws, it will be caught by
+<p>This also works with timers that are returned from <a href="timers.html#timers_setinterval_callback_delay_arg"><code>setInterval()</code></a> and
+<a href="timers.html#timers_settimeout_callback_delay_arg"><code>setTimeout()</code></a>.  If their callback function throws, it will be caught by
 the domain &#39;error&#39; handler.
 
 </p>
@@ -446,7 +446,7 @@ from that one, and bound to this one instead.
 <div class="signature"><ul>
 <li><code>emitter</code> <span class="type">EventEmitter | Timer</span> emitter or timer to be removed from the domain</li>
 </div></ul>
-<p>The opposite of <code>domain.add(emitter)</code>.  Removes domain handling from the
+<p>The opposite of <a href="#domain_domain_add_emitter"><code>domain.add(emitter)</code></a>.  Removes domain handling from the
 specified emitter.
 
 </p>
@@ -457,7 +457,7 @@ specified emitter.
 </div></ul>
 <p>The returned function will be a wrapper around the supplied callback
 function.  When the returned function is called, any errors that are
-thrown will be routed to the domain&#39;s <code>error</code> event.
+thrown will be routed to the domain&#39;s <code>&#39;error&#39;</code> event.
 
 </p>
 <h4>Example<span><a class="mark" href="#domain_example" id="domain_example">#</a></span></h4>
@@ -480,12 +480,12 @@ d.on(&#39;error&#39;, function(er) {
 <li><code>callback</code> <span class="type">Function</span> The callback function</li>
 <li>return: <span class="type">Function</span> The intercepted function</li>
 </div></ul>
-<p>This method is almost identical to <code>domain.bind(callback)</code>.  However, in
-addition to catching thrown errors, it will also intercept <code>Error</code>
+<p>This method is almost identical to <a href="#domain_domain_bind_callback"><code>domain.bind(callback)</code></a>.  However, in
+addition to catching thrown errors, it will also intercept <a href="errors.html#errors_class_error"><code>Error</code></a>
 objects sent as the first argument to the function.
 
 </p>
-<p>In this way, the common <code>if (er) return callback(er);</code> pattern can be replaced
+<p>In this way, the common <code>if (err) return callback(err);</code> pattern can be replaced
 with a single error handler in a single place.
 
 </p>
@@ -515,13 +515,13 @@ d.on(&#39;error&#39;, function(er) {
 <p>The <code>enter</code> method is plumbing used by the <code>run</code>, <code>bind</code>, and <code>intercept</code>
 methods to set the active domain. It sets <code>domain.active</code> and <code>process.domain</code>
 to the domain, and implicitly pushes the domain onto the domain stack managed
-by the domain module (see <code>domain.exit()</code> for details on the domain stack). The
+by the domain module (see <a href="#domain_domain_exit"><code>domain.exit()</code></a> for details on the domain stack). The
 call to <code>enter</code> delimits the beginning of a chain of asynchronous calls and I/O
 operations bound to a domain.
 
 </p>
 <p>Calling <code>enter</code> changes only the active domain, and does not alter the domain
-itself. <code>Enter</code> and <code>exit</code> can be called an arbitrary number of times on a
+itself. <code>enter</code> and <code>exit</code> can be called an arbitrary number of times on a
 single domain.
 
 </p>
@@ -542,7 +542,7 @@ of asynchronous calls and I/O operations bound to a domain.
 
 </p>
 <p>Calling <code>exit</code> changes only the active domain, and does not alter the domain
-itself. <code>Enter</code> and <code>exit</code> can be called an arbitrary number of times on a
+itself. <code>enter</code> and <code>exit</code> can be called an arbitrary number of times on a
 single domain.
 
 </p>
@@ -553,7 +553,7 @@ without exiting the domain.
 <h3>domain.dispose()<span><a class="mark" href="#domain_domain_dispose" id="domain_domain_dispose">#</a></span></h3>
 <pre class="api_stability_0">Stability: 0 - Deprecated.  Please recover from failed IO actions
 explicitly via error event handlers set on the domain.</pre><p>Once <code>dispose</code> has been called, the domain will no longer be used by callbacks
-bound into the domain via <code>run</code>, <code>bind</code>, or <code>intercept</code>, and a <code>dispose</code> event
+bound into the domain via <code>run</code>, <code>bind</code>, or <code>intercept</code>, and a <code>&#39;dispose&#39;</code> event
 is emitted.
 
 </p>

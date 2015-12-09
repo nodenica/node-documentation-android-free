@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Node.js Documentation Free</string>
     <string name="action_settings">Remove Ad</string>
-    <string name="admob_key">ca-app-pub-2015513932539714/8188095420</string>
+    <string name="banner_ad_unit_id">ca-app-pub-2015513932539714/8188095420</string>
 </resources>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>util Node.js v5.0.0 Manual &amp; Documentation</title>
+  <title>util Node.js v5.2.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="util" class="interior">
       <header>
-        <h1>Node.js v5.0.0 Documentation</h1>
+        <h1>Node.js v5.2.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -76,36 +76,36 @@
         <h2>Table of Contents</h2>
         <ul>
 <li><a href="#util_util">util</a><ul>
+<li><a href="#util_util_debug_string">util.debug(string)</a></li>
 <li><a href="#util_util_debuglog_section">util.debuglog(section)</a></li>
+<li><a href="#util_util_deprecate_function_string">util.deprecate(function, string)</a></li>
+<li><a href="#util_util_error">util.error([...])</a></li>
 <li><a href="#util_util_format_format">util.format(format[, ...])</a></li>
-<li><a href="#util_util_log_string">util.log(string)</a></li>
+<li><a href="#util_util_inherits_constructor_superconstructor">util.inherits(constructor, superConstructor)</a></li>
 <li><a href="#util_util_inspect_object_options">util.inspect(object[, options])</a><ul>
 <li><a href="#util_customizing_util_inspect_colors">Customizing <code>util.inspect</code> colors</a></li>
 <li><a href="#util_custom_inspect_function_on_objects">Custom <code>inspect()</code> function on Objects</a></li>
 </ul>
 </li>
 <li><a href="#util_util_isarray_object">util.isArray(object)</a></li>
-<li><a href="#util_util_isregexp_object">util.isRegExp(object)</a></li>
+<li><a href="#util_util_isboolean_object">util.isBoolean(object)</a></li>
+<li><a href="#util_util_isbuffer_object">util.isBuffer(object)</a></li>
 <li><a href="#util_util_isdate_object">util.isDate(object)</a></li>
 <li><a href="#util_util_iserror_object">util.isError(object)</a></li>
-<li><a href="#util_util_isboolean_object">util.isBoolean(object)</a></li>
+<li><a href="#util_util_isfunction_object">util.isFunction(object)</a></li>
 <li><a href="#util_util_isnull_object">util.isNull(object)</a></li>
 <li><a href="#util_util_isnullorundefined_object">util.isNullOrUndefined(object)</a></li>
 <li><a href="#util_util_isnumber_object">util.isNumber(object)</a></li>
+<li><a href="#util_util_isobject_object">util.isObject(object)</a></li>
+<li><a href="#util_util_isprimitive_object">util.isPrimitive(object)</a></li>
+<li><a href="#util_util_isregexp_object">util.isRegExp(object)</a></li>
 <li><a href="#util_util_isstring_object">util.isString(object)</a></li>
 <li><a href="#util_util_issymbol_object">util.isSymbol(object)</a></li>
 <li><a href="#util_util_isundefined_object">util.isUndefined(object)</a></li>
-<li><a href="#util_util_isobject_object">util.isObject(object)</a></li>
-<li><a href="#util_util_isfunction_object">util.isFunction(object)</a></li>
-<li><a href="#util_util_isprimitive_object">util.isPrimitive(object)</a></li>
-<li><a href="#util_util_isbuffer_object">util.isBuffer(object)</a></li>
-<li><a href="#util_util_inherits_constructor_superconstructor">util.inherits(constructor, superConstructor)</a></li>
-<li><a href="#util_util_deprecate_function_string">util.deprecate(function, string)</a></li>
-<li><a href="#util_util_debug_string">util.debug(string)</a></li>
-<li><a href="#util_util_error">util.error([...])</a></li>
-<li><a href="#util_util_puts">util.puts([...])</a></li>
+<li><a href="#util_util_log_string">util.log(string)</a></li>
 <li><a href="#util_util_print">util.print([...])</a></li>
 <li><a href="#util_util_pump_readablestream_writablestream_callback">util.pump(readableStream, writableStream[, callback])</a></li>
+<li><a href="#util_util_puts">util.puts([...])</a></li>
 </ul>
 </li>
 </ul>
@@ -124,6 +124,10 @@ programs.  If you find that these functions are lacking for your
 purposes, however, you are encouraged to write your own utilities.  We
 are not interested in any future additions to the <code>util</code> module that
 are unnecessary for node.js&#39;s internal functionality.
+
+</p>
+<h2>util.debug(string)<span><a class="mark" href="#util_util_debug_string" id="util_util_debug_string">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated: use console.error() instead.</pre><p>Deprecated predecessor of <code>console.error</code>.
 
 </p>
 <h2>util.debuglog(section)<span><a class="mark" href="#util_util_debuglog_section" id="util_util_debuglog_section">#</a></span></h2>
@@ -156,6 +160,42 @@ environment variable set, then it will not print anything.
 </p>
 <p>You may separate multiple <code>NODE_DEBUG</code> environment variables with a
 comma.  For example, <code>NODE_DEBUG=fs,net,tls</code>.
+
+</p>
+<h2>util.deprecate(function, string)<span><a class="mark" href="#util_util_deprecate_function_string" id="util_util_deprecate_function_string">#</a></span></h2>
+<p>Marks that a method should not be used any more.
+
+</p>
+<pre><code>var util = require(&#39;util&#39;);
+
+exports.puts = util.deprecate(function() {
+  for (var i = 0, len = arguments.length; i &lt; len; ++i) {
+    process.stdout.write(arguments[i] + &#39;\n&#39;);
+  }
+}, &#39;util.puts: Use console.log instead&#39;);</code></pre>
+<p>It returns a modified function which warns once by default.
+
+</p>
+<p>If <code>--no-deprecation</code> is set then this function is a NO-OP.  Configurable
+at run-time through the <code>process.noDeprecation</code> boolean (only effective
+when set before a module is loaded.)
+
+</p>
+<p>If <code>--trace-deprecation</code> is set, a warning and a stack trace are logged
+to the console the first time the deprecated API is used.  Configurable
+at run-time through the <code>process.traceDeprecation</code> boolean.
+
+</p>
+<p>If <code>--throw-deprecation</code> is set then the application throws an exception
+when the deprecated API is used.  Configurable at run-time through the
+<code>process.throwDeprecation</code> boolean.
+
+</p>
+<p><code>process.throwDeprecation</code> takes precedence over <code>process.traceDeprecation</code>.
+
+</p>
+<h2>util.error([...])<span><a class="mark" href="#util_util_error" id="util_util_error">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated: Use console.error() instead.</pre><p>Deprecated predecessor of <code>console.error</code>.
 
 </p>
 <h2>util.format(format[, ...])<span><a class="mark" href="#util_util_format_format" id="util_util_format_format">#</a></span></h2>
@@ -191,11 +231,38 @@ Each argument is converted to a string with <code>util.inspect()</code>.
 
 </p>
 <pre><code>util.format(1, 2, 3); // &#39;1 2 3&#39;</code></pre>
-<h2>util.log(string)<span><a class="mark" href="#util_util_log_string" id="util_util_log_string">#</a></span></h2>
-<p>Output with timestamp on <code>stdout</code>.
+<h2>util.inherits(constructor, superConstructor)<span><a class="mark" href="#util_util_inherits_constructor_superconstructor" id="util_util_inherits_constructor_superconstructor">#</a></span></h2>
+<p>Inherit the prototype methods from one <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/constructor">constructor</a> into another.  The
+prototype of <code>constructor</code> will be set to a new object created from
+<code>superConstructor</code>.
 
 </p>
-<pre><code>require(&#39;util&#39;).log(&#39;Timestamped message.&#39;);</code></pre>
+<p>As an additional convenience, <code>superConstructor</code> will be accessible
+through the <code>constructor.super_</code> property.
+
+</p>
+<pre><code>var util = require(&quot;util&quot;);
+var EventEmitter = require(&quot;events&quot;);
+
+function MyStream() {
+    EventEmitter.call(this);
+}
+
+util.inherits(MyStream, EventEmitter);
+
+MyStream.prototype.write = function(data) {
+    this.emit(&quot;data&quot;, data);
+}
+
+var stream = new MyStream();
+
+console.log(stream instanceof EventEmitter); // true
+console.log(MyStream.super_ === EventEmitter); // true
+
+stream.on(&quot;data&quot;, function(data) {
+    console.log(&#39;Received data: &quot;&#39; + data + &#39;&quot;&#39;);
+})
+stream.write(&quot;It works!&quot;); // Received data: &quot;It works!&quot;</code></pre>
 <h2>util.inspect(object[, options])<span><a class="mark" href="#util_util_inspect_object_options" id="util_util_inspect_object_options">#</a></span></h2>
 <p>Return a string representation of <code>object</code>, which is useful for debugging.
 
@@ -285,7 +352,7 @@ obj.inspect = function(depth) {
 util.inspect(obj);
   // &quot;{ bar: &#39;baz&#39; }&quot;</code></pre>
 <h2>util.isArray(object)<span><a class="mark" href="#util_util_isarray_object" id="util_util_isarray_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Internal alias for Array.isArray.
+<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Internal alias for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray"><code>Array.isArray</code></a>.
 
 </p>
 <p>Returns <code>true</code> if the given &quot;object&quot; is an <code>Array</code>. <code>false</code> otherwise.
@@ -299,18 +366,33 @@ util.isArray(new Array)
   // true
 util.isArray({})
   // false</code></pre>
-<h2>util.isRegExp(object)<span><a class="mark" href="#util_util_isregexp_object" id="util_util_isregexp_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>RegExp</code>. <code>false</code> otherwise.
+<h2>util.isBoolean(object)<span><a class="mark" href="#util_util_isboolean_object" id="util_util_isboolean_object">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Boolean</code>. <code>false</code> otherwise.
 
 </p>
 <pre><code>var util = require(&#39;util&#39;);
 
-util.isRegExp(/some regexp/)
-  // true
-util.isRegExp(new RegExp(&#39;another regexp&#39;))
-  // true
-util.isRegExp({})
-  // false</code></pre>
+util.isBoolean(1)
+  // false
+util.isBoolean(0)
+  // false
+util.isBoolean(false)
+  // true</code></pre>
+<h2>util.isBuffer(object)<span><a class="mark" href="#util_util_isbuffer_object" id="util_util_isbuffer_object">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Use <code>Buffer.isBuffer()</code> instead.
+
+</p>
+<p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Buffer</code>. <code>false</code> otherwise.
+
+</p>
+<pre><code>var util = require(&#39;util&#39;);
+
+util.isBuffer({ length: 0 })
+  // false
+util.isBuffer([])
+  // false
+util.isBuffer(new Buffer(&#39;hello world&#39;))
+  // true</code></pre>
 <h2>util.isDate(object)<span><a class="mark" href="#util_util_isdate_object" id="util_util_isdate_object">#</a></span></h2>
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Date</code>. <code>false</code> otherwise.
 
@@ -324,7 +406,7 @@ util.isDate(Date())
 util.isDate({})
   // false</code></pre>
 <h2>util.isError(object)<span><a class="mark" href="#util_util_iserror_object" id="util_util_iserror_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is an <code>Error</code>. <code>false</code> otherwise.
+<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is an <a href="errors.html#errors_class_error"><code>Error</code></a>. <code>false</code> otherwise.
 
 </p>
 <pre><code>var util = require(&#39;util&#39;);
@@ -335,17 +417,20 @@ util.isError(new TypeError())
   // true
 util.isError({ name: &#39;Error&#39;, message: &#39;an error occurred&#39; })
   // false</code></pre>
-<h2>util.isBoolean(object)<span><a class="mark" href="#util_util_isboolean_object" id="util_util_isboolean_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Boolean</code>. <code>false</code> otherwise.
+<h2>util.isFunction(object)<span><a class="mark" href="#util_util_isfunction_object" id="util_util_isfunction_object">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Function</code>. <code>false</code> otherwise.
 
 </p>
 <pre><code>var util = require(&#39;util&#39;);
 
-util.isBoolean(1)
+function Foo() {}
+var Bar = function() {};
+
+util.isFunction({})
   // false
-util.isBoolean(0)
-  // false
-util.isBoolean(false)
+util.isFunction(Foo)
+  // true
+util.isFunction(Bar)
   // true</code></pre>
 <h2>util.isNull(object)<span><a class="mark" href="#util_util_isnull_object" id="util_util_isnull_object">#</a></span></h2>
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is strictly <code>null</code>. <code>false</code> otherwise.
@@ -385,6 +470,57 @@ util.isNumber(0)
   // true
 util.isNumber(NaN)
   // true</code></pre>
+<h2>util.isObject(object)<span><a class="mark" href="#util_util_isobject_object" id="util_util_isobject_object">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is strictly an <code>Object</code> <strong>and</strong> not a
+<code>Function</code>. <code>false</code> otherwise.
+
+</p>
+<pre><code>var util = require(&#39;util&#39;);
+
+util.isObject(5)
+  // false
+util.isObject(null)
+  // false
+util.isObject({})
+  // true
+util.isObject(function(){})
+  // false</code></pre>
+<h2>util.isPrimitive(object)<span><a class="mark" href="#util_util_isprimitive_object" id="util_util_isprimitive_object">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a primitive type. <code>false</code> otherwise.
+
+</p>
+<pre><code>var util = require(&#39;util&#39;);
+
+util.isPrimitive(5)
+  // true
+util.isPrimitive(&#39;foo&#39;)
+  // true
+util.isPrimitive(false)
+  // true
+util.isPrimitive(null)
+  // true
+util.isPrimitive(undefined)
+  // true
+util.isPrimitive({})
+  // false
+util.isPrimitive(function() {})
+  // false
+util.isPrimitive(/^$/)
+  // false
+util.isPrimitive(new Date())
+  // false</code></pre>
+<h2>util.isRegExp(object)<span><a class="mark" href="#util_util_isregexp_object" id="util_util_isregexp_object">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>RegExp</code>. <code>false</code> otherwise.
+
+</p>
+<pre><code>var util = require(&#39;util&#39;);
+
+util.isRegExp(/some regexp/)
+  // true
+util.isRegExp(new RegExp(&#39;another regexp&#39;))
+  // true
+util.isRegExp({})
+  // false</code></pre>
 <h2>util.isString(object)<span><a class="mark" href="#util_util_isstring_object" id="util_util_isstring_object">#</a></span></h2>
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>String</code>. <code>false</code> otherwise.
 
@@ -424,156 +560,22 @@ util.isUndefined(foo)
   // true
 util.isUndefined(null)
   // false</code></pre>
-<h2>util.isObject(object)<span><a class="mark" href="#util_util_isobject_object" id="util_util_isobject_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is strictly an <code>Object</code> <strong>and</strong> not a
-<code>Function</code>. <code>false</code> otherwise.
+<h2>util.log(string)<span><a class="mark" href="#util_util_log_string" id="util_util_log_string">#</a></span></h2>
+<p>Output with timestamp on <code>stdout</code>.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
-
-util.isObject(5)
-  // false
-util.isObject(null)
-  // false
-util.isObject({})
-  // true
-util.isObject(function(){})
-  // false</code></pre>
-<h2>util.isFunction(object)<span><a class="mark" href="#util_util_isfunction_object" id="util_util_isfunction_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Function</code>. <code>false</code> otherwise.
+<pre><code>require(&#39;util&#39;).log(&#39;Timestamped message.&#39;);</code></pre>
+<h2>util.print([...])<span><a class="mark" href="#util_util_print" id="util_util_print">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated: Use <code>console.log</code> instead.</pre><p>Deprecated predecessor of <code>console.log</code>.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
-
-function Foo() {}
-var Bar = function() {};
-
-util.isFunction({})
-  // false
-util.isFunction(Foo)
-  // true
-util.isFunction(Bar)
-  // true</code></pre>
-<h2>util.isPrimitive(object)<span><a class="mark" href="#util_util_isprimitive_object" id="util_util_isprimitive_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a primitive type. <code>false</code> otherwise.
-
-</p>
-<pre><code>var util = require(&#39;util&#39;);
-
-util.isPrimitive(5)
-  // true
-util.isPrimitive(&#39;foo&#39;)
-  // true
-util.isPrimitive(false)
-  // true
-util.isPrimitive(null)
-  // true
-util.isPrimitive(undefined)
-  // true
-util.isPrimitive({})
-  // false
-util.isPrimitive(function() {})
-  // false
-util.isPrimitive(/^$/)
-  // false
-util.isPrimitive(new Date())
-  // false</code></pre>
-<h2>util.isBuffer(object)<span><a class="mark" href="#util_util_isbuffer_object" id="util_util_isbuffer_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Buffer</code>. <code>false</code> otherwise.
-
-</p>
-<pre><code>var util = require(&#39;util&#39;);
-
-util.isBuffer({ length: 0 })
-  // false
-util.isBuffer([])
-  // false
-util.isBuffer(new Buffer(&#39;hello world&#39;))
-  // true</code></pre>
-<h2>util.inherits(constructor, superConstructor)<span><a class="mark" href="#util_util_inherits_constructor_superconstructor" id="util_util_inherits_constructor_superconstructor">#</a></span></h2>
-<p>Inherit the prototype methods from one
-<a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/constructor">constructor</a>
-into another.  The prototype of <code>constructor</code> will be set to a new
-object created from <code>superConstructor</code>.
-
-</p>
-<p>As an additional convenience, <code>superConstructor</code> will be accessible
-through the <code>constructor.super_</code> property.
-
-</p>
-<pre><code>var util = require(&quot;util&quot;);
-var EventEmitter = require(&quot;events&quot;);
-
-function MyStream() {
-    EventEmitter.call(this);
-}
-
-util.inherits(MyStream, EventEmitter);
-
-MyStream.prototype.write = function(data) {
-    this.emit(&quot;data&quot;, data);
-}
-
-var stream = new MyStream();
-
-console.log(stream instanceof EventEmitter); // true
-console.log(MyStream.super_ === EventEmitter); // true
-
-stream.on(&quot;data&quot;, function(data) {
-    console.log(&#39;Received data: &quot;&#39; + data + &#39;&quot;&#39;);
-})
-stream.write(&quot;It works!&quot;); // Received data: &quot;It works!&quot;</code></pre>
-<h2>util.deprecate(function, string)<span><a class="mark" href="#util_util_deprecate_function_string" id="util_util_deprecate_function_string">#</a></span></h2>
-<p>Marks that a method should not be used any more.
-
-</p>
-<pre><code>var util = require(&#39;util&#39;);
-
-exports.puts = util.deprecate(function() {
-  for (var i = 0, len = arguments.length; i &lt; len; ++i) {
-    process.stdout.write(arguments[i] + &#39;\n&#39;);
-  }
-}, &#39;util.puts: Use console.log instead&#39;);</code></pre>
-<p>It returns a modified function which warns once by default.
-
-</p>
-<p>If <code>--no-deprecation</code> is set then this function is a NO-OP.  Configurable
-at run-time through the <code>process.noDeprecation</code> boolean (only effective
-when set before a module is loaded.)
-
-</p>
-<p>If <code>--trace-deprecation</code> is set, a warning and a stack trace are logged
-to the console the first time the deprecated API is used.  Configurable
-at run-time through the <code>process.traceDeprecation</code> boolean.
-
-</p>
-<p>If <code>--throw-deprecation</code> is set then the application throws an exception
-when the deprecated API is used.  Configurable at run-time through the
-<code>process.throwDeprecation</code> boolean.
-
-</p>
-<p><code>process.throwDeprecation</code> takes precedence over <code>process.traceDeprecation</code>.
-
-</p>
-<h2>util.debug(string)<span><a class="mark" href="#util_util_debug_string" id="util_util_debug_string">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: use console.error() instead.</pre><p>Deprecated predecessor of <code>console.error</code>.
-
-</p>
-<h2>util.error([...])<span><a class="mark" href="#util_util_error" id="util_util_error">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use console.error() instead.</pre><p>Deprecated predecessor of <code>console.error</code>.
+<h2>util.pump(readableStream, writableStream[, callback])<span><a class="mark" href="#util_util_pump_readablestream_writablestream_callback" id="util_util_pump_readablestream_writablestream_callback">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated: Use readableStream.pipe(writableStream)</pre><p>Deprecated predecessor of <code>stream.pipe()</code>.
 
 </p>
 <h2>util.puts([...])<span><a class="mark" href="#util_util_puts" id="util_util_puts">#</a></span></h2>
 <pre class="api_stability_0">Stability: 0 - Deprecated: Use console.log() instead.</pre><p>Deprecated predecessor of <code>console.log</code>.
 
-</p>
-<h2>util.print([...])<span><a class="mark" href="#util_util_print" id="util_util_print">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <code>console.log</code> instead.</pre><p>Deprecated predecessor of <code>console.log</code>.
-
-
-</p>
-<h2>util.pump(readableStream, writableStream[, callback])<span><a class="mark" href="#util_util_pump_readablestream_writablestream_callback" id="util_util_pump_readablestream_writablestream_callback">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use readableStream.pipe(writableStream)</pre><p>Deprecated predecessor of <code>stream.pipe()</code>.
 </p>
 
       </div>

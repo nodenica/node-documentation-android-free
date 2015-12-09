@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Debugger Node.js v5.0.0 Manual &amp; Documentation</title>
+  <title>Debugger Node.js v5.2.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="debugger" class="interior">
       <header>
-        <h1>Node.js v5.0.0 Documentation</h1>
+        <h1>Node.js v5.2.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -97,9 +97,8 @@
 <pre class="api_stability_2">Stability: 2 - Stable</pre><!-- type=misc -->
 
 <p>V8 comes with an extensive debugger which is accessible out-of-process via a
-simple <a href="http://code.google.com/p/v8/wiki/DebuggerProtocol">TCP protocol</a>.
-Node.js has a built-in client for this debugger. To use this, start Node.js with
-the <code>debug</code> argument; a prompt will appear:
+simple <a href="http://code.google.com/p/v8/wiki/DebuggerProtocol">TCP protocol</a>. Node.js has a built-in client for this debugger. To
+use this, start Node.js with the <code>debug</code> argument; a prompt will appear:
 
 </p>
 <pre><code>% node debug myscript.js
@@ -237,6 +236,7 @@ after)</li>
 <li><code>watchers</code> - List all watchers and their values (automatically listed on each
 breakpoint)</li>
 <li><code>repl</code> - Open debugger&#39;s repl for evaluation in debugging script&#39;s context</li>
+<li><code>exec expr</code> - Execute an expression in debugging script&#39;s context</li>
 </div></ul>
 <h3>Execution control<span><a class="mark" href="#debugger_execution_control" id="debugger_execution_control">#</a></span></h3>
 <div class="signature"><ul>

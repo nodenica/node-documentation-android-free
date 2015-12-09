@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Zlib Node.js v5.0.0 Manual &amp; Documentation</title>
+  <title>Zlib Node.js v5.2.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="zlib" class="interior">
       <header>
-        <h1>Node.js v5.0.0 Documentation</h1>
+        <h1>Node.js v5.2.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -77,44 +77,46 @@
         <ul>
 <li><a href="#zlib_zlib">Zlib</a><ul>
 <li><a href="#zlib_examples">Examples</a></li>
-<li><a href="#zlib_zlib_creategzip_options">zlib.createGzip([options])</a></li>
-<li><a href="#zlib_zlib_creategunzip_options">zlib.createGunzip([options])</a></li>
-<li><a href="#zlib_zlib_createdeflate_options">zlib.createDeflate([options])</a></li>
-<li><a href="#zlib_zlib_createinflate_options">zlib.createInflate([options])</a></li>
-<li><a href="#zlib_zlib_createdeflateraw_options">zlib.createDeflateRaw([options])</a></li>
-<li><a href="#zlib_zlib_createinflateraw_options">zlib.createInflateRaw([options])</a></li>
-<li><a href="#zlib_zlib_createunzip_options">zlib.createUnzip([options])</a></li>
+<li><a href="#zlib_memory_usage_tuning">Memory Usage Tuning</a></li>
+<li><a href="#zlib_constants">Constants</a></li>
+<li><a href="#zlib_class_options">Class Options</a></li>
+<li><a href="#zlib_class_zlib_deflate">Class: zlib.Deflate</a></li>
+<li><a href="#zlib_class_zlib_deflateraw">Class: zlib.DeflateRaw</a></li>
+<li><a href="#zlib_class_zlib_gunzip">Class: zlib.Gunzip</a></li>
+<li><a href="#zlib_class_zlib_gzip">Class: zlib.Gzip</a></li>
+<li><a href="#zlib_class_zlib_inflate">Class: zlib.Inflate</a></li>
+<li><a href="#zlib_class_zlib_inflateraw">Class: zlib.InflateRaw</a></li>
+<li><a href="#zlib_class_zlib_unzip">Class: zlib.Unzip</a></li>
 <li><a href="#zlib_class_zlib_zlib">Class: zlib.Zlib</a><ul>
 <li><a href="#zlib_zlib_flush_kind_callback">zlib.flush([kind], callback)</a></li>
 <li><a href="#zlib_zlib_params_level_strategy_callback">zlib.params(level, strategy, callback)</a></li>
 <li><a href="#zlib_zlib_reset">zlib.reset()</a></li>
 </ul>
 </li>
-<li><a href="#zlib_class_zlib_gzip">Class: zlib.Gzip</a></li>
-<li><a href="#zlib_class_zlib_gunzip">Class: zlib.Gunzip</a></li>
-<li><a href="#zlib_class_zlib_deflate">Class: zlib.Deflate</a></li>
-<li><a href="#zlib_class_zlib_inflate">Class: zlib.Inflate</a></li>
-<li><a href="#zlib_class_zlib_deflateraw">Class: zlib.DeflateRaw</a></li>
-<li><a href="#zlib_class_zlib_inflateraw">Class: zlib.InflateRaw</a></li>
-<li><a href="#zlib_class_zlib_unzip">Class: zlib.Unzip</a></li>
-<li><a href="#zlib_convenience_methods">Convenience Methods</a></li>
+<li><a href="#zlib_zlib_createdeflate_options">zlib.createDeflate([options])</a></li>
+<li><a href="#zlib_zlib_createdeflateraw_options">zlib.createDeflateRaw([options])</a></li>
+<li><a href="#zlib_zlib_creategunzip_options">zlib.createGunzip([options])</a></li>
+<li><a href="#zlib_zlib_creategzip_options">zlib.createGzip([options])</a></li>
+<li><a href="#zlib_zlib_createinflate_options">zlib.createInflate([options])</a></li>
+<li><a href="#zlib_zlib_createinflateraw_options">zlib.createInflateRaw([options])</a></li>
+<li><a href="#zlib_zlib_createunzip_options">zlib.createUnzip([options])</a></li>
+<li><a href="#zlib_convenience_methods">Convenience Methods</a><ul>
 <li><a href="#zlib_zlib_deflate_buf_options_callback">zlib.deflate(buf[, options], callback)</a></li>
-<li><a href="#zlib_zlib_deflatesync_buf_options">zlib.deflateSync(buf[, options])</a></li>
 <li><a href="#zlib_zlib_deflateraw_buf_options_callback">zlib.deflateRaw(buf[, options], callback)</a></li>
 <li><a href="#zlib_zlib_deflaterawsync_buf_options">zlib.deflateRawSync(buf[, options])</a></li>
-<li><a href="#zlib_zlib_gzip_buf_options_callback">zlib.gzip(buf[, options], callback)</a></li>
-<li><a href="#zlib_zlib_gzipsync_buf_options">zlib.gzipSync(buf[, options])</a></li>
+<li><a href="#zlib_zlib_deflatesync_buf_options">zlib.deflateSync(buf[, options])</a></li>
 <li><a href="#zlib_zlib_gunzip_buf_options_callback">zlib.gunzip(buf[, options], callback)</a></li>
 <li><a href="#zlib_zlib_gunzipsync_buf_options">zlib.gunzipSync(buf[, options])</a></li>
+<li><a href="#zlib_zlib_gzip_buf_options_callback">zlib.gzip(buf[, options], callback)</a></li>
+<li><a href="#zlib_zlib_gzipsync_buf_options">zlib.gzipSync(buf[, options])</a></li>
 <li><a href="#zlib_zlib_inflate_buf_options_callback">zlib.inflate(buf[, options], callback)</a></li>
-<li><a href="#zlib_zlib_inflatesync_buf_options">zlib.inflateSync(buf[, options])</a></li>
 <li><a href="#zlib_zlib_inflateraw_buf_options_callback">zlib.inflateRaw(buf[, options], callback)</a></li>
 <li><a href="#zlib_zlib_inflaterawsync_buf_options">zlib.inflateRawSync(buf[, options])</a></li>
+<li><a href="#zlib_zlib_inflatesync_buf_options">zlib.inflateSync(buf[, options])</a></li>
 <li><a href="#zlib_zlib_unzip_buf_options_callback">zlib.unzip(buf[, options], callback)</a></li>
 <li><a href="#zlib_zlib_unzipsync_buf_options">zlib.unzipSync(buf[, options])</a></li>
-<li><a href="#zlib_options">Options</a></li>
-<li><a href="#zlib_memory_usage_tuning">Memory Usage Tuning</a></li>
-<li><a href="#zlib_constants">Constants</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -160,18 +162,14 @@ zlib.unzip(buffer, function(err, buffer) {
     console.log(buffer.toString());
   }
 });</code></pre>
-<p>To use this module in an HTTP client or server, use the
-<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3">accept-encoding</a>
-on requests, and the
-<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11">content-encoding</a>
-header on responses.
+<p>To use this module in an HTTP client or server, use the <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3">accept-encoding</a>
+on requests, and the <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11">content-encoding</a> header on responses.
 
 </p>
 <p><strong>Note: these examples are drastically simplified to show
 the basic concept.</strong>  Zlib encoding can be expensive, and the results
-ought to be cached.  See <a href="#zlib_memory_usage_tuning">Memory Usage Tuning</a>
-below for more information on the speed/memory/compression
-tradeoffs involved in zlib usage.
+ought to be cached.  See <a href="#zlib_memory_usage_tuning">Memory Usage Tuning</a> below for more information
+on the speed/memory/compression tradeoffs involved in zlib usage.
 
 </p>
 <pre><code>// client request example
@@ -225,165 +223,6 @@ http.createServer(function(request, response) {
     raw.pipe(response);
   }
 }).listen(1337);</code></pre>
-<h2>zlib.createGzip([options])<span><a class="mark" href="#zlib_zlib_creategzip_options" id="zlib_zlib_creategzip_options">#</a></span></h2>
-<p>Returns a new <a href="#zlib_class_zlib_gzip">Gzip</a> object with an
-<a href="#zlib_options">options</a>.
-
-</p>
-<h2>zlib.createGunzip([options])<span><a class="mark" href="#zlib_zlib_creategunzip_options" id="zlib_zlib_creategunzip_options">#</a></span></h2>
-<p>Returns a new <a href="#zlib_class_zlib_gunzip">Gunzip</a> object with an
-<a href="#zlib_options">options</a>.
-
-</p>
-<h2>zlib.createDeflate([options])<span><a class="mark" href="#zlib_zlib_createdeflate_options" id="zlib_zlib_createdeflate_options">#</a></span></h2>
-<p>Returns a new <a href="#zlib_class_zlib_deflate">Deflate</a> object with an
-<a href="#zlib_options">options</a>.
-
-</p>
-<h2>zlib.createInflate([options])<span><a class="mark" href="#zlib_zlib_createinflate_options" id="zlib_zlib_createinflate_options">#</a></span></h2>
-<p>Returns a new <a href="#zlib_class_zlib_inflate">Inflate</a> object with an
-<a href="#zlib_options">options</a>.
-
-</p>
-<h2>zlib.createDeflateRaw([options])<span><a class="mark" href="#zlib_zlib_createdeflateraw_options" id="zlib_zlib_createdeflateraw_options">#</a></span></h2>
-<p>Returns a new <a href="#zlib_class_zlib_deflateraw">DeflateRaw</a> object with an
-<a href="#zlib_options">options</a>.
-
-</p>
-<h2>zlib.createInflateRaw([options])<span><a class="mark" href="#zlib_zlib_createinflateraw_options" id="zlib_zlib_createinflateraw_options">#</a></span></h2>
-<p>Returns a new <a href="#zlib_class_zlib_inflateraw">InflateRaw</a> object with an
-<a href="#zlib_options">options</a>.
-
-</p>
-<h2>zlib.createUnzip([options])<span><a class="mark" href="#zlib_zlib_createunzip_options" id="zlib_zlib_createunzip_options">#</a></span></h2>
-<p>Returns a new <a href="#zlib_class_zlib_unzip">Unzip</a> object with an
-<a href="#zlib_options">options</a>.
-
-
-</p>
-<h2>Class: zlib.Zlib<span><a class="mark" href="#zlib_class_zlib_zlib" id="zlib_class_zlib_zlib">#</a></span></h2>
-<p>Not exported by the <code>zlib</code> module. It is documented here because it is the base
-class of the compressor/decompressor classes.
-
-</p>
-<h3>zlib.flush([kind], callback)<span><a class="mark" href="#zlib_zlib_flush_kind_callback" id="zlib_zlib_flush_kind_callback">#</a></span></h3>
-<p><code>kind</code> defaults to <code>zlib.Z_FULL_FLUSH</code>.
-
-</p>
-<p>Flush pending data. Don&#39;t call this frivolously, premature flushes negatively
-impact the effectiveness of the compression algorithm.
-
-</p>
-<h3>zlib.params(level, strategy, callback)<span><a class="mark" href="#zlib_zlib_params_level_strategy_callback" id="zlib_zlib_params_level_strategy_callback">#</a></span></h3>
-<p>Dynamically update the compression level and compression strategy.
-Only applicable to deflate algorithm.
-
-</p>
-<h3>zlib.reset()<span><a class="mark" href="#zlib_zlib_reset" id="zlib_zlib_reset">#</a></span></h3>
-<p>Reset the compressor/decompressor to factory defaults. Only applicable to
-the inflate and deflate algorithms.
-
-</p>
-<h2>Class: zlib.Gzip<span><a class="mark" href="#zlib_class_zlib_gzip" id="zlib_class_zlib_gzip">#</a></span></h2>
-<p>Compress data using gzip.
-
-</p>
-<h2>Class: zlib.Gunzip<span><a class="mark" href="#zlib_class_zlib_gunzip" id="zlib_class_zlib_gunzip">#</a></span></h2>
-<p>Decompress a gzip stream.
-
-</p>
-<h2>Class: zlib.Deflate<span><a class="mark" href="#zlib_class_zlib_deflate" id="zlib_class_zlib_deflate">#</a></span></h2>
-<p>Compress data using deflate.
-
-</p>
-<h2>Class: zlib.Inflate<span><a class="mark" href="#zlib_class_zlib_inflate" id="zlib_class_zlib_inflate">#</a></span></h2>
-<p>Decompress a deflate stream.
-
-</p>
-<h2>Class: zlib.DeflateRaw<span><a class="mark" href="#zlib_class_zlib_deflateraw" id="zlib_class_zlib_deflateraw">#</a></span></h2>
-<p>Compress data using deflate, and do not append a zlib header.
-
-</p>
-<h2>Class: zlib.InflateRaw<span><a class="mark" href="#zlib_class_zlib_inflateraw" id="zlib_class_zlib_inflateraw">#</a></span></h2>
-<p>Decompress a raw deflate stream.
-
-</p>
-<h2>Class: zlib.Unzip<span><a class="mark" href="#zlib_class_zlib_unzip" id="zlib_class_zlib_unzip">#</a></span></h2>
-<p>Decompress either a Gzip- or Deflate-compressed stream by auto-detecting
-the header.
-
-</p>
-<h2>Convenience Methods<span><a class="mark" href="#zlib_convenience_methods" id="zlib_convenience_methods">#</a></span></h2>
-<!--type=misc-->
-
-<p>All of these take a string or buffer as the first argument, an optional second
-argument to supply options to the zlib classes and will call the supplied
-callback with <code>callback(error, result)</code>.
-
-</p>
-<p>Every method has a <code>*Sync</code> counterpart, which accept the same arguments, but
-without a callback.
-
-</p>
-<h2>zlib.deflate(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_deflate_buf_options_callback" id="zlib_zlib_deflate_buf_options_callback">#</a></span></h2>
-<h2>zlib.deflateSync(buf[, options])<span><a class="mark" href="#zlib_zlib_deflatesync_buf_options" id="zlib_zlib_deflatesync_buf_options">#</a></span></h2>
-<p>Compress a string with Deflate.
-
-</p>
-<h2>zlib.deflateRaw(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_deflateraw_buf_options_callback" id="zlib_zlib_deflateraw_buf_options_callback">#</a></span></h2>
-<h2>zlib.deflateRawSync(buf[, options])<span><a class="mark" href="#zlib_zlib_deflaterawsync_buf_options" id="zlib_zlib_deflaterawsync_buf_options">#</a></span></h2>
-<p>Compress a string with DeflateRaw.
-
-</p>
-<h2>zlib.gzip(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_gzip_buf_options_callback" id="zlib_zlib_gzip_buf_options_callback">#</a></span></h2>
-<h2>zlib.gzipSync(buf[, options])<span><a class="mark" href="#zlib_zlib_gzipsync_buf_options" id="zlib_zlib_gzipsync_buf_options">#</a></span></h2>
-<p>Compress a string with Gzip.
-
-</p>
-<h2>zlib.gunzip(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_gunzip_buf_options_callback" id="zlib_zlib_gunzip_buf_options_callback">#</a></span></h2>
-<h2>zlib.gunzipSync(buf[, options])<span><a class="mark" href="#zlib_zlib_gunzipsync_buf_options" id="zlib_zlib_gunzipsync_buf_options">#</a></span></h2>
-<p>Decompress a raw Buffer with Gunzip.
-
-</p>
-<h2>zlib.inflate(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_inflate_buf_options_callback" id="zlib_zlib_inflate_buf_options_callback">#</a></span></h2>
-<h2>zlib.inflateSync(buf[, options])<span><a class="mark" href="#zlib_zlib_inflatesync_buf_options" id="zlib_zlib_inflatesync_buf_options">#</a></span></h2>
-<p>Decompress a raw Buffer with Inflate.
-
-</p>
-<h2>zlib.inflateRaw(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_inflateraw_buf_options_callback" id="zlib_zlib_inflateraw_buf_options_callback">#</a></span></h2>
-<h2>zlib.inflateRawSync(buf[, options])<span><a class="mark" href="#zlib_zlib_inflaterawsync_buf_options" id="zlib_zlib_inflaterawsync_buf_options">#</a></span></h2>
-<p>Decompress a raw Buffer with InflateRaw.
-
-</p>
-<h2>zlib.unzip(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_unzip_buf_options_callback" id="zlib_zlib_unzip_buf_options_callback">#</a></span></h2>
-<h2>zlib.unzipSync(buf[, options])<span><a class="mark" href="#zlib_zlib_unzipsync_buf_options" id="zlib_zlib_unzipsync_buf_options">#</a></span></h2>
-<p>Decompress a raw Buffer with Unzip.
-
-</p>
-<h2>Options<span><a class="mark" href="#zlib_options" id="zlib_options">#</a></span></h2>
-<!--type=misc-->
-
-<p>Each class takes an options object.  All options are optional.
-
-</p>
-<p>Note that some options are only relevant when compressing, and are
-ignored by the decompression classes.
-
-</p>
-<ul>
-<li>flush (default: <code>zlib.Z_NO_FLUSH</code>)</li>
-<li>chunkSize (default: 16*1024)</li>
-<li>windowBits</li>
-<li>level (compression only)</li>
-<li>memLevel (compression only)</li>
-<li>strategy (compression only)</li>
-<li>dictionary (deflate/inflate only, empty dictionary by default)</li>
-</ul>
-<p>See the description of <code>deflateInit2</code> and <code>inflateInit2</code> at
-</p>
-<p><a href="http://zlib.net/manual.html#Advanced">http://zlib.net/manual.html#Advanced</a> for more information on these.
-
-</p>
 <h2>Memory Usage Tuning<span><a class="mark" href="#zlib_memory_usage_tuning" id="zlib_memory_usage_tuning">#</a></span></h2>
 <!--type=misc-->
 
@@ -437,10 +276,9 @@ speed, at the cost of memory usage.
 <code>require(&#39;zlib&#39;)</code>.
 In the normal course of operations, you will not need to ever set any of
 these.  They are documented here so that their presence is not
-surprising.  This section is taken almost directly from the <a href="http://zlib.net/manual.html#Constants">zlib
-documentation</a>.  See
-</p>
-<p><a href="http://zlib.net/manual.html#Constants">http://zlib.net/manual.html#Constants</a> for more details.
+surprising.  This section is taken almost directly from the
+<a href="http://zlib.net/manual.html#Constants">zlib documentation</a>.  See <a href="http://zlib.net/manual.html#Constants">http://zlib.net/manual.html#Constants</a> for more
+details.
 
 </p>
 <p>Allowed flush values.
@@ -511,6 +349,163 @@ events.
 <ul>
 <li><code>zlib.Z_NULL</code></li>
 </ul>
+<h2>Class Options<span><a class="mark" href="#zlib_class_options" id="zlib_class_options">#</a></span></h2>
+<!--type=misc-->
+
+<p>Each class takes an options object.  All options are optional.
+
+</p>
+<p>Note that some options are only relevant when compressing, and are
+ignored by the decompression classes.
+
+</p>
+<ul>
+<li>flush (default: <code>zlib.Z_NO_FLUSH</code>)</li>
+<li>chunkSize (default: 16*1024)</li>
+<li>windowBits</li>
+<li>level (compression only)</li>
+<li>memLevel (compression only)</li>
+<li>strategy (compression only)</li>
+<li>dictionary (deflate/inflate only, empty dictionary by default)</li>
+</ul>
+<p>See the description of <code>deflateInit2</code> and <code>inflateInit2</code> at
+</p>
+<p><a href="http://zlib.net/manual.html#Advanced">http://zlib.net/manual.html#Advanced</a> for more information on these.
+
+</p>
+<h2>Class: zlib.Deflate<span><a class="mark" href="#zlib_class_zlib_deflate" id="zlib_class_zlib_deflate">#</a></span></h2>
+<p>Compress data using deflate.
+
+</p>
+<h2>Class: zlib.DeflateRaw<span><a class="mark" href="#zlib_class_zlib_deflateraw" id="zlib_class_zlib_deflateraw">#</a></span></h2>
+<p>Compress data using deflate, and do not append a zlib header.
+
+</p>
+<h2>Class: zlib.Gunzip<span><a class="mark" href="#zlib_class_zlib_gunzip" id="zlib_class_zlib_gunzip">#</a></span></h2>
+<p>Decompress a gzip stream.
+
+</p>
+<h2>Class: zlib.Gzip<span><a class="mark" href="#zlib_class_zlib_gzip" id="zlib_class_zlib_gzip">#</a></span></h2>
+<p>Compress data using gzip.
+
+</p>
+<h2>Class: zlib.Inflate<span><a class="mark" href="#zlib_class_zlib_inflate" id="zlib_class_zlib_inflate">#</a></span></h2>
+<p>Decompress a deflate stream.
+
+</p>
+<h2>Class: zlib.InflateRaw<span><a class="mark" href="#zlib_class_zlib_inflateraw" id="zlib_class_zlib_inflateraw">#</a></span></h2>
+<p>Decompress a raw deflate stream.
+
+</p>
+<h2>Class: zlib.Unzip<span><a class="mark" href="#zlib_class_zlib_unzip" id="zlib_class_zlib_unzip">#</a></span></h2>
+<p>Decompress either a Gzip- or Deflate-compressed stream by auto-detecting
+the header.
+
+</p>
+<h2>Class: zlib.Zlib<span><a class="mark" href="#zlib_class_zlib_zlib" id="zlib_class_zlib_zlib">#</a></span></h2>
+<p>Not exported by the <code>zlib</code> module. It is documented here because it is the base
+class of the compressor/decompressor classes.
+
+</p>
+<h3>zlib.flush([kind], callback)<span><a class="mark" href="#zlib_zlib_flush_kind_callback" id="zlib_zlib_flush_kind_callback">#</a></span></h3>
+<p><code>kind</code> defaults to <code>zlib.Z_FULL_FLUSH</code>.
+
+</p>
+<p>Flush pending data. Don&#39;t call this frivolously, premature flushes negatively
+impact the effectiveness of the compression algorithm.
+
+</p>
+<h3>zlib.params(level, strategy, callback)<span><a class="mark" href="#zlib_zlib_params_level_strategy_callback" id="zlib_zlib_params_level_strategy_callback">#</a></span></h3>
+<p>Dynamically update the compression level and compression strategy.
+Only applicable to deflate algorithm.
+
+</p>
+<h3>zlib.reset()<span><a class="mark" href="#zlib_zlib_reset" id="zlib_zlib_reset">#</a></span></h3>
+<p>Reset the compressor/decompressor to factory defaults. Only applicable to
+the inflate and deflate algorithms.
+
+</p>
+<h2>zlib.createDeflate(<a href="#zlib_class_options">options</a>)<span><a class="mark" href="#zlib_zlib_createdeflate_options" id="zlib_zlib_createdeflate_options">#</a></span></h2>
+<p>Returns a new <a href="#zlib_class_zlib_deflate">Deflate</a> object with an <a href="#zlib_class_options">options</a>.
+
+</p>
+<h2>zlib.createDeflateRaw(<a href="#zlib_class_options">options</a>)<span><a class="mark" href="#zlib_zlib_createdeflateraw_options" id="zlib_zlib_createdeflateraw_options">#</a></span></h2>
+<p>Returns a new <a href="#zlib_class_zlib_deflateraw">DeflateRaw</a> object with an <a href="#zlib_class_options">options</a>.
+
+</p>
+<h2>zlib.createGunzip(<a href="#zlib_class_options">options</a>)<span><a class="mark" href="#zlib_zlib_creategunzip_options" id="zlib_zlib_creategunzip_options">#</a></span></h2>
+<p>Returns a new <a href="#zlib_class_zlib_gunzip">Gunzip</a> object with an <a href="#zlib_class_options">options</a>.
+
+</p>
+<h2>zlib.createGzip(<a href="#zlib_class_options">options</a>)<span><a class="mark" href="#zlib_zlib_creategzip_options" id="zlib_zlib_creategzip_options">#</a></span></h2>
+<p>Returns a new <a href="#zlib_class_zlib_gzip">Gzip</a> object with an <a href="#zlib_class_options">options</a>.
+
+</p>
+<h2>zlib.createInflate(<a href="#zlib_class_options">options</a>)<span><a class="mark" href="#zlib_zlib_createinflate_options" id="zlib_zlib_createinflate_options">#</a></span></h2>
+<p>Returns a new <a href="#zlib_class_zlib_inflate">Inflate</a> object with an <a href="#zlib_class_options">options</a>.
+
+</p>
+<h2>zlib.createInflateRaw(<a href="#zlib_class_options">options</a>)<span><a class="mark" href="#zlib_zlib_createinflateraw_options" id="zlib_zlib_createinflateraw_options">#</a></span></h2>
+<p>Returns a new <a href="#zlib_class_zlib_inflateraw">InflateRaw</a> object with an <a href="#zlib_class_options">options</a>.
+
+</p>
+<h2>zlib.createUnzip(<a href="#zlib_class_options">options</a>)<span><a class="mark" href="#zlib_zlib_createunzip_options" id="zlib_zlib_createunzip_options">#</a></span></h2>
+<p>Returns a new <a href="#zlib_class_zlib_unzip">Unzip</a> object with an <a href="#zlib_class_options">options</a>.
+
+</p>
+<h2>Convenience Methods<span><a class="mark" href="#zlib_convenience_methods" id="zlib_convenience_methods">#</a></span></h2>
+<!--type=misc-->
+
+<p>All of these take a string or buffer as the first argument, an optional second
+argument to supply options to the zlib classes and will call the supplied
+callback with <code>callback(error, result)</code>.
+
+</p>
+<p>Every method has a <code>*Sync</code> counterpart, which accept the same arguments, but
+without a callback.
+
+</p>
+<h3>zlib.deflate(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_deflate_buf_options_callback" id="zlib_zlib_deflate_buf_options_callback">#</a></span></h3>
+<p>Compress a string with Deflate.
+
+</p>
+<h3>zlib.deflateRaw(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_deflateraw_buf_options_callback" id="zlib_zlib_deflateraw_buf_options_callback">#</a></span></h3>
+<h3>zlib.deflateRawSync(buf[, options])<span><a class="mark" href="#zlib_zlib_deflaterawsync_buf_options" id="zlib_zlib_deflaterawsync_buf_options">#</a></span></h3>
+<p>Compress a string with DeflateRaw.
+
+</p>
+<h3>zlib.deflateSync(buf[, options])<span><a class="mark" href="#zlib_zlib_deflatesync_buf_options" id="zlib_zlib_deflatesync_buf_options">#</a></span></h3>
+<p>Compress a string with Deflate.
+
+</p>
+<h3>zlib.gunzip(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_gunzip_buf_options_callback" id="zlib_zlib_gunzip_buf_options_callback">#</a></span></h3>
+<h3>zlib.gunzipSync(buf[, options])<span><a class="mark" href="#zlib_zlib_gunzipsync_buf_options" id="zlib_zlib_gunzipsync_buf_options">#</a></span></h3>
+<p>Decompress a raw Buffer with Gunzip.
+
+</p>
+<h3>zlib.gzip(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_gzip_buf_options_callback" id="zlib_zlib_gzip_buf_options_callback">#</a></span></h3>
+<h3>zlib.gzipSync(buf[, options])<span><a class="mark" href="#zlib_zlib_gzipsync_buf_options" id="zlib_zlib_gzipsync_buf_options">#</a></span></h3>
+<p>Compress a string with Gzip.
+
+</p>
+<h3>zlib.inflate(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_inflate_buf_options_callback" id="zlib_zlib_inflate_buf_options_callback">#</a></span></h3>
+<p>Decompress a raw Buffer with Inflate.
+
+</p>
+<h3>zlib.inflateRaw(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_inflateraw_buf_options_callback" id="zlib_zlib_inflateraw_buf_options_callback">#</a></span></h3>
+<h3>zlib.inflateRawSync(buf[, options])<span><a class="mark" href="#zlib_zlib_inflaterawsync_buf_options" id="zlib_zlib_inflaterawsync_buf_options">#</a></span></h3>
+<p>Decompress a raw Buffer with InflateRaw.
+
+</p>
+<h3>zlib.inflateSync(buf[, options])<span><a class="mark" href="#zlib_zlib_inflatesync_buf_options" id="zlib_zlib_inflatesync_buf_options">#</a></span></h3>
+<p>Decompress a raw Buffer with Inflate.
+
+</p>
+<h3>zlib.unzip(buf[, options], callback)<span><a class="mark" href="#zlib_zlib_unzip_buf_options_callback" id="zlib_zlib_unzip_buf_options_callback">#</a></span></h3>
+<h3>zlib.unzipSync(buf[, options])<span><a class="mark" href="#zlib_zlib_unzipsync_buf_options" id="zlib_zlib_unzipsync_buf_options">#</a></span></h3>
+<p>Decompress a raw Buffer with Unzip.
+
+</p>
 
       </div>
     </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Addons Node.js v5.0.0 Manual &amp; Documentation</title>
+  <title>Addons Node.js v5.2.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="addons" class="interior">
       <header>
-        <h1>Node.js v5.0.0 Documentation</h1>
+        <h1>Node.js v5.2.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -108,14 +108,12 @@ knowledge of several libraries:
 <li><p>V8 JavaScript, a C++ library. Used for interfacing with JavaScript:
 creating objects, calling functions, etc.  Documented mostly in the
 <code>v8.h</code> header file (<code>deps/v8/include/v8.h</code> in the Node.js source
-tree), which is also available
-<a href="https://v8docs.nodesource.com/">online</a>.</p>
+tree), which is also available <a href="https://v8docs.nodesource.com/">online</a>.</p>
 </li>
-<li><p><a href="https://github.com/libuv/libuv">libuv</a>, C event loop library.
-Anytime one needs to wait for a file descriptor to become readable,
-wait for a timer, or wait for a signal to be received one will need
-to interface with libuv. That is, if you perform any I/O, libuv will
-need to be used.</p>
+<li><p><a href="https://github.com/libuv/libuv">libuv</a>, C event loop library. Anytime one needs to wait for a file
+descriptor to become readable, wait for a timer, or wait for a signal
+to be received one will need to interface with libuv. That is, if you
+perform any I/O, libuv will need to be used.</p>
 </li>
 <li><p>Internal Node.js libraries. Most importantly is the <code>node::ObjectWrap</code>
 class which you will likely want to derive from.</p>
@@ -128,9 +126,8 @@ When compiling your module, you don&#39;t need to worry about linking to
 any of these libraries.
 
 </p>
-<p>All of the following examples are available for
-<a href="https://github.com/rvagg/node-addon-examples">download</a> and may be
-used as a starting-point for your own Addon.
+<p>All of the following examples are available for <a href="https://github.com/rvagg/node-addon-examples">download</a> and may
+be used as a starting-point for your own Addon.
 
 </p>
 <h2>Hello world<span><a class="mark" href="#addons_hello_world" id="addons_hello_world">#</a></span></h2>
@@ -222,10 +219,9 @@ console.log(addon.hello()); // &#39;world&#39;</code></pre>
 </p>
 <h2>Addon patterns<span><a class="mark" href="#addons_addon_patterns" id="addons_addon_patterns">#</a></span></h2>
 <p>Below are some addon patterns to help you get started. Consult the online
-<a href="http://izs.me/v8-docs/main.html">v8 reference</a> for help with the various v8
-calls, and v8&#39;s <a href="http://code.google.com/apis/v8/embed.html">Embedder&#39;s Guide</a>
-for an explanation of several concepts used such as handles, scopes,
-function templates, etc.
+<a href="http://izs.me/v8-docs/main.html">v8 reference</a> for help with the various v8 calls, and v8&#39;s
+<a href="https://code.google.com/apis/v8/embed.html">Embedder&#39;s Guide</a> for an explanation of several concepts used such as
+handles, scopes, function templates, etc.
 
 </p>
 <p>In order to use these examples you need to compile them using <code>node-gyp</code>.

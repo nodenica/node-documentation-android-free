@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Query String Node.js v5.0.0 Manual &amp; Documentation</title>
+  <title>Query String Node.js v5.2.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="querystring" class="interior">
       <header>
-        <h1>Node.js v5.0.0 Documentation</h1>
+        <h1>Node.js v5.2.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -76,9 +76,9 @@
         <h2>Table of Contents</h2>
         <ul>
 <li><a href="#querystring_query_string">Query String</a><ul>
-<li><a href="#querystring_querystring_stringify_obj_sep_eq_options">querystring.stringify(obj[, sep][, eq][, options])</a></li>
-<li><a href="#querystring_querystring_parse_str_sep_eq_options">querystring.parse(str[, sep][, eq][, options])</a></li>
 <li><a href="#querystring_querystring_escape">querystring.escape</a></li>
+<li><a href="#querystring_querystring_parse_str_sep_eq_options">querystring.parse(str[, sep][, eq][, options])</a></li>
+<li><a href="#querystring_querystring_stringify_obj_sep_eq_options">querystring.stringify(obj[, sep][, eq][, options])</a></li>
 <li><a href="#querystring_querystring_unescape">querystring.unescape</a></li>
 </ul>
 </li>
@@ -94,33 +94,11 @@
 It provides the following methods:
 
 </p>
-<h2>querystring.stringify(obj[, sep][, eq][, options])<span><a class="mark" href="#querystring_querystring_stringify_obj_sep_eq_options" id="querystring_querystring_stringify_obj_sep_eq_options">#</a></span></h2>
-<p>Serialize an object to a query string.
-Optionally override the default separator (<code>&#39;&amp;&#39;</code>) and assignment (<code>&#39;=&#39;</code>)
-characters.
+<h2>querystring.escape<span><a class="mark" href="#querystring_querystring_escape" id="querystring_querystring_escape">#</a></span></h2>
+<p>The escape function used by <code>querystring.stringify</code>,
+provided so that it could be overridden if necessary.
 
 </p>
-<p>Options object may contain <code>encodeURIComponent</code> property (<code>querystring.escape</code> by default),
-it can be used to encode string with <code>non-utf8</code> encoding if necessary.
-
-</p>
-<p>Example:
-
-</p>
-<pre><code>querystring.stringify({ foo: &#39;bar&#39;, baz: [&#39;qux&#39;, &#39;quux&#39;], corge: &#39;&#39; })
-// returns
-&#39;foo=bar&amp;baz=qux&amp;baz=quux&amp;corge=&#39;
-
-querystring.stringify({foo: &#39;bar&#39;, baz: &#39;qux&#39;}, &#39;;&#39;, &#39;:&#39;)
-// returns
-&#39;foo:bar;baz:qux&#39;
-
-// Suppose gbkEncodeURIComponent function already exists,
-// it can encode string with `gbk` encoding
-querystring.stringify({ w: &#39;中文&#39;, foo: &#39;bar&#39; }, null, null,
-  { encodeURIComponent: gbkEncodeURIComponent })
-// returns
-&#39;w=%D6%D0%CE%C4&amp;foo=bar&#39;</code></pre>
 <h2>querystring.parse(str[, sep][, eq][, options])<span><a class="mark" href="#querystring_querystring_parse_str_sep_eq_options" id="querystring_querystring_parse_str_sep_eq_options">#</a></span></h2>
 <p>Deserialize a query string to an object.
 Optionally override the default separator (<code>&#39;&amp;&#39;</code>) and assignment (<code>&#39;=&#39;</code>)
@@ -148,11 +126,33 @@ querystring.parse(&#39;w=%D6%D0%CE%C4&amp;foo=bar&#39;, null, null,
   { decodeURIComponent: gbkDecodeURIComponent })
 // returns
 { w: &#39;中文&#39;, foo: &#39;bar&#39; }</code></pre>
-<h2>querystring.escape<span><a class="mark" href="#querystring_querystring_escape" id="querystring_querystring_escape">#</a></span></h2>
-<p>The escape function used by <code>querystring.stringify</code>,
-provided so that it could be overridden if necessary.
+<h2>querystring.stringify(obj[, sep][, eq][, options])<span><a class="mark" href="#querystring_querystring_stringify_obj_sep_eq_options" id="querystring_querystring_stringify_obj_sep_eq_options">#</a></span></h2>
+<p>Serialize an object to a query string.
+Optionally override the default separator (<code>&#39;&amp;&#39;</code>) and assignment (<code>&#39;=&#39;</code>)
+characters.
 
 </p>
+<p>Options object may contain <code>encodeURIComponent</code> property (<code>querystring.escape</code> by default),
+it can be used to encode string with <code>non-utf8</code> encoding if necessary.
+
+</p>
+<p>Example:
+
+</p>
+<pre><code>querystring.stringify({ foo: &#39;bar&#39;, baz: [&#39;qux&#39;, &#39;quux&#39;], corge: &#39;&#39; })
+// returns
+&#39;foo=bar&amp;baz=qux&amp;baz=quux&amp;corge=&#39;
+
+querystring.stringify({foo: &#39;bar&#39;, baz: &#39;qux&#39;}, &#39;;&#39;, &#39;:&#39;)
+// returns
+&#39;foo:bar;baz:qux&#39;
+
+// Suppose gbkEncodeURIComponent function already exists,
+// it can encode string with `gbk` encoding
+querystring.stringify({ w: &#39;中文&#39;, foo: &#39;bar&#39; }, null, null,
+  { encodeURIComponent: gbkEncodeURIComponent })
+// returns
+&#39;w=%D6%D0%CE%C4&amp;foo=bar&#39;</code></pre>
 <h2>querystring.unescape<span><a class="mark" href="#querystring_querystring_unescape" id="querystring_querystring_unescape">#</a></span></h2>
 <p>The unescape function used by <code>querystring.parse</code>,
 provided so that it could be overridden if necessary.

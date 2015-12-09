@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>TTY Node.js v5.0.0 Manual &amp; Documentation</title>
+  <title>TTY Node.js v5.2.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="tty" class="interior">
       <header>
-        <h1>Node.js v5.0.0 Documentation</h1>
+        <h1>Node.js v5.2.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -76,19 +76,19 @@
         <h2>Table of Contents</h2>
         <ul>
 <li><a href="#tty_tty">TTY</a><ul>
-<li><a href="#tty_tty_isatty_fd">tty.isatty(fd)</a></li>
-<li><a href="#tty_tty_setrawmode_mode">tty.setRawMode(mode)</a></li>
 <li><a href="#tty_class_readstream">Class: ReadStream</a><ul>
 <li><a href="#tty_rs_israw">rs.isRaw</a></li>
 <li><a href="#tty_rs_setrawmode_mode">rs.setRawMode(mode)</a></li>
 </ul>
 </li>
 <li><a href="#tty_class_writestream">Class: WriteStream</a><ul>
+<li><a href="#tty_event_resize">Event: &#39;resize&#39;</a></li>
 <li><a href="#tty_ws_columns">ws.columns</a></li>
 <li><a href="#tty_ws_rows">ws.rows</a></li>
-<li><a href="#tty_event_resize">Event: &#39;resize&#39;</a></li>
 </ul>
 </li>
+<li><a href="#tty_tty_isatty_fd">tty.isatty(fd)</a></li>
+<li><a href="#tty_tty_setrawmode_mode">tty.setRawMode(mode)</a></li>
 </ul>
 </li>
 </ul>
@@ -111,14 +111,7 @@ in a TTY context is to check <code>process.stdout.isTTY</code>:
 true
 $ node -p -e &quot;Boolean(process.stdout.isTTY)&quot; | cat
 false</code></pre>
-<h2>tty.isatty(fd)<span><a class="mark" href="#tty_tty_isatty_fd" id="tty_tty_isatty_fd">#</a></span></h2>
-<p>Returns <code>true</code> or <code>false</code> depending on if the <code>fd</code> is associated with a
-terminal.
-
-
-</p>
-<h2>tty.setRawMode(mode)<span><a class="mark" href="#tty_tty_setrawmode_mode" id="tty_tty_setrawmode_mode">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="#tty_rs_setrawmode_mode">tty.ReadStream#setRawMode</a> (i.e. process.stdin.setRawMode) instead.</pre><h2>Class: ReadStream<span><a class="mark" href="#tty_class_readstream" id="tty_class_readstream">#</a></span></h2>
+<h2>Class: ReadStream<span><a class="mark" href="#tty_class_readstream" id="tty_class_readstream">#</a></span></h2>
 <p>A <code>net.Socket</code> subclass that represents the readable portion of a tty. In normal
 circumstances, <code>process.stdin</code> will be the only <code>tty.ReadStream</code> instance in any
 Node.js program (only when <code>isatty(0)</code> is true).
@@ -134,22 +127,11 @@ of the <code>tty.ReadStream</code> instance.
 <code>tty.ReadStream</code> to act either as a raw device or default. <code>isRaw</code> will be set
 to the resulting mode.
 
-
 </p>
 <h2>Class: WriteStream<span><a class="mark" href="#tty_class_writestream" id="tty_class_writestream">#</a></span></h2>
 <p>A <code>net.Socket</code> subclass that represents the writable portion of a tty. In normal
 circumstances, <code>process.stdout</code> will be the only <code>tty.WriteStream</code> instance
 ever created (and only when <code>isatty(1)</code> is true).
-
-</p>
-<h3>ws.columns<span><a class="mark" href="#tty_ws_columns" id="tty_ws_columns">#</a></span></h3>
-<p>A <code>Number</code> that gives the number of columns the TTY currently has. This property
-gets updated on &quot;resize&quot; events.
-
-</p>
-<h3>ws.rows<span><a class="mark" href="#tty_ws_rows" id="tty_ws_rows">#</a></span></h3>
-<p>A <code>Number</code> that gives the number of rows the TTY currently has. This property
-gets updated on &quot;resize&quot; events.
 
 </p>
 <h3>Event: &#39;resize&#39;<span><a class="mark" href="#tty_event_resize" id="tty_event_resize">#</a></span></h3>
@@ -164,7 +146,23 @@ has changed.
   console.log(&#39;screen size has changed!&#39;);
   console.log(process.stdout.columns + &#39;x&#39; + process.stdout.rows);
 });</code></pre>
+<h3>ws.columns<span><a class="mark" href="#tty_ws_columns" id="tty_ws_columns">#</a></span></h3>
+<p>A <code>Number</code> that gives the number of columns the TTY currently has. This property
+gets updated on <code>&#39;resize&#39;</code> events.
 
+</p>
+<h3>ws.rows<span><a class="mark" href="#tty_ws_rows" id="tty_ws_rows">#</a></span></h3>
+<p>A <code>Number</code> that gives the number of rows the TTY currently has. This property
+gets updated on <code>&#39;resize&#39;</code> events.
+
+</p>
+<h2>tty.isatty(fd)<span><a class="mark" href="#tty_tty_isatty_fd" id="tty_tty_isatty_fd">#</a></span></h2>
+<p>Returns <code>true</code> or <code>false</code> depending on if the <code>fd</code> is associated with a
+terminal.
+
+</p>
+<h2>tty.setRawMode(mode)<span><a class="mark" href="#tty_tty_setrawmode_mode" id="tty_tty_setrawmode_mode">#</a></span></h2>
+<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="#tty_rs_setrawmode_mode">tty.ReadStream#setRawMode</a> (i.e. process.stdin.setRawMode) instead.</pre>
       </div>
     </div>
   </div>
