@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Domain Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>Domain Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="domain" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -159,15 +159,15 @@ the failure, and react accordingly.
 <pre><code class="javascript">// XXX WARNING!  BAD IDEA!
 
 var d = require(&#39;domain&#39;).create();
-d.on(&#39;error&#39;, function(er) {
+d.on(&#39;error&#39;, (er) =&gt; {
   // The error won&#39;t crash the process, but what it does is worse!
   // Though we&#39;ve prevented abrupt process restarting, we are leaking
   // resources like crazy if this ever happens.
   // This is no better than process.on(&#39;uncaughtException&#39;)!
   console.log(&#39;error, but oh well&#39;, er.message);
 });
-d.run(function() {
-  require(&#39;http&#39;).createServer(function(req, res) {
+d.run(() =&gt; {
+  require(&#39;http&#39;).createServer((req, res) =&gt; {
     handleRequest(req, res);
   }).listen(PORT);
 });</code></pre>
@@ -178,8 +178,8 @@ appropriately, and handle errors with much greater safety.
 </p>
 <pre><code class="javascript">// Much better!
 
-var cluster = require(&#39;cluster&#39;);
-var PORT = +process.env.PORT || 1337;
+const cluster = require(&#39;cluster&#39;);
+const PORT = +process.env.PORT || 1337;
 
 if (cluster.isMaster) {
   // In real life, you&#39;d probably use more than just 2 workers,
@@ -197,7 +197,7 @@ if (cluster.isMaster) {
   cluster.fork();
   cluster.fork();
 
-  cluster.on(&#39;disconnect&#39;, function(worker) {
+  cluster.on(&#39;disconnect&#39;, (worker) =&gt; {
     console.error(&#39;disconnect!&#39;);
     cluster.fork();
   });
@@ -207,14 +207,14 @@ if (cluster.isMaster) {
   //
   // This is where we put our bugs!
 
-  var domain = require(&#39;domain&#39;);
+  const domain = require(&#39;domain&#39;);
 
   // See the cluster documentation for more details about using
   // worker processes to serve requests.  How it works, caveats, etc.
 
-  var server = require(&#39;http&#39;).createServer(function(req, res) {
+  const server = require(&#39;http&#39;).createServer((req, res) =&gt; {
     var d = domain.create();
-    d.on(&#39;error&#39;, function(er) {
+    d.on(&#39;error&#39;, (er) =&gt; {
       console.error(&#39;error&#39;, er.stack);
 
       // Note: we&#39;re in dangerous territory!
@@ -224,7 +224,7 @@ if (cluster.isMaster) {
 
       try {
         // make sure we close down within 30 seconds
-        var killtimer = setTimeout(function() {
+        var killtimer = setTimeout(() =&gt; {
           process.exit(1);
         }, 30000);
         // But don&#39;t keep the process open just for that!
@@ -255,7 +255,7 @@ if (cluster.isMaster) {
     d.add(res);
 
     // Now run the handler function in the domain.
-    d.run(function() {
+    d.run(() =&gt; {
       handleRequest(req, res);
     });
   });
@@ -268,7 +268,7 @@ function handleRequest(req, res) {
   switch(req.url) {
     case &#39;/error&#39;:
       // We do some async stuff, and then...
-      setTimeout(function() {
+      setTimeout(() =&gt; {
         // Whoops!
         flerb.bark();
       });
@@ -343,18 +343,20 @@ perhaps we would like to have a separate domain to use for each request.
 
 </p>
 <pre><code>// create a top-level domain for the server
-var serverDomain = domain.create();
+const domain = require(&#39;domain&#39;);
+const http = require(&#39;http&#39;);
+const serverDomain = domain.create();
 
-serverDomain.run(function() {
+serverDomain.run(() =&gt; {
   // server is created in the scope of serverDomain
-  http.createServer(function(req, res) {
+  http.createServer((req, res) =&gt; {
     // req and res are also created in the scope of serverDomain
     // however, we&#39;d prefer to have a separate domain for each request.
     // create it first thing, and add req and res to it.
     var reqd = domain.create();
     reqd.add(req);
     reqd.add(res);
-    reqd.on(&#39;error&#39;, function(er) {
+    reqd.on(&#39;error&#39;, (er) =&gt; {
       console.error(&#39;Error&#39;, er, req.url);
       try {
         res.writeHead(500);
@@ -397,14 +399,16 @@ the function.
 <p>Example:
 
 </p>
-<pre><code>var d = domain.create();
-d.on(&#39;error&#39;, function(er) {
+<pre><code>const domain = require(&#39;domain&#39;);
+const fs = require(&#39;fs&#39;);
+const d = domain.create();
+d.on(&#39;error&#39;, (er) =&gt; {
   console.error(&#39;Caught error!&#39;, er);
 });
-d.run(function() {
-  process.nextTick(function() {
-    setTimeout(function() { // simulating some various async stuff
-      fs.open(&#39;non-existent file&#39;, &#39;r&#39;, function(er, fd) {
+d.run(() =&gt; {
+  process.nextTick(() =&gt; {
+    setTimeout(() =&gt; { // simulating some various async stuff
+      fs.open(&#39;non-existent file&#39;, &#39;r&#39;, (er, fd) =&gt; {
         if (er) throw er;
         // proceed...
       });
@@ -461,7 +465,7 @@ thrown will be routed to the domain&#39;s <code>&#39;error&#39;</code> event.
 
 </p>
 <h4>Example<span><a class="mark" href="#domain_example" id="domain_example">#</a></span></h4>
-<pre><code>var d = domain.create();
+<pre><code>const d = domain.create();
 
 function readSomeFile(filename, cb) {
   fs.readFile(filename, &#39;utf8&#39;, d.bind(function(er, data) {
@@ -470,7 +474,7 @@ function readSomeFile(filename, cb) {
   }));
 }
 
-d.on(&#39;error&#39;, function(er) {
+d.on(&#39;error&#39;, (er) =&gt; {
   // an error occurred somewhere.
   // if we throw it now, it will crash the program
   // with the normal line number and stack message.
@@ -490,7 +494,7 @@ with a single error handler in a single place.
 
 </p>
 <h4>Example<span><a class="mark" href="#domain_example_1" id="domain_example_1">#</a></span></h4>
-<pre><code>var d = domain.create();
+<pre><code>const d = domain.create();
 
 function readSomeFile(filename, cb) {
   fs.readFile(filename, &#39;utf8&#39;, d.intercept(function(data) {
@@ -506,7 +510,7 @@ function readSomeFile(filename, cb) {
   }));
 }
 
-d.on(&#39;error&#39;, function(er) {
+d.on(&#39;error&#39;, (er) =&gt; {
   // an error occurred somewhere.
   // if we throw it now, it will crash the program
   // with the normal line number and stack message.

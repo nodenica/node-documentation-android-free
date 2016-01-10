@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>HTTPS Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>HTTPS Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="https" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -132,31 +132,31 @@ automatically added to the <code>&#39;request&#39;</code> event.
 
 </p>
 <pre><code>// curl -k https://localhost:8000/
-var https = require(&#39;https&#39;);
-var fs = require(&#39;fs&#39;);
+const https = require(&#39;https&#39;);
+const fs = require(&#39;fs&#39;);
 
-var options = {
+const options = {
   key: fs.readFileSync(&#39;test/fixtures/keys/agent2-key.pem&#39;),
   cert: fs.readFileSync(&#39;test/fixtures/keys/agent2-cert.pem&#39;)
 };
 
-https.createServer(options, function (req, res) {
+https.createServer(options, (req, res) =&gt; {
   res.writeHead(200);
-  res.end(&quot;hello world\n&quot;);
+  res.end(&#39;hello world\n&#39;);
 }).listen(8000);</code></pre>
 <p>Or
 
 </p>
-<pre><code>var https = require(&#39;https&#39;);
-var fs = require(&#39;fs&#39;);
+<pre><code>const https = require(&#39;https&#39;);
+const fs = require(&#39;fs&#39;);
 
-var options = {
+const options = {
   pfx: fs.readFileSync(&#39;server.pfx&#39;)
 };
 
-https.createServer(options, function (req, res) {
+https.createServer(options, (req, res) =&gt; {
   res.writeHead(200);
-  res.end(&quot;hello world\n&quot;);
+  res.end(&#39;hello world\n&#39;);
 }).listen(8000);</code></pre>
 <h3>server.close([callback])<span><a class="mark" href="#https_server_close_callback" id="https_server_close_callback">#</a></span></h3>
 <p>See <a href="http.html#http_server_close_callback"><code>http.close()</code></a> for details.
@@ -179,17 +179,17 @@ automatically parsed with <a href="url.html#url_url_parse_urlstr_parsequerystrin
 <p>Example:
 
 </p>
-<pre><code>var https = require(&#39;https&#39;);
+<pre><code>const https = require(&#39;https&#39;);
 
-https.get(&#39;https://encrypted.google.com/&#39;, function(res) {
-  console.log(&quot;statusCode: &quot;, res.statusCode);
-  console.log(&quot;headers: &quot;, res.headers);
+https.get(&#39;https://encrypted.google.com/&#39;, (res) =&gt; {
+  console.log(&#39;statusCode: &#39;, res.statusCode);
+  console.log(&#39;headers: &#39;, res.headers);
 
-  res.on(&#39;data&#39;, function(d) {
+  res.on(&#39;data&#39;, (d) =&gt; {
     process.stdout.write(d);
   });
 
-}).on(&#39;error&#39;, function(e) {
+}).on(&#39;error&#39;, (e) =&gt; {
   console.error(e);
 });</code></pre>
 <h2>https.globalAgent<span><a class="mark" href="#https_https_globalagent" id="https_https_globalagent">#</a></span></h2>
@@ -210,7 +210,7 @@ automatically parsed with <a href="url.html#url_url_parse_urlstr_parsequerystrin
 <p>Example:
 
 </p>
-<pre><code>var https = require(&#39;https&#39;);
+<pre><code>const https = require(&#39;https&#39;);
 
 var options = {
   hostname: &#39;encrypted.google.com&#39;,
@@ -219,17 +219,17 @@ var options = {
   method: &#39;GET&#39;
 };
 
-var req = https.request(options, function(res) {
-  console.log(&quot;statusCode: &quot;, res.statusCode);
-  console.log(&quot;headers: &quot;, res.headers);
+var req = https.request(options, (res) =&gt; {
+  console.log(&#39;statusCode: &#39;, res.statusCode);
+  console.log(&#39;headers: &#39;, res.headers);
 
-  res.on(&#39;data&#39;, function(d) {
+  res.on(&#39;data&#39;, (d) =&gt; {
     process.stdout.write(d);
   });
 });
 req.end();
 
-req.on(&#39;error&#39;, function(e) {
+req.on(&#39;error&#39;, (e) =&gt; {
   console.error(e);
 });</code></pre>
 <p>The options argument has the following options
@@ -272,8 +272,9 @@ default to <code>Connection: keep-alive</code>. Possible values:<ul>
 <li><code>key</code>: Private key to use for SSL. Default <code>null</code>.</li>
 <li><code>passphrase</code>: A string of passphrase for the private key or pfx. Default <code>null</code>.</li>
 <li><code>cert</code>: Public x509 certificate to use. Default <code>null</code>.</li>
-<li><code>ca</code>: An authority certificate or array of authority certificates to check
-the remote host against.</li>
+<li><code>ca</code>: A string, <code>Buffer</code> or array of strings or <code>Buffer</code>s of trusted
+certificates in PEM format. If this is omitted several well known &quot;root&quot;
+CAs will be used, like VeriSign. These are used to authorize connections.</li>
 <li><code>ciphers</code>: A string describing the ciphers to use or exclude. Consult
 <a href="https://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT">https://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT</a> for
 details on the format.</li>
@@ -301,7 +302,7 @@ OpenSSL and are defined in the constant <a href="https://www.openssl.org/docs/ss
 };
 options.agent = new https.Agent(options);
 
-var req = https.request(options, function(res) {
+var req = https.request(options, (res) =&gt; {
   ...
 }</code></pre>
 <p>Alternatively, opt out of connection pooling by not using an <code>Agent</code>.
@@ -320,7 +321,7 @@ var req = https.request(options, function(res) {
   agent: false
 };
 
-var req = https.request(options, function(res) {
+var req = https.request(options, (res) =&gt; {
   ...
 }</code></pre>
 

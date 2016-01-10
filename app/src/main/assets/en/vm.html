@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Executing JavaScript Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>Executing JavaScript Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="vm" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -102,7 +102,7 @@
 <p>You can access this module with:
 
 </p>
-<pre><code>var vm = require(&#39;vm&#39;);</code></pre>
+<pre><code>const vm = require(&#39;vm&#39;);</code></pre>
 <p>JavaScript code can be compiled and run immediately or compiled, saved, and run
 later.
 
@@ -148,8 +148,8 @@ and returns the result. Running code does not have access to local scope.
 execute the code multiple times. These globals are contained in the sandbox.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
-var vm = require(&#39;vm&#39;);
+<pre><code>const util = require(&#39;util&#39;);
+const vm = require(&#39;vm&#39;);
 
 var sandbox = {
   animal: &#39;cat&#39;,
@@ -187,14 +187,14 @@ multiple times in different contexts. These globals are set on and contained in
 the sandboxes.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
-var vm = require(&#39;vm&#39;);
+<pre><code>const util = require(&#39;util&#39;);
+const vm = require(&#39;vm&#39;);
 
-var sandboxes = [{}, {}, {}];
+const sandboxes = [{}, {}, {}];
 
-var script = new vm.Script(&#39;globalVar = &quot;set&quot;&#39;);
+const script = new vm.Script(&#39;globalVar = &quot;set&quot;&#39;);
 
-sandboxes.forEach(function (sandbox) {
+sandboxes.forEach((sandbox) =&gt; {
   script.runInNewContext(sandbox);
 });
 
@@ -217,11 +217,11 @@ current <code>global</code> object.
 multiple times:
 
 </p>
-<pre><code>var vm = require(&#39;vm&#39;);
+<pre><code>const vm = require(&#39;vm&#39;);
 
 global.globalVar = 0;
 
-var script = new vm.Script(&#39;globalVar += 1&#39;, { filename: &#39;myfile.vm&#39; });
+const script = new vm.Script(&#39;globalVar += 1&#39;, { filename: &#39;myfile.vm&#39; });
 
 for (var i = 0; i &lt; 1000; ++i) {
   script.runInThisContext();
@@ -284,10 +284,10 @@ returns the result. Running code does not have access to local scope. The
 <p>Example: compile and execute different scripts in a single existing context.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
-var vm = require(&#39;vm&#39;);
+<pre><code>const util = require(&#39;util&#39;);
+const vm = require(&#39;vm&#39;);
 
-var sandbox = { globalVar: 1 };
+const sandbox = { globalVar: 1 };
 vm.createContext(sandbox);
 
 for (var i = 0; i &lt; 10; ++i) {
@@ -306,7 +306,7 @@ separate process.
 The primary use case is to get access to the V8 debug object:
 
 </p>
-<pre><code>var Debug = vm.runInDebugContext(&#39;Debug&#39;);
+<pre><code>const Debug = vm.runInDebugContext(&#39;Debug&#39;);
 Debug.scripts().forEach(function(script) { console.log(script.name); });</code></pre>
 <p>Note that the debug context and object are intrinsically tied to V8&#39;s debugger
 implementation and may change (or even get removed) without prior warning.
@@ -328,10 +328,10 @@ the sandbox as the global object and returns the result.
 new one. These globals are contained in the sandbox.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
-var vm = require(&#39;vm&#39;);
+<pre><code>const util = require(&#39;util&#39;);
+const vm = require(&#39;vm&#39;);
 
-var sandbox = {
+const sandbox = {
   animal: &#39;cat&#39;,
   count: 2
 };
@@ -354,14 +354,14 @@ code does not have access to local scope, but does have access to the current
 <p>Example of using <code>vm.runInThisContext</code> and <code>eval</code> to run the same code:
 
 </p>
-<pre><code>var vm = require(&#39;vm&#39;);
+<pre><code>const vm = require(&#39;vm&#39;);
 var localVar = &#39;initial value&#39;;
 
-var vmResult = vm.runInThisContext(&#39;localVar = &quot;vm&quot;;&#39;);
+const vmResult = vm.runInThisContext(&#39;localVar = &quot;vm&quot;;&#39;);
 console.log(&#39;vmResult: &#39;, vmResult);
 console.log(&#39;localVar: &#39;, localVar);
 
-var evalResult = eval(&#39;localVar = &quot;eval&quot;;&#39;);
+const evalResult = eval(&#39;localVar = &quot;eval&quot;;&#39;);
 console.log(&#39;evalResult: &#39;, evalResult);
 console.log(&#39;localVar: &#39;, localVar);
 

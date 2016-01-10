@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>process Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>process Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="process" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -88,10 +88,8 @@
 <li><a href="#process_process_arch">process.arch</a></li>
 <li><a href="#process_process_argv">process.argv</a></li>
 <li><a href="#process_process_chdir_directory">process.chdir(directory)</a></li>
-<li><a href="#process_process_config">process.config</a><ul>
+<li><a href="#process_process_config">process.config</a></li>
 <li><a href="#process_process_connected">process.connected</a></li>
-</ul>
-</li>
 <li><a href="#process_process_cwd">process.cwd()</a></li>
 <li><a href="#process_process_disconnect">process.disconnect()</a></li>
 <li><a href="#process_process_env">process.env</a></li>
@@ -168,9 +166,9 @@ implicitly by the event loop draining.
 <p>Example of listening for <code>&#39;exit&#39;</code>:
 
 </p>
-<pre><code>process.on(&#39;exit&#39;, function(code) {
+<pre><code>process.on(&#39;exit&#39;, (code) =&gt; {
   // do *NOT* do this
-  setTimeout(function() {
+  setTimeout(() =&gt; {
     console.log(&#39;This will not run&#39;);
   }, 0);
   console.log(&#39;About to exit with code:&#39;, code);
@@ -214,11 +212,11 @@ event tells you when the list of unhandled rejections shrinks.
 the rejected promise reasons at a given time:
 
 </p>
-<pre><code>var unhandledRejections = new Map();
-process.on(&#39;unhandledRejection&#39;, function(reason, p) {
+<pre><code>const unhandledRejections = new Map();
+process.on(&#39;unhandledRejection&#39;, (reason, p) =&gt; {
   unhandledRejections.set(p, reason);
 });
-process.on(&#39;rejectionHandled&#39;, function(p) {
+process.on(&#39;rejectionHandled&#39;, (p) =&gt; {
   unhandledRejections.delete(p);
 });</code></pre>
 <p>This map will grow and shrink over time, reflecting rejections that start
@@ -237,11 +235,11 @@ a stack trace and exit) will not occur.
 <p>Example of listening for <code>&#39;uncaughtException&#39;</code>:
 
 </p>
-<pre><code>process.on(&#39;uncaughtException&#39;, function(err) {
-  console.log(&#39;Caught exception: &#39; + err);
+<pre><code>process.on(&#39;uncaughtException&#39;, (err) =&gt; {
+  console.log(`Caught exception: ${err}`);
 });
 
-setTimeout(function() {
+setTimeout(() =&gt; {
   console.log(&#39;This will still run.&#39;);
 }, 500);
 
@@ -288,7 +286,7 @@ instance).</li>
 <p>Here is an example that logs every unhandled rejection to the console
 
 </p>
-<pre><code>process.on(&#39;unhandledRejection&#39;, function(reason, p) {
+<pre><code>process.on(&#39;unhandledRejection&#39;, (reason, p) =&gt; {
     console.log(&quot;Unhandled Rejection at: Promise &quot;, p, &quot; reason: &quot;, reason);
     // application specific logging, throwing an error, or other logic here
 });</code></pre>
@@ -296,8 +294,8 @@ instance).</li>
 event:
 
 </p>
-<pre><code>somePromise.then(function(res) {
-  return reportToUser(JSON.pasre(res)); // note the typo
+<pre><code>somePromise.then((res) =&gt; {
+  return reportToUser(JSON.parse(res)); // note the typo
 }); // no `.catch` or `.then`</code></pre>
 <p>Here is an example of a coding pattern that will also trigger
 <code>&#39;unhandledRejection&#39;</code>:
@@ -378,7 +376,7 @@ standard POSIX signal names such as <code>SIGINT</code>, <code>SIGHUP</code>, et
 <pre><code>// Start reading from stdin so we don&#39;t exit.
 process.stdin.resume();
 
-process.on(&#39;SIGINT&#39;, function() {
+process.on(&#39;SIGINT&#39;, () =&gt; {
   console.log(&#39;Got SIGINT.  Press Control-D to exit.&#39;);
 });</code></pre>
 <p>An easy way to send the <code>SIGINT</code> signal is with <code>Control-C</code> in most terminal
@@ -439,8 +437,8 @@ next elements will be any additional command line arguments.
 
 </p>
 <pre><code>// print process.argv
-process.argv.forEach(function(val, index, array) {
-  console.log(index + &#39;: &#39; + val);
+process.argv.forEach((val, index, array) =&gt; {
+  console.log(`${index}: ${val}`);
 });</code></pre>
 <p>This will generate:
 
@@ -455,13 +453,13 @@ process.argv.forEach(function(val, index, array) {
 <p>Changes the current working directory of the process or throws an exception if that fails.
 
 </p>
-<pre><code>console.log(&#39;Starting directory: &#39; + process.cwd());
+<pre><code>console.log(`Starting directory: ${process.cwd()}`);
 try {
   process.chdir(&#39;/tmp&#39;);
-  console.log(&#39;New directory: &#39; + process.cwd());
+  console.log(`New directory: ${process.cwd()}`);
 }
 catch (err) {
-  console.log(&#39;chdir: &#39; + err);
+  console.log(`chdir: ${err}`);
 }</code></pre>
 <h2>process.config<span><a class="mark" href="#process_process_config" id="process_process_config">#</a></span></h2>
 <p>An Object containing the JavaScript representation of the configure options
@@ -492,7 +490,7 @@ the <code>config.gypi</code> file that was produced when running the <code>./con
      strict_aliasing: &#39;true&#39;,
      target_arch: &#39;x64&#39;,
      v8_use_snapshot: &#39;true&#39; } }</code></pre>
-<h3>process.connected<span><a class="mark" href="#process_process_connected" id="process_process_connected">#</a></span></h3>
+<h2>process.connected<span><a class="mark" href="#process_process_connected" id="process_process_connected">#</a></span></h2>
 <div class="signature"><ul>
 <li><span class="type">Boolean</span> Set to false after <code>process.disconnect()</code> is called</li>
 </div></ul>
@@ -503,7 +501,7 @@ the <code>config.gypi</code> file that was produced when running the <code>./con
 <p>Returns the current working directory of the process.
 
 </p>
-<pre><code>console.log(&#39;Current directory: &#39; + process.cwd());</code></pre>
+<pre><code>console.log(`Current directory: ${process.cwd()}`);</code></pre>
 <h2>process.disconnect()<span><a class="mark" href="#process_process_disconnect" id="process_process_disconnect">#</a></span></h2>
 <p>Close the IPC channel to the parent process, allowing this child to exit
 gracefully once there are no other connections keeping it alive.
@@ -606,7 +604,7 @@ This is the numerical group id, not the group name.
 
 </p>
 <pre><code>if (process.getegid) {
-  console.log(&#39;Current gid: &#39; + process.getegid());
+  console.log(`Current gid: ${process.getegid()}`);
 }</code></pre>
 <h2>process.geteuid()<span><a class="mark" href="#process_process_geteuid" id="process_process_geteuid">#</a></span></h2>
 <p>Note: this function is only available on POSIX platforms (i.e. not Windows,
@@ -618,7 +616,7 @@ This is the numerical userid, not the username.
 
 </p>
 <pre><code>if (process.geteuid) {
-  console.log(&#39;Current uid: &#39; + process.geteuid());
+  console.log(`Current uid: ${process.geteuid()}`);
 }</code></pre>
 <h2>process.getgid()<span><a class="mark" href="#process_process_getgid" id="process_process_getgid">#</a></span></h2>
 <p>Note: this function is only available on POSIX platforms (i.e. not Windows,
@@ -630,7 +628,7 @@ This is the numerical group id, not the group name.
 
 </p>
 <pre><code>if (process.getgid) {
-  console.log(&#39;Current gid: &#39; + process.getgid());
+  console.log(`Current gid: ${process.getgid()}`);
 }</code></pre>
 <h2>process.getgroups()<span><a class="mark" href="#process_process_getgroups" id="process_process_getgroups">#</a></span></h2>
 <p>Note: this function is only available on POSIX platforms (i.e. not Windows,
@@ -651,7 +649,7 @@ This is the numerical userid, not the username.
 
 </p>
 <pre><code>if (process.getuid) {
-  console.log(&#39;Current uid: &#39; + process.getuid());
+  console.log(`Current uid: ${process.getuid()}`);
 }</code></pre>
 <h2>process.hrtime()<span><a class="mark" href="#process_process_hrtime" id="process_process_hrtime">#</a></span></h2>
 <p>Returns the current high-resolution real time in a <code>[seconds, nanoseconds]</code>
@@ -667,7 +665,7 @@ a diff reading, useful for benchmarks and measuring intervals:
 <pre><code>var time = process.hrtime();
 // [ 1800216, 25 ]
 
-setTimeout(function() {
+setTimeout(() =&gt; {
   var diff = process.hrtime(time);
   // [ 1, 552 ]
 
@@ -715,11 +713,11 @@ something other than kill the target process.
 <p>Example of sending a signal to yourself:
 
 </p>
-<pre><code>process.on(&#39;SIGHUP&#39;, function() {
+<pre><code>process.on(&#39;SIGHUP&#39;, () =&gt; {
   console.log(&#39;Got SIGHUP signal.&#39;);
 });
 
-setTimeout(function() {
+setTimeout(() =&gt; {
   console.log(&#39;Exiting.&#39;);
   process.exit(0);
 }, 100);
@@ -744,7 +742,7 @@ safe to assume that the two refer to the same module.
 measured in bytes.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 console.log(util.inspect(process.memoryUsage()));</code></pre>
 <p>This will generate:
@@ -771,7 +769,7 @@ timers) fire in subsequent ticks of the event loop.
 
 </p>
 <pre><code>console.log(&#39;start&#39;);
-process.nextTick(function() {
+process.nextTick(() =&gt; {
   console.log(&#39;nextTick callback&#39;);
 });
 console.log(&#39;scheduled&#39;);
@@ -787,7 +785,7 @@ but before any I/O has occurred.
 <pre><code>function MyThing(options) {
   this.setupOptions(options);
 
-  process.nextTick(function() {
+  process.nextTick(() =&gt; {
     this.startDoingStuff();
   }.bind(this));
 }
@@ -840,13 +838,13 @@ happening, just like a <code>while(true);</code> loop.
 <p>The PID of the process.
 
 </p>
-<pre><code>console.log(&#39;This process is pid &#39; + process.pid);</code></pre>
+<pre><code>console.log(`This process is pid ${process.pid}`);</code></pre>
 <h2>process.platform<span><a class="mark" href="#process_process_platform" id="process_process_platform">#</a></span></h2>
 <p>What platform you&#39;re running on:
 <code>&#39;darwin&#39;</code>, <code>&#39;freebsd&#39;</code>, <code>&#39;linux&#39;</code>, <code>&#39;sunos&#39;</code> or <code>&#39;win32&#39;</code>
 
 </p>
-<pre><code>console.log(&#39;This platform is &#39; + process.platform);</code></pre>
+<pre><code>console.log(`This platform is ${process.platform}`);</code></pre>
 <h2>process.release<span><a class="mark" href="#process_process_release" id="process_process_release">#</a></span></h2>
 <p>An Object containing metadata related to the current release, including URLs
 for the source tarball and headers-only tarball.
@@ -905,13 +903,13 @@ is specified, this method blocks while resolving it to a numerical ID.
 
 </p>
 <pre><code>if (process.getegid &amp;&amp; process.setegid) {
-  console.log(&#39;Current gid: &#39; + process.getegid());
+  console.log(`Current gid: ${process.getegid()}`);
   try {
     process.setegid(501);
-    console.log(&#39;New gid: &#39; + process.getegid());
+    console.log(`New gid: ${process.getegid()}`);
   }
   catch (err) {
-    console.log(&#39;Failed to set gid: &#39; + err);
+    console.log(`Failed to set gid: ${err}`);
   }
 }</code></pre>
 <h2>process.seteuid(id)<span><a class="mark" href="#process_process_seteuid_id" id="process_process_seteuid_id">#</a></span></h2>
@@ -925,13 +923,13 @@ is specified, this method blocks while resolving it to a numerical ID.
 
 </p>
 <pre><code>if (process.geteuid &amp;&amp; process.seteuid) {
-  console.log(&#39;Current uid: &#39; + process.geteuid());
+  console.log(`Current uid: ${process.geteuid()}`);
   try {
     process.seteuid(501);
-    console.log(&#39;New uid: &#39; + process.geteuid());
+    console.log(`New uid: ${process.geteuid()}`);
   }
   catch (err) {
-    console.log(&#39;Failed to set uid: &#39; + err);
+    console.log(`Failed to set uid: ${err}`);
   }
 }</code></pre>
 <h2>process.setgid(id)<span><a class="mark" href="#process_process_setgid_id" id="process_process_setgid_id">#</a></span></h2>
@@ -945,13 +943,13 @@ blocks while resolving it to a numerical ID.
 
 </p>
 <pre><code>if (process.getgid &amp;&amp; process.setgid) {
-  console.log(&#39;Current gid: &#39; + process.getgid());
+  console.log(`Current gid: ${process.getgid()}`);
   try {
     process.setgid(501);
-    console.log(&#39;New gid: &#39; + process.getgid());
+    console.log(`New gid: ${process.getgid()}`);
   }
   catch (err) {
-    console.log(&#39;Failed to set gid: &#39; + err);
+    console.log(`Failed to set gid: ${err}`);
   }
 }</code></pre>
 <h2>process.setgroups(groups)<span><a class="mark" href="#process_process_setgroups_groups" id="process_process_setgroups_groups">#</a></span></h2>
@@ -977,13 +975,13 @@ blocks while resolving it to a numerical ID.
 
 </p>
 <pre><code>if (process.getuid &amp;&amp; process.setuid) {
-  console.log(&#39;Current uid: &#39; + process.getuid());
+  console.log(`Current uid: ${process.getuid()}`);
   try {
     process.setuid(501);
-    console.log(&#39;New uid: &#39; + process.getuid());
+    console.log(`New uid: ${process.getuid()}`);
   }
   catch (err) {
-    console.log(&#39;Failed to set uid: &#39; + err);
+    console.log(`Failed to set uid: ${err}`);
   }
 }</code></pre>
 <h2>process.stderr<span><a class="mark" href="#process_process_stderr" id="process_process_stderr">#</a></span></h2>
@@ -1006,14 +1004,14 @@ should be a very rare occurrence indeed.)
 </p>
 <pre><code>process.stdin.setEncoding(&#39;utf8&#39;);
 
-process.stdin.on(&#39;readable&#39;, function() {
+process.stdin.on(&#39;readable&#39;, () =&gt; {
   var chunk = process.stdin.read();
   if (chunk !== null) {
-    process.stdout.write(&#39;data: &#39; + chunk);
+    process.stdout.write(`data: ${chunk}`);
   }
 });
 
-process.stdin.on(&#39;end&#39;, function() {
+process.stdin.on(&#39;end&#39;, () =&gt; {
   process.stdout.write(&#39;end&#39;);
 });</code></pre>
 <p>As a Stream, <code>process.stdin</code> can also be used in &quot;old&quot; mode that is compatible
@@ -1038,7 +1036,7 @@ mode over &quot;old&quot; one.
 
 </p>
 <pre><code>console.log = function(msg) {
-  process.stdout.write(msg + &#39;\n&#39;);
+  process.stdout.write(`${msg}\n`);
 };</code></pre>
 <p><code>process.stderr</code> and <code>process.stdout</code> are unlike other streams in Node.js in
 that they cannot be closed (<code>end()</code> will throw), they never emit the <code>&#39;finish&#39;</code>
@@ -1064,7 +1062,7 @@ false</code></pre>
 
 </p>
 <h2>process.title<span><a class="mark" href="#process_process_title" id="process_process_title">#</a></span></h2>
-<p>Getter/setter to set what is displayed in `ps.
+<p>Getter/setter to set what is displayed in <code>ps</code>.
 
 </p>
 <p>When used as a setter, the maximum length is platform-specific and probably
@@ -1086,11 +1084,11 @@ the mask from the parent process. Returns the old mask if <code>mask</code> argu
 given, otherwise returns the current mask.
 
 </p>
-<pre><code>var oldmask, newmask = 0022;
-
-oldmask = process.umask(newmask);
-console.log(&#39;Changed umask from: &#39; + oldmask.toString(8) +
-            &#39; to &#39; + newmask.toString(8));</code></pre>
+<pre><code>const newmask = 0o022;
+const oldmask = process.umask(newmask);
+console.log(
+  `Changed umask from ${oldmask.toString(8)} to ${newmask.toString(8)}`
+);</code></pre>
 <h2>process.uptime()<span><a class="mark" href="#process_process_uptime" id="process_process_uptime">#</a></span></h2>
 <p>Number of seconds Node.js has been running.
 
@@ -1099,7 +1097,7 @@ console.log(&#39;Changed umask from: &#39; + oldmask.toString(8) +
 <p>A compiled-in property that exposes <code>NODE_VERSION</code>.
 
 </p>
-<pre><code>console.log(&#39;Version: &#39; + process.version);</code></pre>
+<pre><code>console.log(`Version: ${process.version}`);</code></pre>
 <h2>process.versions<span><a class="mark" href="#process_process_versions" id="process_process_versions">#</a></span></h2>
 <p>A property exposing version strings of Node.js and its dependencies.
 

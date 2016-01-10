@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), primaryColor));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // set colorPrimaryDark
-            getWindow().setStatusBarColor(getResources().getColor(primaryDarkColor));
-            getWindow().setNavigationBarColor(getResources().getColor(primaryColor));
+            getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), primaryDarkColor));
+            getWindow().setNavigationBarColor(ContextCompat.getColor(getApplicationContext(), primaryColor));
         }
     }
 

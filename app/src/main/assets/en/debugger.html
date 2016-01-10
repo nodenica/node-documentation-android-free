@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Debugger Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>Debugger Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="debugger" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -96,9 +96,10 @@
         <h1>Debugger<span><a class="mark" href="#debugger_debugger" id="debugger_debugger">#</a></span></h1>
 <pre class="api_stability_2">Stability: 2 - Stable</pre><!-- type=misc -->
 
-<p>V8 comes with an extensive debugger which is accessible out-of-process via a
-simple <a href="http://code.google.com/p/v8/wiki/DebuggerProtocol">TCP protocol</a>. Node.js has a built-in client for this debugger. To
-use this, start Node.js with the <code>debug</code> argument; a prompt will appear:
+<p>Node.js includes a full-featured out-of-process debugging utility accessible
+via a simple <a href="https://github.com/v8/v8/wiki/Debugging-Protocol">TCP-based protocol</a> and built-in debugging client. To use it,
+start Node.js with the <code>debug</code> argument followed by the path to the script to
+debug; a prompt will be displayed indicating successful launch of the debugger:
 
 </p>
 <pre><code>% node debug myscript.js
@@ -109,22 +110,25 @@ break in /home/indutny/Code/git/indutny/myscript.js:1
   2 setTimeout(function () {
   3   debugger;
 debug&gt;</code></pre>
-<p>Node.js&#39;s debugger client doesn&#39;t support the full range of commands, but
-simple step and inspection is possible. By putting the statement <code>debugger;</code>
-into the source code of your script, you will enable a breakpoint.
+<p>Node.js&#39;s debugger client does not yet support the full range of commands, but
+simple step and inspection are possible.
 
 </p>
-<p>For example, suppose <code>myscript.js</code> looked like this:
+<p>Inserting the statement <code>debugger;</code> into the source code of a script will
+enable a breakpoint at that position in the code.
+
+</p>
+<p>For example, suppose <code>myscript.js</code> is written as:
 
 </p>
 <pre><code>// myscript.js
 x = 5;
 setTimeout(function () {
   debugger;
-  console.log(&quot;world&quot;);
+  console.log(&#39;world&#39;);
 }, 1000);
-console.log(&quot;hello&quot;);</code></pre>
-<p>Then once the debugger is run, it will break on line 4.
+console.log(&#39;hello&#39;);</code></pre>
+<p>Once the debugger is run, a breakpoint will occur at line 4:
 
 </p>
 <pre><code>% node debug myscript.js
@@ -140,15 +144,15 @@ break in /home/indutny/Code/git/indutny/myscript.js:3
   1 x = 5;
   2 setTimeout(function () {
   3   debugger;
-  4   console.log(&quot;world&quot;);
+  4   console.log(&#39;world&#39;);
   5 }, 1000);
 debug&gt; next
 break in /home/indutny/Code/git/indutny/myscript.js:4
   2 setTimeout(function () {
   3   debugger;
-  4   console.log(&quot;world&quot;);
+  4   console.log(&#39;world&#39;);
   5 }, 1000);
-  6 console.log(&quot;hello&quot;);
+  6 console.log(&#39;hello&#39;);
 debug&gt; repl
 Press Ctrl + C to leave debug repl
 &gt; x
@@ -159,27 +163,27 @@ debug&gt; next
 &lt; world
 break in /home/indutny/Code/git/indutny/myscript.js:5
   3   debugger;
-  4   console.log(&quot;world&quot;);
+  4   console.log(&#39;world&#39;);
   5 }, 1000);
-  6 console.log(&quot;hello&quot;);
+  6 console.log(&#39;hello&#39;);
   7
 debug&gt; quit
 %</code></pre>
-<p>The <code>repl</code> command allows you to evaluate code remotely. The <code>next</code> command
-steps over to the next line. There are a few other commands available and more
-to come. Type <code>help</code> to see others.
+<p>The <code>repl</code> command allows code to be evaluated remotely. The <code>next</code> command
+steps over to the next line. Type <code>help</code> to see what other commands are
+available.
 
 </p>
 <h2>Watchers<span><a class="mark" href="#debugger_watchers" id="debugger_watchers">#</a></span></h2>
-<p>You can watch expression and variable values while debugging your code.
-On every breakpoint each expression from the watchers list will be evaluated
-in the current context and displayed just before the breakpoint&#39;s source code
-listing.
+<p>It is possible to watch expression and variable values while debugging. On
+every breakpoint, each expression from the watchers list will be evaluated
+in the current context and displayed immediately before the breakpoint&#39;s
+source code listing.
 
 </p>
-<p>To start watching an expression, type <code>watch(&quot;my_expression&quot;)</code>. <code>watchers</code>
-prints the active watchers. To remove a watcher, type
-<code>unwatch(&quot;my_expression&quot;)</code>.
+<p>To begin watching an expression, type <code>watch(&#39;my_expression&#39;)</code>. The command
+<code>watchers</code> will print the active watchers. To remove a watcher, type
+<code>unwatch(&#39;my_expression&#39;)</code>.
 
 </p>
 <h2>Commands reference<span><a class="mark" href="#debugger_commands_reference" id="debugger_commands_reference">#</a></span></h2>
@@ -247,22 +251,23 @@ breakpoint)</li>
 <h3>Various<span><a class="mark" href="#debugger_various" id="debugger_various">#</a></span></h3>
 <div class="signature"><ul>
 <li><code>scripts</code> - List all loaded scripts</li>
-<li><code>version</code> - Display v8&#39;s version</li>
+<li><code>version</code> - Display V8&#39;s version</li>
 </div></ul>
 <h2>Advanced Usage<span><a class="mark" href="#debugger_advanced_usage" id="debugger_advanced_usage">#</a></span></h2>
-<p>The V8 debugger can be enabled and accessed either by starting Node.js with
-the <code>--debug</code> command-line flag or by signaling an existing Node.js process
-with <code>SIGUSR1</code>.
+<p>An alternative way of enabling and accessing the debugger is to start
+Node.js with the <code>--debug</code> command-line flag or by signaling an existing
+Node.js process with <code>SIGUSR1</code>.
 
 </p>
-<p>Once a process has been set in debug mode with this it can be connected to
-with the Node.js debugger. Either connect to the <code>pid</code> or the URI to the
-debugger. The syntax is:
+<p>Once a process has been set in debug mode this way, it can be connected to
+using the Node.js debugger by either connecting to the <code>pid</code> of the running
+process or via URI reference to the listening debugger:
 
 </p>
 <ul>
 <li><code>node debug -p &lt;pid&gt;</code> - Connects to the process via the <code>pid</code></li>
-<li><code>node debug &lt;URI&gt;</code> - Connects to the process via the URI such as localhost:5858</li>
+<li><code>node debug &lt;URI&gt;</code> - Connects to the process via the URI such as
+localhost:5858</li>
 </ul>
 
       </div>

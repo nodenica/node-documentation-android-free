@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Stream Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>Stream Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="stream" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -220,9 +220,9 @@ interfaces in your own program, please also refer to
 way. Here is an example of using Streams in an Node.js program:
 
 </p>
-<pre><code class="javascript">var http = require(&#39;http&#39;);
+<pre><code class="javascript">const http = require(&#39;http&#39;);
 
-var server = http.createServer(function (req, res) {
+var server = http.createServer( (req, res) =&gt; {
   // req is an http.IncomingMessage, which is a Readable Stream
   // res is an http.ServerResponse, which is a Writable Stream
 
@@ -232,18 +232,18 @@ var server = http.createServer(function (req, res) {
   req.setEncoding(&#39;utf8&#39;);
 
   // Readable streams emit &#39;data&#39; events once a listener is added
-  req.on(&#39;data&#39;, function (chunk) {
+  req.on(&#39;data&#39;, (chunk) =&gt; {
     body += chunk;
   });
 
   // the end event tells you that you have entire body
-  req.on(&#39;end&#39;, function () {
+  req.on(&#39;end&#39;, () =&gt; {
     try {
       var data = JSON.parse(body);
     } catch (er) {
       // uh oh!  bad json!
       res.statusCode = 400;
-      return res.end(&#39;error: &#39; + er.message);
+      return res.end(`error: ${er.message}`);
     }
 
     // write back something interesting to the user:
@@ -358,7 +358,7 @@ possible, this is the best way to do so.
 
 </p>
 <pre><code class="javascript">var readable = getReadableStreamSomehow();
-readable.on(&#39;data&#39;, function(chunk) {
+readable.on(&#39;data&#39;, (chunk) =&gt; {
   console.log(&#39;got %d bytes of data&#39;, chunk.length);
 });</code></pre>
 <h4>Event: &#39;end&#39;<span><a class="mark" href="#stream_event_end" id="stream_event_end">#</a></span></h4>
@@ -371,10 +371,10 @@ or by calling <code>read()</code> repeatedly until you get to the end.
 
 </p>
 <pre><code class="javascript">var readable = getReadableStreamSomehow();
-readable.on(&#39;data&#39;, function(chunk) {
+readable.on(&#39;data&#39;, (chunk) =&gt; {
   console.log(&#39;got %d bytes of data&#39;, chunk.length);
 });
-readable.on(&#39;end&#39;, function() {
+readable.on(&#39;end&#39;, () =&gt; {
   console.log(&#39;there will be no more data.&#39;);
 });</code></pre>
 <h4>Event: &#39;error&#39;<span><a class="mark" href="#stream_event_error" id="stream_event_error">#</a></span></h4>
@@ -395,7 +395,7 @@ hadn&#39;t already.
 
 </p>
 <pre><code class="javascript">var readable = getReadableStreamSomehow();
-readable.on(&#39;readable&#39;, function() {
+readable.on(&#39;readable&#39;, () =&gt; {
   // there is some data to read now
 });</code></pre>
 <p>Once the internal buffer is drained, a <code>&#39;readable&#39;</code> event will fire
@@ -413,12 +413,12 @@ In the former case, <code>.read()</code> will return that data. In the latter ca
 is an empty file:
 
 </p>
-<pre><code class="javascript">var fs = require(&#39;fs&#39;);
+<pre><code class="javascript">const fs = require(&#39;fs&#39;);
 var rr = fs.createReadStream(&#39;foo.txt&#39;);
-rr.on(&#39;readable&#39;, function() {
+rr.on(&#39;readable&#39;, () =&gt; {
   console.log(&#39;readable:&#39;, rr.read());
 });
-rr.on(&#39;end&#39;, function() {
+rr.on(&#39;end&#39;, () =&gt; {
   console.log(&#39;end&#39;);
 });</code></pre>
 <p>The output of running this script is:
@@ -453,11 +453,11 @@ available will remain in the internal buffer.
 
 </p>
 <pre><code class="javascript">var readable = getReadableStreamSomehow();
-readable.on(&#39;data&#39;, function(chunk) {
+readable.on(&#39;data&#39;, (chunk) =&gt; {
   console.log(&#39;got %d bytes of data&#39;, chunk.length);
   readable.pause();
   console.log(&#39;there will be no more data for 1 second&#39;);
-  setTimeout(function() {
+  setTimeout(() =&gt; {
     console.log(&#39;now data will start flowing again&#39;);
     readable.resume();
   }, 1000);
@@ -504,7 +504,7 @@ end.
 
 </p>
 <pre><code class="javascript">reader.pipe(writer, { end: false });
-reader.on(&#39;end&#39;, function() {
+reader.on(&#39;end&#39;, () =&gt; {
   writer.end(&#39;Goodbye\n&#39;);
 });</code></pre>
 <p>Note that <code>process.stderr</code> and <code>process.stdout</code> are never closed until
@@ -537,7 +537,7 @@ drained.
 
 </p>
 <pre><code class="javascript">var readable = getReadableStreamSomehow();
-readable.on(&#39;readable&#39;, function() {
+readable.on(&#39;readable&#39;, () =&gt; {
   var chunk;
   while (null !== (chunk = readable.read())) {
     console.log(&#39;got %d bytes of data&#39;, chunk.length);
@@ -567,7 +567,7 @@ data.
 </p>
 <pre><code class="javascript">var readable = getReadableStreamSomehow();
 readable.resume();
-readable.on(&#39;end&#39;, function() {
+readable.on(&#39;end&#39;, () =&gt; {
   console.log(&#39;got to the end, but did not read anything&#39;);
 });</code></pre>
 <h4>readable.setEncoding(encoding)<span><a class="mark" href="#stream_readable_setencoding_encoding" id="stream_readable_setencoding_encoding">#</a></span></h4>
@@ -591,7 +591,7 @@ as strings, always use this method.
 </p>
 <pre><code class="javascript">var readable = getReadableStreamSomehow();
 readable.setEncoding(&#39;utf8&#39;);
-readable.on(&#39;data&#39;, function(chunk) {
+readable.on(&#39;data&#39;, (chunk) =&gt; {
   assert.equal(typeof chunk, &#39;string&#39;);
   console.log(&#39;got %d characters of string data&#39;, chunk.length);
 });</code></pre>
@@ -614,7 +614,7 @@ var writable = fs.createWriteStream(&#39;file.txt&#39;);
 // All the data from readable goes into &#39;file.txt&#39;,
 // but only for the first second
 readable.pipe(writable);
-setTimeout(function() {
+setTimeout(() =&gt; {
   console.log(&#39;stop writing to file.txt&#39;);
   readable.unpipe(writable);
   console.log(&#39;manually close the file stream&#39;);
@@ -642,7 +642,7 @@ for Stream Implementors, below.)
 <pre><code class="javascript">// Pull off a header delimited by \n\n
 // use unshift() if we get too much
 // Call the callback with (error, header, stream)
-var StringDecoder = require(&#39;string_decoder&#39;).StringDecoder;
+const StringDecoder = require(&#39;string_decoder&#39;).StringDecoder;
 function parseHeader(stream, callback) {
   stream.on(&#39;error&#39;, callback);
   stream.on(&#39;readable&#39;, onReadable);
@@ -702,12 +702,12 @@ as a convenience for interacting with old Node.js programs and libraries.
 <p>For example:
 
 </p>
-<pre><code class="javascript">var OldReader = require(&#39;./old-api-module.js&#39;).OldReader;
-var oreader = new OldReader;
-var Readable = require(&#39;stream&#39;).Readable;
-var myReader = new Readable().wrap(oreader);
+<pre><code class="javascript">const OldReader = require(&#39;./old-api-module.js&#39;).OldReader;
+const Readable = require(&#39;stream&#39;).Readable;
+const oreader = new OldReader;
+const myReader = new Readable().wrap(oreader);
 
-myReader.on(&#39;readable&#39;, function() {
+myReader.on(&#39;readable&#39;, () =&gt; {
   myReader.read(); // etc.
 });</code></pre>
 <h3>Class: stream.Transform<span><a class="mark" href="#stream_class_stream_transform" id="stream_class_stream_transform">#</a></span></h3>
@@ -788,10 +788,10 @@ to the underlying system, this event is emitted.
 </p>
 <pre><code class="javascript">var writer = getWritableStreamSomehow();
 for (var i = 0; i &lt; 100; i ++) {
-  writer.write(&#39;hello, #&#39; + i + &#39;!\n&#39;);
+  writer.write(&#39;hello, #${i}!\n&#39;);
 }
 writer.end(&#39;this is the end\n&#39;);
-writer.on(&#39;finish&#39;, function() {
+writer.on(&#39;finish&#39;, () =&gt; {
   console.error(&#39;all writes are now complete.&#39;);
 });</code></pre>
 <h4>Event: &#39;pipe&#39;<span><a class="mark" href="#stream_event_pipe" id="stream_event_pipe">#</a></span></h4>
@@ -804,7 +804,7 @@ stream, adding this writable to its set of destinations.
 </p>
 <pre><code class="javascript">var writer = getWritableStreamSomehow();
 var reader = getReadableStreamSomehow();
-writer.on(&#39;pipe&#39;, function(src) {
+writer.on(&#39;pipe&#39;, (src) =&gt; {
   console.error(&#39;something is piping into the writer&#39;);
   assert.equal(src, reader);
 });
@@ -819,7 +819,7 @@ readable stream, removing this writable from its set of destinations.
 </p>
 <pre><code class="javascript">var writer = getWritableStreamSomehow();
 var reader = getReadableStreamSomehow();
-writer.on(&#39;unpipe&#39;, function(src) {
+writer.on(&#39;unpipe&#39;, (src) =&gt; {
   console.error(&#39;something has stopped piping into the writer&#39;);
   assert.equal(src, reader);
 });
@@ -934,7 +934,7 @@ of stream class you are writing:
       <p><a href="#stream_class_stream_writable_1">Writable</a></p>
     </td>
     <td>
-      <p><code><a href="#stream_writable_write_chunk_encoding_callback_1">_write</a></code>, <code>_writev</code></p>
+      <p><code><a href="#stream_writable_write_chunk_encoding_callback_1">_write</a></code>, <code><a href="#stream_writable_writev_chunks_callback">_writev</a></code></p>
     </td>
   </tr>
   <tr>
@@ -945,7 +945,7 @@ of stream class you are writing:
       <p><a href="#stream_class_stream_duplex_1">Duplex</a></p>
     </td>
     <td>
-      <p><code><a href="#stream_readable_read_size_1">_read</a></code>, <code><a href="#stream_writable_write_chunk_encoding_callback_1">_write</a></code>, <code>_writev</code></p>
+      <p><code><a href="#stream_readable_read_size_1">_read</a></code>, <code><a href="#stream_writable_write_chunk_encoding_callback_1">_write</a></code>, <code><a href="#stream_writable_writev_chunks_callback">_writev</a></code></p>
     </td>
   </tr>
   <tr>
@@ -956,7 +956,7 @@ of stream class you are writing:
       <p><a href="#stream_class_stream_transform_1">Transform</a></p>
     </td>
     <td>
-      <p><code>_transform</code>, <code>_flush</code></p>
+      <p><code><a href="#stream_transform_transform_chunk_encoding_callback">_transform</a></code>, <code><a href="#stream_transform_flush_callback">_flush</a></code></p>
     </td>
   </tr>
 </table>
@@ -1143,8 +1143,8 @@ SourceWrapper.prototype._read = function(size) {
 from 1 to 1,000,000 in ascending order, and then ends.
 
 </p>
-<pre><code class="javascript">var Readable = require(&#39;stream&#39;).Readable;
-var util = require(&#39;util&#39;);
+<pre><code class="javascript">const Readable = require(&#39;stream&#39;).Readable;
+const util = require(&#39;util&#39;);
 util.inherits(Counter, Readable);
 
 function Counter(opt) {
@@ -1181,8 +1181,8 @@ below for a better implementation.
 // Using Readable directly for this is sub-optimal.  See the
 // alternative example below under the Transform section.
 
-var Readable = require(&#39;stream&#39;).Readable;
-var util = require(&#39;util&#39;);
+const Readable = require(&#39;stream&#39;).Readable;
+const util = require(&#39;util&#39;);
 
 util.inherits(SimpleProtocol, Readable);
 
@@ -1198,13 +1198,13 @@ function SimpleProtocol(source, options) {
   this._source = source;
 
   var self = this;
-  source.on(&#39;end&#39;, function() {
+  source.on(&#39;end&#39;, () =&gt; {
     self.push(null);
   });
 
   // give it a kick whenever the source is readable
   // read(0) will not consume any bytes
-  source.on(&#39;readable&#39;, function() {
+  source.on(&#39;readable&#39;, () =&gt; {
     self.read(0);
   });
 
@@ -1404,8 +1404,8 @@ would be piped into the parser, which is a more idiomatic Node.js stream
 approach.
 
 </p>
-<pre><code class="javascript">var util = require(&#39;util&#39;);
-var Transform = require(&#39;stream&#39;).Transform;
+<pre><code class="javascript">const util = require(&#39;util&#39;);
+const Transform = require(&#39;stream&#39;).Transform;
 util.inherits(SimpleProtocol, Transform);
 
 function SimpleProtocol(options) {
@@ -1718,10 +1718,10 @@ introduces an edge case in the following conditions:
 
 </p>
 <pre><code class="javascript">// WARNING!  BROKEN!
-net.createServer(function(socket) {
+net.createServer((socket) =&gt; {
 
   // we add an &#39;end&#39; method, but never consume the data
-  socket.on(&#39;end&#39;, function() {
+  socket.on(&#39;end&#39;, () =&gt; {
     // It will never get here.
     socket.end(&#39;I got your message (but didnt read it)\n&#39;);
   });
@@ -1737,9 +1737,9 @@ start the flow of data:
 
 </p>
 <pre><code class="javascript">// Workaround
-net.createServer(function(socket) {
+net.createServer((socket) =&gt; {
 
-  socket.on(&#39;end&#39;, function() {
+  socket.on(&#39;end&#39;, () =&gt; {
     socket.end(&#39;I got your message (but didnt read it)\n&#39;);
   });
 
@@ -1793,9 +1793,9 @@ respectively. These options can be used to implement parsers and
 serializers with Transform streams.
 
 </p>
-<pre><code class="javascript">var util = require(&#39;util&#39;);
-var StringDecoder = require(&#39;string_decoder&#39;).StringDecoder;
-var Transform = require(&#39;stream&#39;).Transform;
+<pre><code class="javascript">const util = require(&#39;util&#39;);
+const StringDecoder = require(&#39;string_decoder&#39;).StringDecoder;
+const Transform = require(&#39;stream&#39;).Transform;
 util.inherits(JSONParseStream, Transform);
 
 // Gets \n-delimited JSON string data, and emits the parsed objects

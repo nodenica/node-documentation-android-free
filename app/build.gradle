@@ -8,8 +8,8 @@ android {
         applicationId "com.mc.nad"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 52000
-        versionName "5.2.0"
+        versionCode 54000
+        versionName "5.4.0"
     }
     buildTypes {
         release {
@@ -23,5 +23,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.google.android.gms:play-services-ads:8.3.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
 }

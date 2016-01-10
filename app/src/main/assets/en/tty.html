@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>TTY Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>TTY Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="tty" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -142,9 +142,9 @@ ever created (and only when <code>isatty(1)</code> is true).
 has changed.
 
 </p>
-<pre><code>process.stdout.on(&#39;resize&#39;, function() {
+<pre><code>process.stdout.on(&#39;resize&#39;, () =&gt; {
   console.log(&#39;screen size has changed!&#39;);
-  console.log(process.stdout.columns + &#39;x&#39; + process.stdout.rows);
+  console.log(`${process.stdout.columns}x${process.stdout.rows}`);
 });</code></pre>
 <h3>ws.columns<span><a class="mark" href="#tty_ws_columns" id="tty_ws_columns">#</a></span></h3>
 <p>A <code>Number</code> that gives the number of columns the TTY currently has. This property

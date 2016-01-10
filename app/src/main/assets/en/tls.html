@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>TLS (SSL) Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>TLS (SSL) Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="tls" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -409,11 +409,11 @@ established after addition of event listener.
 
 </p>
 <pre><code>var tlsSessionStore = {};
-server.on(&#39;newSession&#39;, function(id, data, cb) {
+server.on(&#39;newSession&#39;, (id, data, cb) =&gt; {
   tlsSessionStore[id.toString(&#39;hex&#39;)] = data;
   cb();
 });
-server.on(&#39;resumeSession&#39;, function(id, cb) {
+server.on(&#39;resumeSession&#39;, (id, cb) =&gt; {
   cb(null, tlsSessionStore[id.toString(&#39;hex&#39;)] || null);
 });</code></pre>
 <h3>Event: &#39;secureConnection&#39;<span><a class="mark" href="#tls_event_secureconnection" id="tls_event_secureconnection">#</a></span></h3>
@@ -754,9 +754,9 @@ PEM format. (Could be an array of keys).</p>
 <li><p><code>cert</code>: A string or <code>Buffer</code> containing the certificate key of the client in
 PEM format. (Could be an array of certs).</p>
 </li>
-<li><p><code>ca</code>: An array of strings or <code>Buffer</code>s of trusted certificates in PEM
-format. If this is omitted several well known &quot;root&quot; CAs will be used,
-like VeriSign. These are used to authorize connections.</p>
+<li><p><code>ca</code>: A string, <code>Buffer</code> or array of strings or <code>Buffer</code>s of trusted
+certificates in PEM format. If this is omitted several well known &quot;root&quot;
+CAs will be used, like VeriSign. These are used to authorize connections.</p>
 </li>
 <li><p><code>ciphers</code>: A string describing the ciphers to use or exclude, separated by
 <code>:</code>. Uses the same default cipher suite as <code>tls.createServer</code>.</p>
@@ -787,6 +787,10 @@ fails. Return <code>undefined</code> if passing.</p>
 SSL version 3. The possible values depend on your installation of
 OpenSSL and are defined in the constant <a href="https://www.openssl.org/docs/ssl/ssl.html#DEALING_WITH_PROTOCOL_METHODS">SSL_METHODS</a>.</p>
 </li>
+<li><p><code>secureContext</code>: An optional TLS context object from
+ <code>tls.createSecureContext( ... )</code>. It could be used for caching client
+ certificates, key, and CA certificates.</p>
+</li>
 <li><p><code>session</code>: A <code>Buffer</code> instance, containing TLS session.</p>
 </li>
 <li><p><code>minDHSize</code>: Minimum size of DH parameter in bits to accept a TLS
@@ -805,10 +809,10 @@ error. Default: 1024.</p>
 <p>Here is an example of a client of echo server as described previously:
 
 </p>
-<pre><code>var tls = require(&#39;tls&#39;);
-var fs = require(&#39;fs&#39;);
+<pre><code>const tls = require(&#39;tls&#39;);
+const fs = require(&#39;fs&#39;);
 
-var options = {
+const options = {
   // These are necessary only if using the client certificate authentication
   key: fs.readFileSync(&#39;client-key.pem&#39;),
   cert: fs.readFileSync(&#39;client-cert.pem&#39;),
@@ -817,40 +821,40 @@ var options = {
   ca: [ fs.readFileSync(&#39;server-cert.pem&#39;) ]
 };
 
-var socket = tls.connect(8000, options, function() {
+var socket = tls.connect(8000, options, () =&gt; {
   console.log(&#39;client connected&#39;,
               socket.authorized ? &#39;authorized&#39; : &#39;unauthorized&#39;);
   process.stdin.pipe(socket);
   process.stdin.resume();
 });
 socket.setEncoding(&#39;utf8&#39;);
-socket.on(&#39;data&#39;, function(data) {
+socket.on(&#39;data&#39;, (data) =&gt; {
   console.log(data);
 });
-socket.on(&#39;end&#39;, function() {
+socket.on(&#39;end&#39;, () =&gt; {
   server.close();
 });</code></pre>
 <p>Or
 
 </p>
-<pre><code>var tls = require(&#39;tls&#39;);
-var fs = require(&#39;fs&#39;);
+<pre><code>const tls = require(&#39;tls&#39;);
+const fs = require(&#39;fs&#39;);
 
-var options = {
+const options = {
   pfx: fs.readFileSync(&#39;client.pfx&#39;)
 };
 
-var socket = tls.connect(8000, options, function() {
+var socket = tls.connect(8000, options, () =&gt; {
   console.log(&#39;client connected&#39;,
               socket.authorized ? &#39;authorized&#39; : &#39;unauthorized&#39;);
   process.stdin.pipe(socket);
   process.stdin.resume();
 });
 socket.setEncoding(&#39;utf8&#39;);
-socket.on(&#39;data&#39;, function(data) {
+socket.on(&#39;data&#39;, (data) =&gt; {
   console.log(data);
 });
-socket.on(&#39;end&#39;, function() {
+socket.on(&#39;end&#39;, () =&gt; {
   server.close();
 });</code></pre>
 <h2>tls.createSecureContext(details)<span><a class="mark" href="#tls_tls_createsecurecontext_details" id="tls_tls_createsecurecontext_details">#</a></span></h2>
@@ -867,8 +871,9 @@ can be provided. It can either be a plain array of keys, or an array of
 objects in the format <code>{pem: key, passphrase: passphrase}</code>. (Required)</li>
 <li><code>passphrase</code> : A string of passphrase for the private key or pfx</li>
 <li><code>cert</code> : A string holding the PEM encoded certificate</li>
-<li><code>ca</code> : Either a string or list of strings of PEM encoded CA
-certificates to trust.</li>
+<li><code>ca</code>: A string, <code>Buffer</code> or array of strings or <code>Buffer</code>s of trusted
+certificates in PEM format. If this is omitted several well known &quot;root&quot;
+CAs will be used, like VeriSign. These are used to authorize connections.</li>
 <li><code>crl</code> : Either a string or list of strings of PEM encoded CRLs
 (Certificate Revocation List)</li>
 <li><code>ciphers</code>: A string describing the ciphers to use or exclude.
@@ -936,9 +941,9 @@ objects in the format <code>{pem: key, passphrase: passphrase}</code>. (Required
 <li><p><code>cert</code>: A string or <code>Buffer</code> containing the certificate key of the server in
 PEM format. (Could be an array of certs). (Required)</p>
 </li>
-<li><p><code>ca</code>: An array of strings or <code>Buffer</code>s of trusted certificates in PEM
-format. If this is omitted several well known &quot;root&quot; CAs will be used,
-like VeriSign. These are used to authorize connections.</p>
+<li><p><code>ca</code>: A string, <code>Buffer</code> or array of strings or <code>Buffer</code>s of trusted
+certificates in PEM format. If this is omitted several well known &quot;root&quot;
+CAs will be used, like VeriSign. These are used to authorize connections.</p>
 </li>
 <li><p><code>crl</code> : Either a string or list of strings of PEM encoded CRLs (Certificate
 Revocation List)</p>
@@ -1046,10 +1051,10 @@ OpenSSL and are defined in the constant <a href="https://www.openssl.org/docs/ss
 <p>Here is a simple example echo server:
 
 </p>
-<pre><code>var tls = require(&#39;tls&#39;);
-var fs = require(&#39;fs&#39;);
+<pre><code>const tls = require(&#39;tls&#39;);
+const fs = require(&#39;fs&#39;);
 
-var options = {
+const options = {
   key: fs.readFileSync(&#39;server-key.pem&#39;),
   cert: fs.readFileSync(&#39;server-cert.pem&#39;),
 
@@ -1060,23 +1065,23 @@ var options = {
   ca: [ fs.readFileSync(&#39;client-cert.pem&#39;) ]
 };
 
-var server = tls.createServer(options, function(socket) {
+var server = tls.createServer(options, (socket) =&gt; {
   console.log(&#39;server connected&#39;,
               socket.authorized ? &#39;authorized&#39; : &#39;unauthorized&#39;);
-  socket.write(&quot;welcome!\n&quot;);
+  socket.write(&#39;welcome!\n&#39;);
   socket.setEncoding(&#39;utf8&#39;);
   socket.pipe(socket);
 });
-server.listen(8000, function() {
+server.listen(8000, () =&gt; {
   console.log(&#39;server bound&#39;);
 });</code></pre>
 <p>Or
 
 </p>
-<pre><code>var tls = require(&#39;tls&#39;);
-var fs = require(&#39;fs&#39;);
+<pre><code>const tls = require(&#39;tls&#39;);
+const fs = require(&#39;fs&#39;);
 
-var options = {
+const options = {
   pfx: fs.readFileSync(&#39;server.pfx&#39;),
 
   // This is necessary only if using the client certificate authentication.
@@ -1084,14 +1089,14 @@ var options = {
 
 };
 
-var server = tls.createServer(options, function(socket) {
+var server = tls.createServer(options, (socket) =&gt; {
   console.log(&#39;server connected&#39;,
               socket.authorized ? &#39;authorized&#39; : &#39;unauthorized&#39;);
-  socket.write(&quot;welcome!\n&quot;);
+  socket.write(&#39;welcome!\n&#39;);
   socket.setEncoding(&#39;utf8&#39;);
   socket.pipe(socket);
 });
-server.listen(8000, function() {
+server.listen(8000, () =&gt; {
   console.log(&#39;server bound&#39;);
 });</code></pre>
 <p>You can test this server by connecting to it with <code>openssl s_client</code>:

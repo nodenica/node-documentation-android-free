@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Modules Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>Modules Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="modules" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -120,13 +120,12 @@ in one-to-one correspondence.  As an example, <code>foo.js</code> loads the modu
 <p>The contents of <code>foo.js</code>:
 
 </p>
-<pre><code>var circle = require(&#39;./circle.js&#39;);
-console.log( &#39;The area of a circle of radius 4 is &#39;
-           + circle.area(4));</code></pre>
+<pre><code>const circle = require(&#39;./circle.js&#39;);
+console.log( `The area of a circle of radius 4 is ${circle.area(4)}`);</code></pre>
 <p>The contents of <code>circle.js</code>:
 
 </p>
-<pre><code>var PI = Math.PI;
+<pre><code>const PI = Math.PI;
 
 exports.area = function (r) {
   return PI * r * r;
@@ -153,9 +152,9 @@ instead of <code>exports</code>.
 <p>Below, <code>bar.js</code> makes use of the <code>square</code> module, which exports a constructor:
 
 </p>
-<pre><code>var square = require(&#39;./square.js&#39;);
+<pre><code>const square = require(&#39;./square.js&#39;);
 var mySquare = square(2);
-console.log(&#39;The area of my square is &#39; + mySquare.area());</code></pre>
+console.log(`The area of my square is ${mySquare.area()}`);</code></pre>
 <p>The <code>square</code> module is defined in <code>square.js</code>:
 
 </p>
@@ -362,7 +361,7 @@ executing when it is returned.
 </p>
 <pre><code>console.log(&#39;a starting&#39;);
 exports.done = false;
-var b = require(&#39;./b.js&#39;);
+const b = require(&#39;./b.js&#39;);
 console.log(&#39;in a, b.done = %j&#39;, b.done);
 exports.done = true;
 console.log(&#39;a done&#39;);</code></pre>
@@ -371,7 +370,7 @@ console.log(&#39;a done&#39;);</code></pre>
 </p>
 <pre><code>console.log(&#39;b starting&#39;);
 exports.done = false;
-var a = require(&#39;./a.js&#39;);
+const a = require(&#39;./a.js&#39;);
 console.log(&#39;in b, a.done = %j&#39;, a.done);
 exports.done = true;
 console.log(&#39;b done&#39;);</code></pre>
@@ -379,8 +378,8 @@ console.log(&#39;b done&#39;);</code></pre>
 
 </p>
 <pre><code>console.log(&#39;main starting&#39;);
-var a = require(&#39;./a.js&#39;);
-var b = require(&#39;./b.js&#39;);
+const a = require(&#39;./a.js&#39;);
+const b = require(&#39;./b.js&#39;);
 console.log(&#39;in main, a.done=%j, b.done=%j&#39;, a.done, b.done);</code></pre>
 <p>When <code>main.js</code> loads <code>a.js</code>, then <code>a.js</code> in turn loads <code>b.js</code>.  At that
 point, <code>b.js</code> tries to load <code>a.js</code>.  In order to prevent an infinite
@@ -579,20 +578,20 @@ which is probably not what you want to do.
 <p>For example suppose we were making a module called <code>a.js</code>
 
 </p>
-<pre><code>var EventEmitter = require(&#39;events&#39;);
+<pre><code>const EventEmitter = require(&#39;events&#39;);
 
 module.exports = new EventEmitter();
 
 // Do some work, and after some time emit
 // the &#39;ready&#39; event from the module itself.
-setTimeout(function() {
+setTimeout(() =&gt; {
   module.exports.emit(&#39;ready&#39;);
 }, 1000);</code></pre>
 <p>Then in another file we could do
 
 </p>
-<pre><code>var a = require(&#39;./a&#39;);
-a.on(&#39;ready&#39;, function() {
+<pre><code>const a = require(&#39;./a&#39;);
+a.on(&#39;ready&#39;, () =&gt; {
   console.log(&#39;module a is ready&#39;);
 });</code></pre>
 <p>Note that assignment to <code>module.exports</code> must be done immediately. It cannot be
@@ -602,13 +601,13 @@ done in any callbacks.  This does not work:
 <p>x.js:
 
 </p>
-<pre><code>setTimeout(function() {
-  module.exports = { a: &quot;hello&quot; };
+<pre><code>setTimeout(() =&gt; {
+  module.exports = { a: &#39;hello&#39; };
 }, 0);</code></pre>
 <p>y.js:
 
 </p>
-<pre><code>var x = require(&#39;./x&#39;);
+<pre><code>const x = require(&#39;./x&#39;);
 console.log(x.a);</code></pre>
 <h4>exports alias<span><a class="mark" href="#modules_exports_alias" id="modules_exports_alias">#</a></span></h4>
 <p>The <code>exports</code> variable that is available within a module starts as a reference

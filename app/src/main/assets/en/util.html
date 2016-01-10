@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>util Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>util Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="util" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -118,12 +118,12 @@
 access them.
 
 </p>
-<p>The <code>util</code> module is primarily designed to support the needs of node.js&#39;s
+<p>The <code>util</code> module is primarily designed to support the needs of Node.js&#39;s
 internal APIs.  Many of these utilities are useful for your own
 programs.  If you find that these functions are lacking for your
 purposes, however, you are encouraged to write your own utilities.  We
 are not interested in any future additions to the <code>util</code> module that
-are unnecessary for node.js&#39;s internal functionality.
+are unnecessary for Node.js&#39;s internal functionality.
 
 </p>
 <h2>util.debug(string)<span><a class="mark" href="#util_util_debug_string" id="util_util_debug_string">#</a></span></h2>
@@ -166,7 +166,7 @@ comma.  For example, <code>NODE_DEBUG=fs,net,tls</code>.
 <p>Marks that a method should not be used any more.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 exports.puts = util.deprecate(function() {
   for (var i = 0, len = arguments.length; i &lt; len; ++i) {
@@ -241,8 +241,8 @@ prototype of <code>constructor</code> will be set to a new object created from
 through the <code>constructor.super_</code> property.
 
 </p>
-<pre><code>var util = require(&quot;util&quot;);
-var EventEmitter = require(&quot;events&quot;);
+<pre><code>const util = require(&#39;util&#39;);
+const EventEmitter = require(&#39;events&#39;);
 
 function MyStream() {
     EventEmitter.call(this);
@@ -251,7 +251,7 @@ function MyStream() {
 util.inherits(MyStream, EventEmitter);
 
 MyStream.prototype.write = function(data) {
-    this.emit(&quot;data&quot;, data);
+    this.emit(&#39;data&#39;, data);
 }
 
 var stream = new MyStream();
@@ -259,10 +259,10 @@ var stream = new MyStream();
 console.log(stream instanceof EventEmitter); // true
 console.log(MyStream.super_ === EventEmitter); // true
 
-stream.on(&quot;data&quot;, function(data) {
-    console.log(&#39;Received data: &quot;&#39; + data + &#39;&quot;&#39;);
+stream.on(&#39;data&#39;, (data) =&gt; {
+  console.log(`Received data: &quot;${data}&quot;`);
 })
-stream.write(&quot;It works!&quot;); // Received data: &quot;It works!&quot;</code></pre>
+stream.write(&#39;It works!&#39;); // Received data: &quot;It works!&quot;</code></pre>
 <h2>util.inspect(object[, options])<span><a class="mark" href="#util_util_inspect_object_options" id="util_util_inspect_object_options">#</a></span></h2>
 <p>Return a string representation of <code>object</code>, which is useful for debugging.
 
@@ -289,7 +289,7 @@ defined on the objects being inspected won&#39;t be called. Defaults to <code>tr
 <p>Example of inspecting all properties of the <code>util</code> object:
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 console.log(util.inspect(util, { showHidden: true, depth: null }));</code></pre>
 <p>Values may supply their own custom <code>inspect(depth, opts)</code> functions, when
@@ -330,11 +330,11 @@ There are also <code>bold</code>, <code>italic</code>, <code>underline</code> an
 will invoke and use the result of when inspecting the object:
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 var obj = { name: &#39;nate&#39; };
 obj.inspect = function(depth) {
-  return &#39;{&#39; + this.name + &#39;}&#39;;
+  return `{${this.name}}`;
 };
 
 util.inspect(obj);
@@ -358,7 +358,7 @@ util.inspect(obj);
 <p>Returns <code>true</code> if the given &quot;object&quot; is an <code>Array</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isArray([])
   // true
@@ -370,7 +370,7 @@ util.isArray({})
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Boolean</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isBoolean(1)
   // false
@@ -385,7 +385,7 @@ util.isBoolean(false)
 <p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Buffer</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isBuffer({ length: 0 })
   // false
@@ -397,7 +397,7 @@ util.isBuffer(new Buffer(&#39;hello world&#39;))
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Date</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isDate(new Date())
   // true
@@ -409,7 +409,7 @@ util.isDate({})
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is an <a href="errors.html#errors_class_error"><code>Error</code></a>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isError(new Error())
   // true
@@ -421,7 +421,7 @@ util.isError({ name: &#39;Error&#39;, message: &#39;an error occurred&#39; })
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Function</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 function Foo() {}
 var Bar = function() {};
@@ -436,7 +436,7 @@ util.isFunction(Bar)
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is strictly <code>null</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isNull(0)
   // false
@@ -448,7 +448,7 @@ util.isNull(null)
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is <code>null</code> or <code>undefined</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isNullOrUndefined(0)
   // false
@@ -460,7 +460,7 @@ util.isNullOrUndefined(null)
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Number</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isNumber(false)
   // false
@@ -475,7 +475,7 @@ util.isNumber(NaN)
 <code>Function</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isObject(5)
   // false
@@ -489,7 +489,7 @@ util.isObject(function(){})
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a primitive type. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isPrimitive(5)
   // true
@@ -513,7 +513,7 @@ util.isPrimitive(new Date())
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>RegExp</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isRegExp(/some regexp/)
   // true
@@ -525,7 +525,7 @@ util.isRegExp({})
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>String</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isString(&#39;&#39;)
   // true
@@ -539,7 +539,7 @@ util.isString(5)
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Symbol</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 util.isSymbol(5)
   // false
@@ -551,7 +551,7 @@ util.isSymbol(Symbol(&#39;foo&#39;))
 <pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is <code>undefined</code>. <code>false</code> otherwise.
 
 </p>
-<pre><code>var util = require(&#39;util&#39;);
+<pre><code>const util = require(&#39;util&#39;);
 
 var foo;
 util.isUndefined(5)

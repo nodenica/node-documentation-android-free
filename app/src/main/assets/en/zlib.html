@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Zlib Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>Zlib Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="zlib" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -128,7 +128,7 @@
 <pre class="api_stability_2">Stability: 2 - Stable</pre><p>You can access this module with:
 
 </p>
-<pre><code>var zlib = require(&#39;zlib&#39;);</code></pre>
+<pre><code>const zlib = require(&#39;zlib&#39;);</code></pre>
 <p>This provides bindings to Gzip/Gunzip, Deflate/Inflate, and
 DeflateRaw/InflateRaw classes.  Each class takes the same options, and
 is a readable/writable Stream.
@@ -139,24 +139,24 @@ is a readable/writable Stream.
 fs.ReadStream into a zlib stream, then into an fs.WriteStream.
 
 </p>
-<pre><code>var gzip = zlib.createGzip();
-var fs = require(&#39;fs&#39;);
-var inp = fs.createReadStream(&#39;input.txt&#39;);
-var out = fs.createWriteStream(&#39;input.txt.gz&#39;);
+<pre><code>const gzip = zlib.createGzip();
+const fs = require(&#39;fs&#39;);
+const inp = fs.createReadStream(&#39;input.txt&#39;);
+const out = fs.createWriteStream(&#39;input.txt.gz&#39;);
 
 inp.pipe(gzip).pipe(out);</code></pre>
 <p>Compressing or decompressing data in one step can be done by using
 the convenience methods.
 
 </p>
-<pre><code>var input = &#39;.................................&#39;;
+<pre><code>const input = &#39;.................................&#39;;
 zlib.deflate(input, function(err, buffer) {
   if (!err) {
     console.log(buffer.toString(&#39;base64&#39;));
   }
 });
 
-var buffer = new Buffer(&#39;eJzT0yMAAGTvBe8=&#39;, &#39;base64&#39;);
+const buffer = new Buffer(&#39;eJzT0yMAAGTvBe8=&#39;, &#39;base64&#39;);
 zlib.unzip(buffer, function(err, buffer) {
   if (!err) {
     console.log(buffer.toString());
@@ -173,14 +173,14 @@ on the speed/memory/compression tradeoffs involved in zlib usage.
 
 </p>
 <pre><code>// client request example
-var zlib = require(&#39;zlib&#39;);
-var http = require(&#39;http&#39;);
-var fs = require(&#39;fs&#39;);
-var request = http.get({ host: &#39;izs.me&#39;,
+const zlib = require(&#39;zlib&#39;);
+const http = require(&#39;http&#39;);
+const fs = require(&#39;fs&#39;);
+const request = http.get({ host: &#39;izs.me&#39;,
                          path: &#39;/&#39;,
                          port: 80,
                          headers: { &#39;accept-encoding&#39;: &#39;gzip,deflate&#39; } });
-request.on(&#39;response&#39;, function(response) {
+request.on(&#39;response&#39;, (response) =&gt; {
   var output = fs.createWriteStream(&#39;izs.me_index.html&#39;);
 
   switch (response.headers[&#39;content-encoding&#39;]) {
@@ -200,10 +200,10 @@ request.on(&#39;response&#39;, function(response) {
 // server example
 // Running a gzip operation on every request is quite expensive.
 // It would be much more efficient to cache the compressed buffer.
-var zlib = require(&#39;zlib&#39;);
-var http = require(&#39;http&#39;);
-var fs = require(&#39;fs&#39;);
-http.createServer(function(request, response) {
+const zlib = require(&#39;zlib&#39;);
+const http = require(&#39;http&#39;);
+const fs = require(&#39;fs&#39;);
+http.createServer((request, response) =&gt; {
   var raw = fs.createReadStream(&#39;index.html&#39;);
   var acceptEncoding = request.headers[&#39;accept-encoding&#39;];
   if (!acceptEncoding) {

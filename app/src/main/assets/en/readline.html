@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Readline Node.js v5.2.0 Manual &amp; Documentation</title>
+  <title>Readline Node.js v5.4.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="readline" class="interior">
       <header>
-        <h1>Node.js v5.2.0 Documentation</h1>
+        <h1>Node.js v5.4.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -119,16 +119,16 @@ terminate until you&#39;ve closed the interface. Here&#39;s how to allow your
 program to gracefully exit:
 
 </p>
-<pre><code>var readline = require(&#39;readline&#39;);
+<pre><code>const readline = require(&#39;readline&#39;);
 
-var rl = readline.createInterface({
+const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-rl.question(&quot;What do you think of Node.js? &quot;, function(answer) {
+rl.question(&#39;What do you think of Node.js? &#39;, (answer) =&gt; {
   // TODO: Log the answer in a database
-  console.log(&quot;Thank you for your valuable feedback:&quot;, answer);
+  console.log(&#39;Thank you for your valuable feedback:&#39;, answer);
 
   rl.close();
 });</code></pre>
@@ -181,8 +181,8 @@ nothing is displayed.
 <p>Example usage:
 
 </p>
-<pre><code>interface.question(&#39;What is your favorite food?&#39;, function(answer) {
-  console.log(&#39;Oh, so your favorite food is &#39; + answer);
+<pre><code>interface.question(&#39;What is your favorite food?&#39;, (answer) =&gt; {
+  console.log(`Oh, so your favorite food is ${answer}`);
 });</code></pre>
 <h3>rl.resume()<span><a class="mark" href="#readline_rl_resume" id="readline_rl_resume">#</a></span></h3>
 <p>Resumes the readline <code>input</code> stream.
@@ -190,7 +190,7 @@ nothing is displayed.
 </p>
 <h3>rl.setPrompt(prompt)<span><a class="mark" href="#readline_rl_setprompt_prompt" id="readline_rl_setprompt_prompt">#</a></span></h3>
 <p>Sets the prompt, for example when you run <code>node</code> on the command line, you see
-<code>&gt; </code>, which is node.js&#39;s prompt.
+<code>&gt; </code>, which is Node.js&#39;s prompt.
 
 </p>
 <h3>rl.write(data[, key])<span><a class="mark" href="#readline_rl_write_data_key" id="readline_rl_write_data_key">#</a></span></h3>
@@ -236,8 +236,8 @@ user hits enter, or return. This is a good hook to listen for user input.
 <p>Example of listening for <code>&#39;line&#39;</code>:
 
 </p>
-<pre><code>rl.on(&#39;line&#39;, function (cmd) {
-  console.log(&#39;You just typed: &#39;+cmd);
+<pre><code>rl.on(&#39;line&#39;, (cmd) =&gt; {
+  console.log(`You just typed: ${cmd}`);
 });</code></pre>
 <h3>Event: &#39;pause&#39;<span><a class="mark" href="#readline_event_pause" id="readline_event_pause">#</a></span></h3>
 <p><code>function () {}</code>
@@ -253,7 +253,7 @@ user hits enter, or return. This is a good hook to listen for user input.
 <p>Example of listening for <code>&#39;pause&#39;</code>:
 
 </p>
-<pre><code>rl.on(&#39;pause&#39;, function() {
+<pre><code>rl.on(&#39;pause&#39;, () =&gt; {
   console.log(&#39;Readline paused.&#39;);
 });</code></pre>
 <h3>Event: &#39;resume&#39;<span><a class="mark" href="#readline_event_resume" id="readline_event_resume">#</a></span></h3>
@@ -266,7 +266,7 @@ user hits enter, or return. This is a good hook to listen for user input.
 <p>Example of listening for <code>&#39;resume&#39;</code>:
 
 </p>
-<pre><code>rl.on(&#39;resume&#39;, function() {
+<pre><code>rl.on(&#39;resume&#39;, () =&gt; {
   console.log(&#39;Readline resumed.&#39;);
 });</code></pre>
 <h3>Event: &#39;SIGCONT&#39;<span><a class="mark" href="#readline_event_sigcont" id="readline_event_sigcont">#</a></span></h3>
@@ -285,7 +285,7 @@ background.
 <p>Example of listening for <code>SIGCONT</code>:
 
 </p>
-<pre><code>rl.on(&#39;SIGCONT&#39;, function() {
+<pre><code>rl.on(&#39;SIGCONT&#39;, () =&gt; {
   // `prompt` will automatically resume the stream
   rl.prompt();
 });</code></pre>
@@ -301,8 +301,8 @@ stream receives a <code>SIGINT</code>, <code>pause</code> will be triggered.
 <p>Example of listening for <code>SIGINT</code>:
 
 </p>
-<pre><code>rl.on(&#39;SIGINT&#39;, function() {
-  rl.question(&#39;Are you sure you want to exit?&#39;, function(answer) {
+<pre><code>rl.on(&#39;SIGINT&#39;, () =&gt; {
+  rl.question(&#39;Are you sure you want to exit?&#39;, (answer) =&gt; {
     if (answer.match(/^y(es)?$/i)) rl.pause();
   });
 });</code></pre>
@@ -329,7 +329,7 @@ before the program was sent to the background.
 <p>Example of listening for <code>SIGTSTP</code>:
 
 </p>
-<pre><code>rl.on(&#39;SIGTSTP&#39;, function() {
+<pre><code>rl.on(&#39;SIGTSTP&#39;, () =&gt; {
   // This will override SIGTSTP and prevent the program from going to the
   // background.
   console.log(&#39;Caught SIGTSTP.&#39;);
@@ -339,13 +339,13 @@ before the program was sent to the background.
 line interface:
 
 </p>
-<pre><code>var readline = require(&#39;readline&#39;),
-    rl = readline.createInterface(process.stdin, process.stdout);
+<pre><code>const readline = require(&#39;readline&#39;);
+const rl = readline.createInterface(process.stdin, process.stdout);
 
 rl.setPrompt(&#39;OHAI&gt; &#39;);
 rl.prompt();
 
-rl.on(&#39;line&#39;, function(line) {
+rl.on(&#39;line&#39;, (line) =&gt; {
   switch(line.trim()) {
     case &#39;hello&#39;:
       console.log(&#39;world!&#39;);
@@ -355,7 +355,7 @@ rl.on(&#39;line&#39;, function(line) {
       break;
   }
   rl.prompt();
-}).on(&#39;close&#39;, function() {
+}).on(&#39;close&#39;, () =&gt; {
   console.log(&#39;Have a great day!&#39;);
   process.exit(0);
 });</code></pre>
@@ -412,7 +412,7 @@ is supposed to return an Array with 2 entries:
 </p>
 <pre><code>function completer(line) {
   var completions = &#39;.help .error .exit .quit .q&#39;.split(&#39; &#39;)
-  var hits = completions.filter(function(c) { return c.indexOf(line) == 0 })
+  var hits = completions.filter((c) =&gt; { return c.indexOf(line) == 0 })
   // show all completions if none found
   return [hits.length ? hits : completions, line]
 }</code></pre>
@@ -426,8 +426,8 @@ is supposed to return an Array with 2 entries:
 <a href="process.html#process_process_stdout"><code>process.stdout</code></a> in order to accept user input:
 
 </p>
-<pre><code>var readline = require(&#39;readline&#39;);
-var rl = readline.createInterface({
+<pre><code>const readline = require(&#39;readline&#39;);
+const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });</code></pre>
