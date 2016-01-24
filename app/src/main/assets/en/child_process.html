@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Child Process Node.js v5.4.0 Manual &amp; Documentation</title>
+  <title>Child Process Node.js v5.5.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="child_process" class="interior">
       <header>
-        <h1>Node.js v5.4.0 Documentation</h1>
+        <h1>Node.js v5.5.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -156,10 +156,9 @@ the event loop until the spawned process either exits of is terminated.
 
 </p>
 <p>For convenience, the <code>child_process</code> module provides a handful of synchronous
-and asynchronous alternatives to <code>child_process.spawn()</code> and
-<code>child_process.spawnSync()</code>, each of which are documented fully <a href="#child_process_asynchronous_process_creation">below</a>.
-<em>Note that each of these alternatives are implemented on top of
-<code>child_process.spawn()</code> or <code>child_process.spawnSync()</code>.</em>
+and asynchronous alternatives to <a href="#child_process_child_process_spawn_command_args_options"><code>child_process.spawn()</code></a> and
+<a href="#child_process_child_process_spawnsync_command_args_options"><code>child_process.spawnSync()</code></a>.  <em>Note that each of these alternatives are
+implemented on top of <code>child_process.spawn()</code> or <code>child_process.spawnSync()</code>.</em>
 
 </p>
 <ul>
@@ -187,8 +186,8 @@ and <code>child_process.execFile()</code> methods all follow the idiomatic async
 programming pattern typical of other Node.js APIs.
 
 </p>
-<p>Each of the methods returns a [ChildProcess][] instance. These objects
-implement the Node.js [EventEmitter][] API, allowing the parent process to
+<p>Each of the methods returns a <a href="#child_process_child_process"><code>ChildProcess</code></a> instance. These objects
+implement the Node.js <a href="events.html#events_class_events_eventemitter"><code>EventEmitter</code></a> API, allowing the parent process to
 register listener functions that are called when certain events occur during
 the life cycle of the child process.
 
@@ -311,7 +310,7 @@ replace the existing process and uses a shell to execute the command.</em>
 </p>
 <h3>child_process.execFile(file[, args][, options][, callback])<span><a class="mark" href="#child_process_child_process_execfile_file_args_options_callback" id="child_process_child_process_execfile_file_args_options_callback">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>file</code> <span class="type">String</span> The filename of the program to run</li>
+<li><code>file</code> <span class="type">String</span> A path to an executable file</li>
 <li><code>args</code> <span class="type">Array</span> List of string arguments</li>
 <li><code>options</code> <span class="type">Object</span><ul>
 <li><code>cwd</code> <span class="type">String</span> Current working directory of the child process</li>
@@ -333,21 +332,22 @@ stderr - if exceeded child process is killed (Default: 200*1024)</li>
 </li>
 <li>Return: ChildProcess object</li>
 </div></ul>
-<p>The <code>child_process.execFile()</code> method is similar to <a href="#child_process_child_process_exec_command_options_callback"><code>child_process.exec()</code></a>
-except that it does not first spawn a shell. Rather, the specified <code>command</code> is
-spawned directly as a new process making it slightly more efficient than
-<a href="#child_process_child_process_exec_command_options_callback"><code>child_process.exec()</code></a>. The same options are support by both
-<code>child_process.exec()</code> and <code>child_process.execFile()</code>.
+<p>The <code>child_process.execFile()</code> function is similar to <a href="#child_process_child_process_exec_command_options_callback"><code>child_process.exec()</code></a>
+except that it does not spawn a shell. Rather, the specified executable <code>file</code>
+is spawned directly as a new process making it slightly more efficient than
+<a href="#child_process_child_process_exec_command_options_callback"><code>child_process.exec()</code></a>.
 
 </p>
-<pre><code>const exec = require(&#39;child_process&#39;).execFile;
-const child = execFile(&#39;cat *.js bad_file | wc -l&#39;,
-  (error, stdout, stderr) =&gt; {
-    console.log(`stdout: ${stdout}`);
-    console.log(`stderr: ${stderr}`);
-    if (error !== null) {
-      console.log(`exec error: ${error}`);
-    }
+<p>The same options as <code>child_process.exec()</code> are supported. Since a shell is not
+spawned, behaviors such as I/O redirection and file globbing are not supported.
+
+</p>
+<pre><code>const execFile = require(&#39;child_process&#39;).execFile;
+const child = execFile(&#39;node&#39;, [&#39;--version&#39;], (error, stdout, stderr) =&gt; {
+  if (error) {
+    throw error;
+  }
+  console.log(stdout);
 });</code></pre>
 <h3>child_process.fork(modulePath[, args][, options])<span><a class="mark" href="#child_process_child_process_fork_modulepath_args_options" id="child_process_child_process_fork_modulepath_args_options">#</a></span></h3>
 <div class="signature"><ul>
@@ -361,8 +361,8 @@ const child = execFile(&#39;cat *.js bad_file | wc -l&#39;,
 (Default: <code>process.execArgv</code>)</li>
 <li><code>silent</code> <span class="type">Boolean</span> If true, stdin, stdout, and stderr of the child will be
 piped to the parent, otherwise they will be inherited from the parent, see
-the <code>&#39;pipe&#39;</code> and <code>&#39;inherit&#39;</code> options for [<code>spawn()</code>][]&#39;s <a href="#child_process_options_stdio"><code>stdio</code></a> for more details
-(default is false)</li>
+the <code>&#39;pipe&#39;</code> and <code>&#39;inherit&#39;</code> options for <a href="#child_process_child_process_spawn_command_args_options"><code>child_process.spawn()</code></a>&#39;s
+<a href="#child_process_options_stdio"><code>stdio</code></a> for more details (default is false)</li>
 <li><code>uid</code> <span class="type">Number</span> Sets the user identity of the process. (See setuid(2).)</li>
 <li><code>gid</code> <span class="type">Number</span> Sets the group identity of the process. (See setgid(2).)</li>
 </ul>
@@ -408,10 +408,10 @@ not clone the current process.</em>
 <li><code>cwd</code> <span class="type">String</span> Current working directory of the child process</li>
 <li><code>env</code> <span class="type">Object</span> Environment key-value pairs</li>
 <li><code>stdio</code> <span class="type">Array|String</span> Child&#39;s stdio configuration. (See
-<a href="#child_process_options_stdio">below</a>)</li>
+<a href="#child_process_options_stdio"><code>options.stdio</code></a>)</li>
 <li><code>detached</code> <span class="type">Boolean</span> Prepare child to run independently of its parent
 process. Specific behavior depends on the platform, see
-<a href="#child_process_options_detached">below</a>)</li>
+<a href="#child_process_options_detached"><code>options.detached</code></a>)</li>
 <li><code>uid</code> <span class="type">Number</span> Sets the user identity of the process. (See setuid(2).)</li>
 <li><code>gid</code> <span class="type">Number</span> Sets the group identity of the process. (See setgid(2).)</li>
 </ul>
@@ -1144,9 +1144,6 @@ to the same value.
       </div>
     </div>
   </div>
-  <div id="footer">
-  </div>
-
   <script src="assets/sh_main.js"></script>
   <script src="assets/sh_javascript.min.js"></script>
   <script>highlight(undefined, undefined, 'pre');</script>

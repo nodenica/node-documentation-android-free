@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>DNS Node.js v5.4.0 Manual &amp; Documentation</title>
+  <title>DNS Node.js v5.5.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="dns" class="interior">
       <header>
-        <h1>Node.js v5.4.0 Documentation</h1>
+        <h1>Node.js v5.5.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -180,7 +180,7 @@ an integer, then it must be <code>4</code> or <code>6</code>.
 <code>getaddrinfo</code> flags. If <code>hints</code> is not provided, then no flags are passed to
 <code>getaddrinfo</code>. Multiple flags can be passed through <code>hints</code> by logically
 <code>OR</code>ing their values.
-See <a href="#dns_supported_getaddrinfo_flags">supported <code>getaddrinfo</code> flags</a> below for more information on supported
+See <a href="#dns_supported_getaddrinfo_flags">supported <code>getaddrinfo</code> flags</a> for more information on supported
 flags.</li>
 <li><code>all</code>: {Boolean} - When <code>true</code>, the callback returns all resolved addresses
 in an array, otherwise returns a single address. Defaults to <code>false</code>.</li>
@@ -270,11 +270,11 @@ array of the record types specified by <code>rrtype</code>.
 <p>The <code>callback</code> function has arguments <code>(err, addresses)</code>. When successful,
 <code>addresses</code> will be an array. The type of each  item in <code>addresses</code> is
 determined by the record type, and described in the documentation for the
-corresponding lookup methods below.
+corresponding lookup methods.
 
 </p>
 <p>On error, <code>err</code> is an <a href="errors.html#errors_class_error"><code>Error</code></a> object, where <code>err.code</code> is
-one of the error codes listed below.
+one of the error codes listed <a href="#dns_error_codes">here</a>.
 
 </p>
 <h2>dns.resolve4(hostname, callback)<span><a class="mark" href="#dns_dns_resolve4_hostname_callback" id="dns_dns_resolve4_hostname_callback">#</a></span></h2>
@@ -374,7 +374,7 @@ is an array of resolved hostnames for the given <code>ip</code>.
 
 </p>
 <p>On error, <code>err</code> is an <a href="errors.html#errors_class_error"><code>Error</code></a> object, where <code>err.code</code> is
-one of the error codes listed below.
+one of the <a href="#dns_error_codes">DNS error codes</a>.
 
 </p>
 <h2>dns.setServers(servers)<span><a class="mark" href="#dns_dns_setservers_servers" id="dns_dns_setservers_servers">#</a></span></h2>
@@ -471,9 +471,6 @@ uses. For instance, <em>they do not use the configuration from <code>/etc/hosts<
       </div>
     </div>
   </div>
-  <div id="footer">
-  </div>
-
   <script src="assets/sh_main.js"></script>
   <script src="assets/sh_javascript.min.js"></script>
   <script>highlight(undefined, undefined, 'pre');</script>

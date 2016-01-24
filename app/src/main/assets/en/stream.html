@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Stream Node.js v5.4.0 Manual &amp; Documentation</title>
+  <title>Stream Node.js v5.5.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="stream" class="interior">
       <header>
-        <h1>Node.js v5.4.0 Documentation</h1>
+        <h1>Node.js v5.5.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -175,24 +175,20 @@ There are base classes provided for <a href="#stream_class_stream_readable">Read
 streams, <a href="#stream_class_stream_duplex">Duplex</a> streams, and <a href="#stream_class_stream_transform">Transform</a> streams.
 
 </p>
-<p>This document is split up into 3 sections.  The first explains the
-parts of the API that you need to be aware of to use streams in your
-programs.  If you never implement a streaming API yourself, you can
-stop there.
+<p>This document is split up into 3 sections:
 
 </p>
-<p>The second section explains the parts of the API that you need to use
-if you implement your own custom streams yourself.  The API is
-designed to make this easy for you to do.
-
-</p>
-<p>The third section goes into more depth about how streams work,
+<ol>
+<li>The first section explains the parts of the API that you need to be
+aware of to use streams in your programs.</li>
+<li>The second section explains the parts of the API that you need to
+use if you implement your own custom streams yourself.  The API is
+designed to make this easy for you to do.</li>
+<li>The third section goes into more depth about how streams work,
 including some of the internal mechanisms and functions that you
 should probably not modify unless you definitely know what you are
-doing.
-
-
-</p>
+doing.</li>
+</ol>
 <h2>API for Stream Consumers<span><a class="mark" href="#stream_api_for_stream_consumers" id="stream_api_for_stream_consumers">#</a></span></h2>
 <!--type=misc-->
 
@@ -205,7 +201,7 @@ Duplex.
 
 </p>
 <p>If a stream is both Readable and Writable, then it implements all of
-the methods and events below.  So, a <a href="#stream_class_stream_duplex">Duplex</a> or <a href="#stream_class_stream_transform">Transform</a> stream is
+the methods and events.  So, a <a href="#stream_class_stream_duplex">Duplex</a> or <a href="#stream_class_stream_transform">Transform</a> stream is
 fully described by this API, though their implementation may be
 somewhat different.
 
@@ -213,7 +209,7 @@ somewhat different.
 <p>It is not necessary to implement Stream interfaces in order to consume
 streams in your programs.  If you <strong>are</strong> implementing streaming
 interfaces in your own program, please also refer to
-<a href="#stream_api_for_stream_implementors">API for Stream Implementors</a> below.
+<a href="#stream_api_for_stream_implementors">API for Stream Implementors</a>.
 
 </p>
 <p>Almost all Node.js programs, no matter how simple, use Streams in some
@@ -262,7 +258,7 @@ server.listen(1337);
 // error: Unexpected token o</code></pre>
 <h3>Class: stream.Duplex<span><a class="mark" href="#stream_class_stream_duplex" id="stream_class_stream_duplex">#</a></span></h3>
 <p>Duplex streams are streams that implement both the <a href="#stream_class_stream_readable">Readable</a> and
-<a href="#stream_class_stream_writable">Writable</a> interfaces.  See above for usage.
+<a href="#stream_class_stream_writable">Writable</a> interfaces.
 
 </p>
 <p>Examples of Duplex streams include:
@@ -635,8 +631,8 @@ has been triggered; a runtime error will be raised.
 
 </p>
 <p>If you find that you must often call <code>stream.unshift(chunk)</code> in your
-programs, consider implementing a <a href="#stream_class_stream_transform">Transform</a> stream instead.  (See API
-for Stream Implementors, below.)
+programs, consider implementing a <a href="#stream_class_stream_transform">Transform</a> stream instead.  (See <a href="#stream_api_for_stream_implementors">API
+for Stream Implementors</a>.)
 
 </p>
 <pre><code class="javascript">// Pull off a header delimited by \n\n
@@ -685,7 +681,7 @@ reading state appropriately, however it is best to simply avoid calling
 <li><code>stream</code> <span class="type">Stream</span> An &quot;old style&quot; readable stream</li>
 </div></ul>
 <p>Versions of Node.js prior to v0.10 had streams that did not implement the
-entire Streams API as it is today.  (See &quot;Compatibility&quot; below for
+entire Streams API as it is today.  (See <a href="#stream_compatibility_with_older_node_js_versions">Compatibility</a> for
 more information.)
 
 </p>
@@ -713,7 +709,7 @@ myReader.on(&#39;readable&#39;, () =&gt; {
 <h3>Class: stream.Transform<span><a class="mark" href="#stream_class_stream_transform" id="stream_class_stream_transform">#</a></span></h3>
 <p>Transform streams are <a href="#stream_class_stream_duplex">Duplex</a> streams where the output is in some way
 computed from the input.  They implement both the <a href="#stream_class_stream_readable">Readable</a> and
-<a href="#stream_class_stream_writable">Writable</a> interfaces.  See above for usage.
+<a href="#stream_class_stream_writable">Writable</a> interfaces.
 
 </p>
 <p>Examples of Transform streams include:
@@ -962,7 +958,7 @@ of stream class you are writing:
 </table>
 
 <p>In your implementation code, it is very important to never call the
-methods described in <a href="#stream_api_for_stream_consumers">API for Stream Consumers</a> above.  Otherwise, you
+methods described in <a href="#stream_api_for_stream_consumers">API for Stream Consumers</a>.  Otherwise, you
 can potentially cause adverse side effects in programs that consume
 your streaming interfaces.
 
@@ -1022,7 +1018,7 @@ it can come in handy as a building block for novel sorts of streams.
 underlying implementation of the <a href="#stream_readable_read_size_1"><code>_read(size)</code></a> method.
 
 </p>
-<p>Please see above under <a href="#stream_api_for_stream_consumers">API for Stream Consumers</a> for how to consume
+<p>Please see <a href="#stream_api_for_stream_consumers">API for Stream Consumers</a> for how to consume
 streams in your programs.  What follows is an explanation of how to
 implement Readable streams in your programs.
 
@@ -1038,6 +1034,7 @@ strings using the specified encoding.  Default=null</li>
 <li><code>objectMode</code> <span class="type">Boolean</span> Whether this stream should behave
 as a stream of objects. Meaning that stream.read(n) returns
 a single value instead of a Buffer of size n.  Default=false</li>
+<li><code>read</code> <span class="type">Function</span> Implementation for the <a href="#stream_readable_read_size_1"><code>_read()</code></a> method.</li>
 </ul>
 </li>
 </div></ul>
@@ -1164,13 +1161,14 @@ Counter.prototype._read = function() {
   }
 };</code></pre>
 <h4>Example: SimpleProtocol v1 (Sub-optimal)<span><a class="mark" href="#stream_example_simpleprotocol_v1_sub_optimal" id="stream_example_simpleprotocol_v1_sub_optimal">#</a></span></h4>
-<p>This is similar to the <code>parseHeader</code> function described above, but
-implemented as a custom stream.  Also, note that this implementation
-does not convert the incoming data to a string.
+<p>This is similar to the <code>parseHeader</code> function described
+<a href="#stream_readable_unshift_chunk">here</a>, but implemented as a custom stream.
+Also, note that this implementation does not convert the incoming data to a
+string.
 
 </p>
 <p>However, this would be better implemented as a <a href="#stream_class_stream_transform">Transform</a> stream.  See
-below for a better implementation.
+<a href="#stream_example_simpleprotocol_parser_v2">SimpleProtocol v2</a> for a better implementation.
 
 </p>
 <pre><code class="javascript">// A parser for a simple data protocol.
@@ -1296,7 +1294,11 @@ also implement the <code>_flush()</code> method.  (See below.)
 <h4>new stream.Transform([options])<span><a class="mark" href="#stream_new_stream_transform_options" id="stream_new_stream_transform_options">#</a></span></h4>
 <div class="signature"><ul>
 <li><code>options</code> <span class="type">Object</span> Passed to both Writable and Readable
-constructors.</li>
+constructors.  Also has the following fields:<ul>
+<li><code>transform</code> <span class="type">Function</span> Implementation for the <a href="#stream_transform_transform_chunk_encoding_callback"><code>_transform()</code></a> method.</li>
+<li><code>flush</code> <span class="type">Function</span> Implementation for the <a href="#stream_transform_flush_callback"><code>_flush()</code></a> method.</li>
+</ul>
+</li>
 </div></ul>
 <p>In classes that extend the Transform class, make sure to call the
 constructor so that the buffering settings can be properly
@@ -1394,9 +1396,10 @@ your own extension classes.
 
 </p>
 <h4>Example: <code>SimpleProtocol</code> parser v2<span><a class="mark" href="#stream_example_simpleprotocol_parser_v2" id="stream_example_simpleprotocol_parser_v2">#</a></span></h4>
-<p>The example above of a simple protocol parser can be implemented
-simply by using the higher level <a href="#stream_class_stream_transform">Transform</a> stream class, similar to
-the <code>parseHeader</code> and <code>SimpleProtocol v1</code> examples above.
+<p>The example <a href="#stream_example_simpleprotocol_v1_sub_optimal">here</a> of a simple
+protocol parser can be implemented simply by using the higher level
+<a href="#stream_class_stream_transform">Transform</a> stream class, similar to the <code>parseHeader</code> and <code>SimpleProtocol
+v1</code> examples.
 
 </p>
 <p>In this example, rather than providing the input as an argument, it
@@ -1476,7 +1479,7 @@ SimpleProtocol.prototype._transform = function(chunk, encoding, done) {
 underlying implementation of the <a href="#stream_writable_write_chunk_encoding_callback_1"><code>_write(chunk, encoding, callback)</code></a> method.
 
 </p>
-<p>Please see above under <a href="#stream_api_for_stream_consumers">API for Stream Consumers</a> for how to consume
+<p>Please see <a href="#stream_api_for_stream_consumers">API for Stream Consumers</a> for how to consume
 writable streams in your programs.  What follows is an explanation of
 how to implement Writable streams in your programs.
 
@@ -1491,6 +1494,8 @@ Buffers before passing them to <a href="#stream_writable_write_chunk_encoding_ca
 <li><code>objectMode</code> <span class="type">Boolean</span> Whether or not the <code>write(anyObj)</code> is
 a valid operation. If set you can write arbitrary data instead
 of only <code>Buffer</code> / <code>String</code> data.  Default=false</li>
+<li><code>write</code> <span class="type">Function</span> Implementation for the <a href="#stream_writable_write_chunk_encoding_callback_1"><code>_write()</code></a> method.</li>
+<li><code>writev</code> <span class="type">Function</span> Implementation for the <a href="#stream_writable_writev_chunks_callback"><code>_writev()</code></a> method.</li>
 </ul>
 </li>
 </div></ul>
@@ -1697,7 +1702,7 @@ in some kind of buffer so that they would not be lost.</li>
 meant that you still had to be prepared to receive <code>&#39;data&#39;</code> events
 even when the stream was in a paused state.</li>
 </ul>
-<p>In Node.js v0.10, the Readable class described below was added.
+<p>In Node.js v0.10, the <a href="#stream_class_stream_readable">Readable</a> class was added.
 For backwards compatibility with older Node.js programs, Readable streams
 switch into &quot;flowing mode&quot; when a <code>&#39;data&#39;</code> event handler is added, or
 when the <a href="#stream_readable_resume"><code>resume()</code></a> method is called.  The effect is that, even if
@@ -1886,9 +1891,6 @@ horribly wrong.
       </div>
     </div>
   </div>
-  <div id="footer">
-  </div>
-
   <script src="assets/sh_main.js"></script>
   <script src="assets/sh_javascript.min.js"></script>
   <script>highlight(undefined, undefined, 'pre');</script>

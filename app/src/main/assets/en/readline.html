@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Readline Node.js v5.4.0 Manual &amp; Documentation</title>
+  <title>Readline Node.js v5.5.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="readline" class="interior">
       <header>
-        <h1>Node.js v5.4.0 Documentation</h1>
+        <h1>Node.js v5.5.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -97,6 +97,7 @@
 </ul>
 </li>
 <li><a href="#readline_example_tiny_cli">Example: Tiny CLI</a></li>
+<li><a href="#readline_example_read_file_stream_line_by_line">Example: Read File Stream Line-by-Line</a></li>
 <li><a href="#readline_readline_clearline_stream_dir">readline.clearLine(stream, dir)</a></li>
 <li><a href="#readline_readline_clearscreendown_stream">readline.clearScreenDown(stream)</a></li>
 <li><a href="#readline_readline_createinterface_options">readline.createInterface(options)</a></li>
@@ -359,6 +360,21 @@ rl.on(&#39;line&#39;, (line) =&gt; {
   console.log(&#39;Have a great day!&#39;);
   process.exit(0);
 });</code></pre>
+<h2>Example: Read File Stream Line-by-Line<span><a class="mark" href="#readline_example_read_file_stream_line_by_line" id="readline_example_read_file_stream_line_by_line">#</a></span></h2>
+<p>A common case for <code>readline</code>&#39;s <code>input</code> option is to pass a filesystem readable
+stream to it. This is how one could craft line-by-line parsing of a file:
+
+</p>
+<pre><code>const readline = require(&#39;readline&#39;);
+const fs = require(&#39;fs&#39;);
+
+const rl = readline.createInterface({
+  input: fs.createReadStream(&#39;sample.txt&#39;)
+});
+
+rl.on(&#39;line&#39;, function (line) {
+  console.log(&#39;Line from file:&#39;, line);
+});</code></pre>
 <h2>readline.clearLine(stream, dir)<span><a class="mark" href="#readline_readline_clearline_stream_dir" id="readline_readline_clearline_stream_dir">#</a></span></h2>
 <p>Clears current line of given TTY stream in a specified direction.
 <code>dir</code> should have one of following values:
@@ -374,7 +390,7 @@ rl.on(&#39;line&#39;, (line) =&gt; {
 
 </p>
 <h2>readline.createInterface(options)<span><a class="mark" href="#readline_readline_createinterface_options" id="readline_readline_createinterface_options">#</a></span></h2>
-<p>Creates a readline <code>Interface</code> instance. Accepts an `options Object that takes
+<p>Creates a readline <code>Interface</code> instance. Accepts an <code>options</code> Object that takes
 the following values:
 
 </p>
@@ -453,9 +469,6 @@ a <code>&#39;resize&#39;</code> event on the <code>output</code> if/when the col
       </div>
     </div>
   </div>
-  <div id="footer">
-  </div>
-
   <script src="assets/sh_main.js"></script>
   <script src="assets/sh_javascript.min.js"></script>
   <script>highlight(undefined, undefined, 'pre');</script>

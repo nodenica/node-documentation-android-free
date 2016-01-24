@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>File System Node.js v5.4.0 Manual &amp; Documentation</title>
+  <title>File System Node.js v5.5.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="fs" class="interior">
       <header>
-        <h1>Node.js v5.4.0 Documentation</h1>
+        <h1>Node.js v5.5.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -84,6 +84,7 @@
 </li>
 <li><a href="#fs_class_fs_readstream">Class: fs.ReadStream</a><ul>
 <li><a href="#fs_event_open">Event: &#39;open&#39;</a></li>
+<li><a href="#fs_readstream_path">readStream.path</a></li>
 </ul>
 </li>
 <li><a href="#fs_class_fs_stats">Class: fs.Stats</a><ul>
@@ -93,6 +94,7 @@
 <li><a href="#fs_class_fs_writestream">Class: fs.WriteStream</a><ul>
 <li><a href="#fs_event_open_1">Event: &#39;open&#39;</a></li>
 <li><a href="#fs_writestream_byteswritten">writeStream.bytesWritten</a></li>
+<li><a href="#fs_writestream_path">writeStream.path</a></li>
 </ul>
 </li>
 <li><a href="#fs_fs_access_path_mode_callback">fs.access(path[, mode], callback)</a></li>
@@ -303,6 +305,10 @@ See more details in <a href="#fs_fs_watch_filename_options_listener"><code>fs.wa
 <p>Emitted when the ReadStream&#39;s file is opened.
 
 </p>
+<h3>readStream.path<span><a class="mark" href="#fs_readstream_path" id="fs_readstream_path">#</a></span></h3>
+<p>The path to the file the stream is reading from.
+
+</p>
 <h2>Class: fs.Stats<span><a class="mark" href="#fs_class_fs_stats" id="fs_class_fs_stats">#</a></span></h2>
 <p>Objects returned from <a href="#fs_fs_stat_path_callback"><code>fs.stat()</code></a>, <a href="#fs_fs_lstat_path_callback"><code>fs.lstat()</code></a> and <a href="#fs_fs_fstat_fd_callback"><code>fs.fstat()</code></a> and their
 synchronous counterparts are of this type.
@@ -386,6 +392,10 @@ on Unix systems, it never was.
 <h3>writeStream.bytesWritten<span><a class="mark" href="#fs_writestream_byteswritten" id="fs_writestream_byteswritten">#</a></span></h3>
 <p>The number of bytes written so far. Does not include data that is still queued
 for writing.
+
+</p>
+<h3>writeStream.path<span><a class="mark" href="#fs_writestream_path" id="fs_writestream_path">#</a></span></h3>
+<p>The path to the file the stream is writing to.
 
 </p>
 <h2>fs.access(path[, mode], callback)<span><a class="mark" href="#fs_fs_access_path_mode_callback" id="fs_fs_access_path_mode_callback">#</a></span></h2>
@@ -539,11 +549,19 @@ file was created.
 <pre><code>{ flags: &#39;w&#39;,
   defaultEncoding: &#39;utf8&#39;,
   fd: null,
-  mode: 0o666 }</code></pre>
+  mode: 0o666,
+  autoClose: true }</code></pre>
 <p><code>options</code> may also include a <code>start</code> option to allow writing data at
 some position past the beginning of the file.  Modifying a file rather
 than replacing it may require a <code>flags</code> mode of <code>r+</code> rather than the
 default mode <code>w</code>. The <code>defaultEncoding</code> can be any one of those accepted by <a href="buffer.html#buffer_buffer"><code>Buffer</code></a>.
+
+</p>
+<p>If <code>autoClose</code> is set to true (default behavior) on <code>error</code> or <code>end</code>
+the file descriptor will be closed automatically. If <code>autoClose</code> is false,
+then the file descriptor won&#39;t be closed, even if there&#39;s an error.
+It is your responsiblity to close it and make sure
+there&#39;s no file descriptor leak.
 
 </p>
 <p>Like <a href="#fs_class_fs_readstream"><code>ReadStream</code></a>, if <code>fd</code> is specified, <code>WriteStream</code> will ignore the
@@ -879,7 +897,7 @@ to the completion callback.
 </p>
 <h2>fs.stat(path, callback)<span><a class="mark" href="#fs_fs_stat_path_callback" id="fs_fs_stat_path_callback">#</a></span></h2>
 <p>Asynchronous stat(2). The callback gets two arguments <code>(err, stats)</code> where
-<code>stats</code> is a <a href="#fs_class_fs_stats"><code>fs.Stats</code></a> object.  See the <a href="#fs_class_fs_stats"><code>fs.Stats</code></a> section below for more
+<code>stats</code> is a <a href="#fs_class_fs_stats"><code>fs.Stats</code></a> object.  See the <a href="#fs_class_fs_stats"><code>fs.Stats</code></a> section for more
 information.
 
 </p>
@@ -969,7 +987,7 @@ The supported boolean members are <code>persistent</code> and <code>recursive</c
 indicates whether the process should continue to run as long as files are being
 watched. <code>recursive</code> indicates whether all subdirectories should be watched, or
 only the current directory. This applies when a directory is specified, and only
-on supported platforms (See Caveats below).
+on supported platforms (See <a href="#fs_caveats">Caveats</a>).
 
 </p>
 <p>The default is <code>{ persistent: true, recursive: false }</code>.
@@ -1185,9 +1203,6 @@ without waiting for the callback. For this scenario,
       </div>
     </div>
   </div>
-  <div id="footer">
-  </div>
-
   <script src="assets/sh_main.js"></script>
   <script src="assets/sh_javascript.min.js"></script>
   <script>highlight(undefined, undefined, 'pre');</script>
