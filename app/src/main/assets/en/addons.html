@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Addons Node.js v5.5.0 Manual &amp; Documentation</title>
+  <title>Addons Node.js v5.6.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,12 +11,13 @@
 <body class="alt apidoc" id="api-section-addons">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div id="intro" class="interior">
-        <a href="/" title="Go back to the home page">
-          Node.js (1)
-        </a>
-      </div>
-      <ul>
+      <div class="no-scrollbar">
+        <div id="intro" class="interior">
+          <a href="/" title="Go back to the home page">
+            Node.js (1)
+          </a>
+        </div>
+        <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -57,11 +58,12 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
+      </div>
     </div>
 
     <div id="column1" data-id="addons" class="interior">
       <header>
-        <h1>Node.js v5.5.0 Documentation</h1>
+        <h1>Node.js v5.6.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -106,9 +108,9 @@
       <div id="apicontent">
         <h1>Addons<span><a class="mark" href="#addons_addons" id="addons_addons">#</a></span></h1>
 <p>Node.js Addons are dynamically-linked shared objects, written in C or C++, that
-can be loaded into Node.js using the <code>require()</code> function, and used just as if
-they were an ordinary Node.js module. They are used primarily to provide an
-interface between JavaScript running in Node.js and C/C++ libraries.
+can be loaded into Node.js using the <a href="globals.html#globals_require"><code>require()</code></a> function, and used
+just as if they were an ordinary Node.js module. They are used primarily to
+provide an interface between JavaScript running in Node.js and C/C++ libraries.
 
 </p>
 <p>At the moment, the method for implementing Addons is rather complicated,
@@ -154,11 +156,11 @@ be used as a starting-point for your own Addon.
 equivalent of the following JavaScript code:
 
 </p>
-<pre><code>module.exports.hello = function() { return &#39;world&#39;; };</code></pre>
+<pre><code class="js">module.exports.hello = () =&gt; &#39;world&#39;;</code></pre>
 <p>First, create the file <code>hello.cc</code>:
 
 </p>
-<pre><code>// hello.cc
+<pre><code class="cpp">// hello.cc
 #include &lt;node.h&gt;
 
 namespace demo {
@@ -186,7 +188,7 @@ NODE_MODULE(addon, init)
 the pattern:
 
 </p>
-<pre><code>void Initialize(Local&lt;Object&gt; exports);
+<pre><code class="cpp">void Initialize(Local&lt;Object&gt; exports);
 NODE_MODULE(module_name, Initialize)</code></pre>
 <p>There is no semi-colon after <code>NODE_MODULE</code> as it&#39;s not a function (see
 <code>node.h</code>).
@@ -241,10 +243,10 @@ compiled version of the Addon for the user&#39;s platform on demand.
 
 </p>
 <p>Once built, the binary Addon can be used from within Node.js by pointing
-<code>require()</code> to the built <code>addon.node</code> module:
+<a href="globals.html#globals_require"><code>require()</code></a> to the built <code>addon.node</code> module:
 
 </p>
-<pre><code>// hello.js
+<pre><code class="js">// hello.js
 const addon = require(&#39;./build/Release/addon&#39;);
 
 console.log(addon.hello()); // &#39;world&#39;</code></pre>
@@ -263,7 +265,7 @@ in how it locates Addon modules, it is essentially using a try-catch pattern
 similar to:
 
 </p>
-<pre><code>try {
+<pre><code class="js">try {
   return require(&#39;./build/Release/addon.node&#39;);
 } catch (err) {
   return require(&#39;./build/Debug/addon.node&#39;);
@@ -291,18 +293,18 @@ dependencies.</p>
 </ul>
 <h3>Loading Addons using require()<span><a class="mark" href="#addons_loading_addons_using_require" id="addons_loading_addons_using_require">#</a></span></h3>
 <p>The filename extension of the compiled Addon binary is <code>.node</code> (as opposed
-to <code>.dll</code> or <code>.so</code>). The <code>require()</code> function is written to look for files
-with the <code>.node</code> file extension and initialize those as dynamically-linked
+to <code>.dll</code> or <code>.so</code>). The <a href="globals.html#globals_require"><code>require()</code></a> function is written to look for
+files with the <code>.node</code> file extension and initialize those as dynamically-linked
 libraries.
 
 </p>
-<p>When calling <code>require()</code>, the <code>.node</code> extension can usually be
+<p>When calling <a href="globals.html#globals_require"><code>require()</code></a>, the <code>.node</code> extension can usually be
 omitted and Node.js will still find and initialize the Addon. One caveat,
 however, is that Node.js will first attempt to locate and load modules or
 JavaScript files that happen to share the same base name. For instance, if
 there is a file <code>addon.js</code> in the same directory as the binary <code>addon.node</code>,
-then <code>require(&#39;addon&#39;)</code> will give precedence to the <code>addon.js</code> file and load it
-instead.
+then <a href="globals.html#globals_require"><code>require(&#39;addon&#39;)</code></a> will give precedence to the <code>addon.js</code> file
+and load it instead.
 
 </p>
 <h2>Native Abstractions for Node.js<span><a class="mark" href="#addons_native_abstractions_for_node_js" id="addons_native_abstractions_for_node_js">#</a></span></h2>
@@ -324,9 +326,10 @@ illustration of how it can be used.
 </p>
 <h2>Addon examples<span><a class="mark" href="#addons_addon_examples" id="addons_addon_examples">#</a></span></h2>
 <p>Following are some example Addons intended to help developers get started. The
-examples make use of the V8 APIs. Refer to the online <a href="https://v8docs.nodesource.com/">V8 reference</a> for help
-with the various V8 calls, and V8&#39;s <a href="https://developers.google.com/v8/embed">Embedder&#39;s Guide</a> for an explanation of
-several concepts used such as handles, scopes, function templates, etc.
+examples make use of the V8 APIs. Refer to the online <a href="https://v8docs.nodesource.com/">V8 reference</a>
+for help with the various V8 calls, and V8&#39;s <a href="https://developers.google.com/v8/embed">Embedder&#39;s Guide</a> for an
+explanation of several concepts used such as handles, scopes, function
+templates, etc.
 
 </p>
 <p>Each of these examples using the following <code>binding.gyp</code> file:
@@ -361,7 +364,7 @@ code.
 JavaScript and how to return a result:
 
 </p>
-<pre><code>// addon.cc
+<pre><code class="cpp">// addon.cc
 #include &lt;node.h&gt;
 
 namespace demo {
@@ -415,17 +418,17 @@ NODE_MODULE(addon, Init)
 <p>Once compiled, the example Addon can be required and used from within Node.js:
 
 </p>
-<pre><code>// test.js
+<pre><code class="js">// test.js
 const addon = require(&#39;./build/Release/addon&#39;);
 
-console.log( &#39;This should be eight:&#39;, addon.add(3,5) );</code></pre>
+console.log(&#39;This should be eight:&#39;, addon.add(3,5));</code></pre>
 <h3>Callbacks<span><a class="mark" href="#addons_callbacks" id="addons_callbacks">#</a></span></h3>
 <p>It is common practice within Addons to pass JavaScript functions to a C++
 function and execute them from there. The following example illustrates how
 to invoke such callbacks:
 
 </p>
-<pre><code>// addon.cc
+<pre><code class="cpp">// addon.cc
 #include &lt;node.h&gt;
 
 namespace demo {
@@ -463,10 +466,10 @@ adding the function as a property of <code>exports</code>.
 <p>To test it, run the following JavaScript:
 
 </p>
-<pre><code>// test.js
+<pre><code class="js">// test.js
 const addon = require(&#39;./build/Release/addon&#39;);
 
-addon(function(msg){
+addon((msg) =&gt; {
   console.log(msg); // &#39;hello world&#39;
 });</code></pre>
 <p>Note that, in this example, the callback function is invoked synchronously.
@@ -478,7 +481,7 @@ illustrated in the following example. An object is created and returned with a
 property <code>msg</code> that echoes the string passed to <code>createObject()</code>:
 
 </p>
-<pre><code>// addon.cc
+<pre><code class="cpp">// addon.cc
 #include &lt;node.h&gt;
 
 namespace demo {
@@ -509,7 +512,7 @@ NODE_MODULE(addon, Init)
 <p>To test it in JavaScript:
 
 </p>
-<pre><code>// test.js
+<pre><code class="js">// test.js
 const addon = require(&#39;./build/Release/addon&#39;);
 
 var obj1 = addon(&#39;hello&#39;);
@@ -520,7 +523,7 @@ console.log(obj1.msg+&#39; &#39;+obj2.msg); // &#39;hello world&#39;</code></pre
 functions and returning those back to JavaScript:
 
 </p>
-<pre><code>// addon.cc
+<pre><code class="cpp">// addon.cc
 #include &lt;node.h&gt;
 
 namespace demo {
@@ -561,7 +564,7 @@ NODE_MODULE(addon, Init)
 <p>To test:
 
 </p>
-<pre><code>// test.js
+<pre><code class="js">// test.js
 const addon = require(&#39;./build/Release/addon&#39;);
 
 var fn = addon();
@@ -571,7 +574,7 @@ console.log(fn()); // &#39;hello world&#39;</code></pre>
 instances to be created using the JavaScript <code>new</code> operator:
 
 </p>
-<pre><code>// addon.cc
+<pre><code class="cpp">// addon.cc
 #include &lt;node.h&gt;
 #include &quot;myobject.h&quot;
 
@@ -590,7 +593,7 @@ NODE_MODULE(addon, InitAll)
 <p>Then, in <code>myobject.h</code>, the wrapper class inherits from <code>node::ObjectWrap</code>:
 
 </p>
-<pre><code>// myobject.h
+<pre><code class="cpp">// myobject.h
 #ifndef MYOBJECT_H
 #define MYOBJECT_H
 
@@ -621,7 +624,7 @@ Below, the method <code>plusOne()</code> is exposed by adding it to the construc
 prototype:
 
 </p>
-<pre><code>// myobject.cc
+<pre><code class="cpp">// myobject.cc
 #include &quot;myobject.h&quot;
 
 namespace demo {
@@ -707,7 +710,7 @@ void MyObject::PlusOne(const FunctionCallbackInfo&lt;Value&gt;&amp; args) {
 <p>Test it with:
 
 </p>
-<pre><code>// test.js
+<pre><code class="js">// test.js
 const addon = require(&#39;./build/Release/addon&#39;);
 
 var obj = new addon.MyObject(10);
@@ -719,13 +722,13 @@ console.log( obj.plusOne() ); // 13</code></pre>
 creating object instances using the JavaScript <code>new</code> operator:
 
 </p>
-<pre><code>var obj = addon.createObject();
+<pre><code class="js">var obj = addon.createObject();
 // instead of:
 // var obj = new addon.Object();</code></pre>
 <p>First, the <code>createObject()</code> method is implemented in <code>addon.cc</code>:
 
 </p>
-<pre><code>// addon.cc
+<pre><code class="cpp">// addon.cc
 #include &lt;node.h&gt;
 #include &quot;myobject.h&quot;
 
@@ -756,7 +759,7 @@ instantiating the object. This method takes the place of using <code>new</code> 
 JavaScript:
 
 </p>
-<pre><code>// myobject.h
+<pre><code class="cpp">// myobject.h
 #ifndef MYOBJECT_H
 #define MYOBJECT_H
 
@@ -786,7 +789,7 @@ class MyObject : public node::ObjectWrap {
 <p>The implementation in <code>myobject.cc</code> is similar to the previous example:
 
 </p>
-<pre><code>// myobject.cc
+<pre><code class="cpp">// myobject.cc
 #include &lt;node.h&gt;
 #include &quot;myobject.h&quot;
 
@@ -880,7 +883,7 @@ void MyObject::PlusOne(const FunctionCallbackInfo&lt;Value&gt;&amp; args) {
 <p>Test it with:
 
 </p>
-<pre><code>// test.js
+<pre><code class="js">// test.js
 const createObject = require(&#39;./build/Release/addon&#39;);
 
 var obj = createObject(10);
@@ -899,7 +902,7 @@ wrapped objects around by unwrapping them with the Node.js helper function
 that can take two <code>MyObject</code> objects as input arguments:
 
 </p>
-<pre><code>// addon.cc
+<pre><code class="cpp">// addon.cc
 #include &lt;node.h&gt;
 #include &lt;node_object_wrap.h&gt;
 #include &quot;myobject.h&quot;
@@ -944,7 +947,7 @@ NODE_MODULE(addon, InitAll)
 after unwrapping the object.
 
 </p>
-<pre><code>// myobject.h
+<pre><code class="cpp">// myobject.h
 #ifndef MYOBJECT_H
 #define MYOBJECT_H
 
@@ -974,7 +977,7 @@ class MyObject : public node::ObjectWrap {
 <p>The implementation of <code>myobject.cc</code> is similar to before:
 
 </p>
-<pre><code>// myobject.cc
+<pre><code class="cpp">// myobject.cc
 #include &lt;node.h&gt;
 #include &quot;myobject.h&quot;
 
@@ -1040,7 +1043,7 @@ void MyObject::NewInstance(const FunctionCallbackInfo&lt;Value&gt;&amp; args) {
 <p>Test it with:
 
 </p>
-<pre><code>// test.js
+<pre><code class="js">// test.js
 const addon = require(&#39;./build/Release/addon&#39;);
 
 var obj1 = addon.createObject(10);
@@ -1073,7 +1076,7 @@ and a pointer to untyped context data to be passed to that callback.
 <p>The following <code>addon.cc</code> implements AtExit:
 
 </p>
-<pre><code>// addon.cc
+<pre><code class="cpp">// addon.cc
 #undef NDEBUG
 #include &lt;assert.h&gt;
 #include &lt;stdlib.h&gt;
@@ -1123,7 +1126,7 @@ NODE_MODULE(addon, init);
 <p>Test in JavaScript by running:
 
 </p>
-<pre><code>// test.js
+<pre><code class="js">// test.js
 const addon = require(&#39;./build/Release/addon&#39;);</code></pre>
 
       </div>

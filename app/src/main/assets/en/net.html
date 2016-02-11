@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>net Node.js v5.5.0 Manual &amp; Documentation</title>
+  <title>net Node.js v5.6.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,12 +11,13 @@
 <body class="alt apidoc" id="api-section-net">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div id="intro" class="interior">
-        <a href="/" title="Go back to the home page">
-          Node.js (1)
-        </a>
-      </div>
-      <ul>
+      <div class="no-scrollbar">
+        <div id="intro" class="interior">
+          <a href="/" title="Go back to the home page">
+            Node.js (1)
+          </a>
+        </div>
+        <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -57,11 +58,12 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
+      </div>
     </div>
 
     <div id="column1" data-id="net" class="interior">
       <header>
-        <h1>Node.js v5.5.0 Documentation</h1>
+        <h1>Node.js v5.6.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -195,12 +197,13 @@ Returns an object with three properties, e.g.
 <p>Example:
 
 </p>
-<pre><code>var server = net.createServer((socket) =&gt; {
+<pre><code class="js">var server = net.createServer((socket) =&gt; {
   socket.end(&#39;goodbye\n&#39;);
 });
 
 // grab a random port.
-server.listen(() =&gt; {
+server.listen((err) =&gt; {
+  if (err) throw err;
   address = server.address();
   console.log(&#39;opened server on %j&#39;, address);
 });</code></pre>
@@ -217,7 +220,7 @@ was not open when it was closed.
 
 </p>
 <h3>server.connections<span><a class="mark" href="#net_server_connections" id="net_server_connections">#</a></span></h3>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="#net_server_getconnections_callback"><code>server.getConnections</code></a> instead.</pre><p>The number of concurrent connections on the server.
+<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="#net_server_getconnections_callback"><code>server.getConnections()</code></a> instead.</pre><p>The number of concurrent connections on the server.
 
 </p>
 <p>This becomes <code>null</code> when sending a socket to a child with
@@ -286,7 +289,7 @@ results in an error. An example which listens on an exclusive port is
 shown below.
 
 </p>
-<pre><code>server.listen({
+<pre><code class="js">server.listen({
   host: &#39;localhost&#39;,
   port: 80,
   exclusive: true
@@ -349,7 +352,7 @@ another server is already running on the requested port. One way of handling thi
 would be to wait a second and then try again. This can be done with
 
 </p>
-<pre><code>server.on(&#39;error&#39;, (e) =&gt; {
+<pre><code class="js">server.on(&#39;error&#39;, (e) =&gt; {
   if (e.code == &#39;EADDRINUSE&#39;) {
     console.log(&#39;Address in use, retrying...&#39;);
     setTimeout(() =&gt; {
@@ -402,7 +405,8 @@ and passed to the user through the <code>&#39;connection&#39;</code> event of a 
 <p><code>options</code> is an object with the following defaults:
 
 </p>
-<pre><code>{ fd: null,
+<pre><code class="js">{
+  fd: null,
   allowHalfOpen: false,
   readable: false,
   writable: false
@@ -715,8 +719,9 @@ connects with the supplied <code>options</code>.
 <p>Here is an example of a client of the previously described echo server:
 
 </p>
-<pre><code>const net = require(&#39;net&#39;);
-const client = net.connect({port: 8124}, () =&gt; { //&#39;connect&#39; listener
+<pre><code class="js">const net = require(&#39;net&#39;);
+const client = net.connect({port: 8124}, () =&gt; {
+  // &#39;connect&#39; listener
   console.log(&#39;connected to server!&#39;);
   client.write(&#39;world!\r\n&#39;);
 });
@@ -731,7 +736,7 @@ client.on(&#39;end&#39;, () =&gt; {
 changed to
 
 </p>
-<pre><code>const client = net.connect({path: &#39;/tmp/echo.sock&#39;});</code></pre>
+<pre><code class="js">const client = net.connect({path: &#39;/tmp/echo.sock&#39;});</code></pre>
 <h2>net.connect(path[, connectListener])<span><a class="mark" href="#net_net_connect_path_connectlistener" id="net_net_connect_path_connectlistener">#</a></span></h2>
 <p>A factory function, which returns a new unix <a href="#net_class_net_socket"><code>net.Socket</code></a> and automatically
 connects to the supplied <code>path</code>.
@@ -769,9 +774,9 @@ connects with the supplied <code>options</code>.
 <p>Here is an example of a client of the previously described echo server:
 
 </p>
-<pre><code>const net = require(&#39;net&#39;);
-const client = net.connect({port: 8124},
-    () =&gt; { //&#39;connect&#39; listener
+<pre><code class="js">const net = require(&#39;net&#39;);
+const client = net.connect({port: 8124}, () =&gt; {
+  //&#39;connect&#39; listener
   console.log(&#39;connected to server!&#39;);
   client.write(&#39;world!\r\n&#39;);
 });
@@ -786,7 +791,7 @@ client.on(&#39;end&#39;, () =&gt; {
 changed to
 
 </p>
-<pre><code>const client = net.connect({path: &#39;/tmp/echo.sock&#39;});</code></pre>
+<pre><code class="js">const client = net.connect({path: &#39;/tmp/echo.sock&#39;});</code></pre>
 <h2>net.createConnection(path[, connectListener])<span><a class="mark" href="#net_net_createconnection_path_connectlistener" id="net_net_createconnection_path_connectlistener">#</a></span></h2>
 <p>A factory function, which returns a new unix <a href="#net_class_net_socket"><code>net.Socket</code></a> and automatically
 connects to the supplied <code>path</code>.
@@ -816,7 +821,7 @@ automatically set as a listener for the <a href="#net_event_connection"><code>&#
 <p><code>options</code> is an object with the following defaults:
 
 </p>
-<pre><code>{
+<pre><code class="js">{
   allowHalfOpen: false,
   pauseOnConnect: false
 }</code></pre>
@@ -836,8 +841,9 @@ original process. To begin reading data from a paused socket, call <a href="#net
 on port 8124:
 
 </p>
-<pre><code>const net = require(&#39;net&#39;);
-const server = net.createServer((c) =&gt; { //&#39;connection&#39; listener
+<pre><code class="js">const net = require(&#39;net&#39;);
+const server = net.createServer((c) =&gt; {
+  // &#39;connection&#39; listener
   console.log(&#39;client connected&#39;);
   c.on(&#39;end&#39;, () =&gt; {
     console.log(&#39;client disconnected&#39;);
@@ -845,7 +851,9 @@ const server = net.createServer((c) =&gt; { //&#39;connection&#39; listener
   c.write(&#39;hello\r\n&#39;);
   c.pipe(c);
 });
-server.listen(8124, () =&gt; { //&#39;listening&#39; listener
+server.listen(8124, (err) =&gt; {
+  // &#39;listening&#39; listener
+  if (err) throw err;
   console.log(&#39;server bound&#39;);
 });</code></pre>
 <p>Test this by using <code>telnet</code>:
@@ -856,11 +864,14 @@ server.listen(8124, () =&gt; { //&#39;listening&#39; listener
 just be changed to
 
 </p>
-<pre><code>server.listen(&#39;/tmp/echo.sock&#39;, () =&gt; { //&#39;listening&#39; listener</code></pre>
+<pre><code class="js">server.listen(&#39;/tmp/echo.sock&#39;, (err) =&gt; {
+  // &#39;listening&#39; listener
+  if (err) throw err;
+});</code></pre>
 <p>Use <code>nc</code> to connect to a UNIX domain socket server:
 
 </p>
-<pre><code>nc -U /tmp/echo.sock</code></pre>
+<pre><code class="js">nc -U /tmp/echo.sock</code></pre>
 <h2>net.isIP(input)<span><a class="mark" href="#net_net_isip_input" id="net_net_isip_input">#</a></span></h2>
 <p>Tests if input is an IP address. Returns 0 for invalid strings,
 returns 4 for IP version 4 addresses, and returns 6 for IP version 6 addresses.

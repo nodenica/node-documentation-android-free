@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>HTTP Node.js v5.5.0 Manual &amp; Documentation</title>
+  <title>HTTP Node.js v5.6.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,12 +11,13 @@
 <body class="alt apidoc" id="api-section-http">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div id="intro" class="interior">
-        <a href="/" title="Go back to the home page">
-          Node.js (1)
-        </a>
-      </div>
-      <ul>
+      <div class="no-scrollbar">
+        <div id="intro" class="interior">
+          <a href="/" title="Go back to the home page">
+            Node.js (1)
+          </a>
+        </div>
+        <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -57,11 +58,12 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
+      </div>
     </div>
 
     <div id="column1" data-id="http" class="interior">
       <header>
-        <h1>Node.js v5.5.0 Documentation</h1>
+        <h1>Node.js v5.6.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -240,7 +242,7 @@ you intend to keep one HTTP request open for a long time and don&#39;t
 want it to stay in the pool you can do something along the lines of:
 
 </p>
-<pre><code>http.get(options, (res) =&gt; {
+<pre><code class="js">http.get(options, (res) =&gt; {
   // Do stuff
 }).on(&#39;socket&#39;, (socket) =&gt; {
   socket.emit(&#39;agentRemove&#39;);
@@ -249,7 +251,7 @@ want it to stay in the pool you can do something along the lines of:
 <code>agent:false</code>:
 
 </p>
-<pre><code>http.get({
+<pre><code class="js">http.get({
   hostname: &#39;localhost&#39;,
   port: 80,
   path: &#39;/&#39;,
@@ -281,7 +283,7 @@ of these values set to their respective defaults.
 <p>To configure any of them, you must create your own <a href="#http_class_http_agent"><code>http.Agent</code></a> object.
 
 </p>
-<pre><code class="javascript">const http = require(&#39;http&#39;);
+<pre><code class="js">const http = require(&#39;http&#39;);
 var keepAliveAgent = new http.Agent({ keepAlive: true });
 options.agent = keepAliveAgent;
 http.request(options, onResponseCallback);</code></pre>
@@ -400,7 +402,7 @@ their connections closed.
 <p>A client server pair that show you how to listen for the <code>&#39;connect&#39;</code> event.
 
 </p>
-<pre><code>const http = require(&#39;http&#39;);
+<pre><code class="js">const http = require(&#39;http&#39;);
 const net = require(&#39;net&#39;);
 const url = require(&#39;url&#39;);
 
@@ -496,7 +498,7 @@ their connections closed.
 <p>A client server pair that show you how to listen for the <code>&#39;upgrade&#39;</code> event.
 
 </p>
-<pre><code>const http = require(&#39;http&#39;);
+<pre><code class="js">const http = require(&#39;http&#39;);
 
 // Create an HTTP server
 var srv = http.createServer( (req, res) =&gt; {
@@ -856,13 +858,13 @@ be silently discarded.
 emit trailers, with a list of the header fields in its value. E.g.,
 
 </p>
-<pre><code>response.writeHead(200, { &#39;Content-Type&#39;: &#39;text/plain&#39;,
+<pre><code class="js">response.writeHead(200, { &#39;Content-Type&#39;: &#39;text/plain&#39;,
                           &#39;Trailer&#39;: &#39;Content-MD5&#39; });
 response.write(fileData);
 response.addTrailers({&#39;Content-MD5&#39;: &#39;7895bf4b8828b55ceaf47747b4bca667&#39;});
 response.end();</code></pre>
-<p>Attempting to set a trailer field name that contains invalid characters will
-result in a <a href="errors.html#errors_class_typeerror"><code>TypeError</code></a> being thrown.
+<p>Attempting to set a header field name or value that contains invalid characters
+will result in a <a href="errors.html#errors_class_typeerror"><code>TypeError</code></a> being thrown.
 
 </p>
 <h3>response.end([data][, encoding][, callback])<span><a class="mark" href="#http_response_end_data_encoding_callback" id="http_response_end_data_encoding_callback">#</a></span></h3>
@@ -893,7 +895,7 @@ implicitly flushed.
 <p>Example:
 
 </p>
-<pre><code>var contentType = response.getHeader(&#39;content-type&#39;);</code></pre>
+<pre><code class="js">var contentType = response.getHeader(&#39;content-type&#39;);</code></pre>
 <h3>response.headersSent<span><a class="mark" href="#http_response_headerssent" id="http_response_headerssent">#</a></span></h3>
 <p>Boolean (read-only). True if headers were sent, false otherwise.
 
@@ -905,7 +907,7 @@ implicitly flushed.
 <p>Example:
 
 </p>
-<pre><code>response.removeHeader(&#39;Content-Encoding&#39;);</code></pre>
+<pre><code class="js">response.removeHeader(&#39;Content-Encoding&#39;);</code></pre>
 <h3>response.sendDate<span><a class="mark" href="#http_response_senddate" id="http_response_senddate">#</a></span></h3>
 <p>When true, the Date header will be automatically generated and sent in
 the response if it is not already present in the headers. Defaults to true.
@@ -924,13 +926,13 @@ here if you need to send multiple headers with the same name.
 <p>Example:
 
 </p>
-<pre><code>response.setHeader(&#39;Content-Type&#39;, &#39;text/html&#39;);</code></pre>
+<pre><code class="js">response.setHeader(&#39;Content-Type&#39;, &#39;text/html&#39;);</code></pre>
 <p>or
 
 </p>
-<pre><code>response.setHeader(&#39;Set-Cookie&#39;, [&#39;type=ninja&#39;, &#39;language=javascript&#39;]);</code></pre>
-<p>Attempting to set a header field name that contains invalid characters will
-result in a <a href="errors.html#errors_class_typeerror"><code>TypeError</code></a> being thrown.
+<pre><code class="js">response.setHeader(&#39;Set-Cookie&#39;, [&#39;type=ninja&#39;, &#39;language=javascript&#39;]);</code></pre>
+<p>Attempting to set a header field name or value that contains invalid characters
+will result in a <a href="errors.html#errors_class_typeerror"><code>TypeError</code></a> being thrown.
 
 </p>
 <h3>response.setTimeout(msecs, callback)<span><a class="mark" href="#http_response_settimeout_msecs_callback" id="http_response_settimeout_msecs_callback">#</a></span></h3>
@@ -962,7 +964,7 @@ the headers get flushed.
 <p>Example:
 
 </p>
-<pre><code>response.statusCode = 404;</code></pre>
+<pre><code class="js">response.statusCode = 404;</code></pre>
 <p>After response header was sent to the client, this property indicates the
 status code which was sent out.
 
@@ -977,7 +979,7 @@ code will be used.
 <p>Example:
 
 </p>
-<pre><code>response.statusMessage = &#39;Not found&#39;;</code></pre>
+<pre><code class="js">response.statusMessage = &#39;Not found&#39;;</code></pre>
 <p>After response header was sent to the client, this property indicates the
 status message which was sent out.
 
@@ -1028,7 +1030,7 @@ argument.
 <p>Example:
 
 </p>
-<pre><code>var body = &#39;hello world&#39;;
+<pre><code class="js">var body = &#39;hello world&#39;;
 response.writeHead(200, {
   &#39;Content-Length&#39;: body.length,
   &#39;Content-Type&#39;: &#39;text/plain&#39; });</code></pre>
@@ -1036,8 +1038,8 @@ response.writeHead(200, {
 be called before <a href="#http_response_end_data_encoding_callback"><code>response.end()</code></a> is called.
 
 </p>
-<p>If you call <a href="#http_response_write_chunk_encoding_callback"><code>response.write()</code></a> or <a href="#http_response_end_data_encoding_callback"><code>response.end()</code></a> before calling this, the
-implicit/mutable headers will be calculated and call this function for you.
+<p>If you call <a href="#http_response_write_chunk_encoding_callback"><code>response.write()</code></a> or <a href="#http_response_end_data_encoding_callback"><code>response.end()</code></a> before calling this,
+the implicit/mutable headers will be calculated and call this function for you.
 
 </p>
 <p>Note that Content-Length is given in bytes not characters. The above example
@@ -1046,6 +1048,10 @@ If the body contains higher coded characters then <code>Buffer.byteLength()</cod
 should be used to determine the number of bytes in a given encoding.
 And Node.js does not check whether Content-Length and the length of the body
 which has been transmitted are equal or not.
+
+</p>
+<p>Attempting to set a header field name or value that contains invalid characters
+will result in a <a href="errors.html#errors_class_typeerror"><code>TypeError</code></a> being thrown.
 
 </p>
 <h2>Class: http.IncomingMessage<span><a class="mark" href="#http_class_http_incomingmessage" id="http_class_http_incomingmessage">#</a></span></h2>
@@ -1075,7 +1081,7 @@ Just like <code>&#39;end&#39;</code>, this event occurs only once per response.
 Example:
 
 </p>
-<pre><code>// Prints something like:
+<pre><code class="js">// Prints something like:
 //
 // { &#39;user-agent&#39;: &#39;curl/7.22.0&#39;,
 //   host: &#39;127.0.0.1:8000&#39;,
@@ -1123,7 +1129,7 @@ odd-numbered offsets are the associated values.
 <p>Header names are not lowercased, and duplicates are not merged.
 
 </p>
-<pre><code>// Prints something like:
+<pre><code class="js">// Prints something like:
 //
 // [ &#39;user-agent&#39;,
 //   &#39;this is invalid because there can be only one&#39;,
@@ -1161,15 +1167,15 @@ received.  Only populated at the <code>&#39;end&#39;</code> event.
 <p><strong>Only valid for response obtained from <a href="#http_class_http_clientrequest"><code>http.ClientRequest</code></a>.</strong>
 
 </p>
+<p>The HTTP response status message (reason phrase). E.G. <code>OK</code> or <code>Internal Server Error</code>.
+
+</p>
 <h3>message.socket<span><a class="mark" href="#http_message_socket" id="http_message_socket">#</a></span></h3>
 <p>The <a href="net.html#net_class_net_socket"><code>net.Socket</code></a> object associated with the connection.
 
 </p>
 <p>With HTTPS support, use <a href="tls.html#tls_tlssocket_getpeercertificate_detailed"><code>request.socket.getPeerCertificate()</code></a> to obtain the
 client&#39;s authentication details.
-
-</p>
-<p>The HTTP response status message (reason phrase). E.G. <code>OK</code> or <code>Internal Server Error</code>.
 
 </p>
 <h3>message.trailers<span><a class="mark" href="#http_message_trailers" id="http_message_trailers">#</a></span></h3>
@@ -1195,21 +1201,27 @@ Accept: text/plain\r\n
 <code>require(&#39;url&#39;).parse(request.url)</code>.  Example:
 
 </p>
-<pre><code>node&gt; require(&#39;url&#39;).parse(&#39;/status?name=ryan&#39;)
-{ href: &#39;/status?name=ryan&#39;,
+<pre><code>$ node
+&gt; require(&#39;url&#39;).parse(&#39;/status?name=ryan&#39;)
+{
+  href: &#39;/status?name=ryan&#39;,
   search: &#39;?name=ryan&#39;,
   query: &#39;name=ryan&#39;,
-  pathname: &#39;/status&#39; }</code></pre>
+  pathname: &#39;/status&#39;
+}</code></pre>
 <p>If you would like to extract the params from the query string,
 you can use the <code>require(&#39;querystring&#39;).parse</code> function, or pass
 <code>true</code> as the second argument to <code>require(&#39;url&#39;).parse</code>.  Example:
 
 </p>
-<pre><code>node&gt; require(&#39;url&#39;).parse(&#39;/status?name=ryan&#39;, true)
-{ href: &#39;/status?name=ryan&#39;,
+<pre><code>$ node
+&gt; require(&#39;url&#39;).parse(&#39;/status?name=ryan&#39;, true)
+{
+  href: &#39;/status?name=ryan&#39;,
   search: &#39;?name=ryan&#39;,
-  query: { name: &#39;ryan&#39; },
-  pathname: &#39;/status&#39; }</code></pre>
+  query: {name: &#39;ryan&#39;},
+  pathname: &#39;/status&#39;
+}</code></pre>
 <h2>http.METHODS<span><a class="mark" href="#http_http_methods" id="http_http_methods">#</a></span></h2>
 <div class="signature"><ul>
 <li><span class="type">Array</span></li>
@@ -1248,7 +1260,7 @@ is that it sets the method to GET and calls <code>req.end()</code> automatically
 <p>Example:
 
 </p>
-<pre><code>http.get(&#39;http://www.google.com/index.html&#39;, (res) =&gt; {
+<pre><code class="js">http.get(&#39;http://www.google.com/index.html&#39;, (res) =&gt; {
   console.log(`Got response: ${res.statusCode}`);
   // consume response body
   res.resume();
@@ -1313,7 +1325,7 @@ upload a file with a POST request, then write to the <code>ClientRequest</code> 
 <p>Example:
 
 </p>
-<pre><code>var postData = querystring.stringify({
+<pre><code class="js">var postData = querystring.stringify({
   &#39;msg&#39; : &#39;Hello World!&#39;
 });
 

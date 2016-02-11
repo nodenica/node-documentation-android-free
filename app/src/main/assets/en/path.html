@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Path Node.js v5.5.0 Manual &amp; Documentation</title>
+  <title>Path Node.js v5.6.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,12 +11,13 @@
 <body class="alt apidoc" id="api-section-path">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div id="intro" class="interior">
-        <a href="/" title="Go back to the home page">
-          Node.js (1)
-        </a>
-      </div>
-      <ul>
+      <div class="no-scrollbar">
+        <div id="intro" class="interior">
+          <a href="/" title="Go back to the home page">
+            Node.js (1)
+          </a>
+        </div>
+        <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -57,11 +58,12 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
+      </div>
     </div>
 
     <div id="column1" data-id="path" class="interior">
       <header>
-        <h1>Node.js v5.5.0 Documentation</h1>
+        <h1>Node.js v5.6.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -113,7 +115,7 @@ The file system is not consulted to check whether paths are valid.
 <p>Example:
 
 </p>
-<pre><code>path.basename(&#39;/foo/bar/baz/asdf/quux.html&#39;)
+<pre><code class="js">path.basename(&#39;/foo/bar/baz/asdf/quux.html&#39;)
 // returns
 &#39;quux.html&#39;
 
@@ -127,7 +129,7 @@ path.basename(&#39;/foo/bar/baz/asdf/quux.html&#39;, &#39;.html&#39;)
 <p>An example on *nix:
 
 </p>
-<pre><code>console.log(process.env.PATH)
+<pre><code class="js">console.log(process.env.PATH)
 // &#39;/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin&#39;
 
 process.env.PATH.split(path.delimiter)
@@ -136,7 +138,7 @@ process.env.PATH.split(path.delimiter)
 <p>An example on Windows:
 
 </p>
-<pre><code>console.log(process.env.PATH)
+<pre><code class="js">console.log(process.env.PATH)
 // &#39;C:\Windows\system32;C:\Windows;C:\Program Files\node\&#39;
 
 process.env.PATH.split(path.delimiter)
@@ -149,7 +151,7 @@ process.env.PATH.split(path.delimiter)
 <p>Example:
 
 </p>
-<pre><code>path.dirname(&#39;/foo/bar/baz/asdf/quux&#39;)
+<pre><code class="js">path.dirname(&#39;/foo/bar/baz/asdf/quux&#39;)
 // returns
 &#39;/foo/bar/baz/asdf&#39;</code></pre>
 <h2>path.extname(p)<span><a class="mark" href="#path_path_extname_p" id="path_path_extname_p">#</a></span></h2>
@@ -159,7 +161,7 @@ of the path or the first character of it is &#39;.&#39;, then it returns
 an empty string.  Examples:
 
 </p>
-<pre><code>path.extname(&#39;index.html&#39;)
+<pre><code class="js">path.extname(&#39;index.html&#39;)
 // returns
 &#39;.html&#39;
 
@@ -182,7 +184,7 @@ path.extname(&#39;.index&#39;)
 <p>Returns a path string from an object, the opposite of <a href="#path_path_parse_pathstring"><code>path.parse</code></a>.
 
 </p>
-<pre><code>path.format({
+<pre><code class="js">path.format({
     root : &quot;/&quot;,
     dir : &quot;/home/user/dir&quot;,
     base : &quot;file.txt&quot;,
@@ -199,14 +201,14 @@ resolve to the same location, regardless of the working directory.
 <p>Posix examples:
 
 </p>
-<pre><code>path.isAbsolute(&#39;/foo/bar&#39;) // true
+<pre><code class="js">path.isAbsolute(&#39;/foo/bar&#39;) // true
 path.isAbsolute(&#39;/baz/..&#39;)  // true
 path.isAbsolute(&#39;qux/&#39;)     // false
 path.isAbsolute(&#39;.&#39;)        // false</code></pre>
 <p>Windows examples:
 
 </p>
-<pre><code>path.isAbsolute(&#39;//server&#39;)  // true
+<pre><code class="js">path.isAbsolute(&#39;//server&#39;)  // true
 path.isAbsolute(&#39;C:/foo/..&#39;) // true
 path.isAbsolute(&#39;bar\\baz&#39;)  // false
 path.isAbsolute(&#39;.&#39;)         // false</code></pre>
@@ -226,7 +228,7 @@ silently ignored.  In v0.10 and up, an exception is thrown.
 <p>Example:
 
 </p>
-<pre><code>path.join(&#39;/foo&#39;, &#39;bar&#39;, &#39;baz/asdf&#39;, &#39;quux&#39;, &#39;..&#39;)
+<pre><code class="js">path.join(&#39;/foo&#39;, &#39;bar&#39;, &#39;baz/asdf&#39;, &#39;quux&#39;, &#39;..&#39;)
 // returns
 &#39;/foo/bar/baz/asdf&#39;
 
@@ -251,7 +253,7 @@ On Windows backslashes are used.
 <p>Example:
 
 </p>
-<pre><code>path.normalize(&#39;/foo/bar//baz/asdf/quux/..&#39;)
+<pre><code class="js">path.normalize(&#39;/foo/bar//baz/asdf/quux/..&#39;)
 // returns
 &#39;/foo/bar/baz/asdf&#39;</code></pre>
 <p><em>Note:</em> If the path string passed as argument is a zero-length string then <code>&#39;.&#39;</code>
@@ -265,7 +267,7 @@ On Windows backslashes are used.
 <p>An example on *nix:
 
 </p>
-<pre><code>path.parse(&#39;/home/user/dir/file.txt&#39;)
+<pre><code class="js">path.parse(&#39;/home/user/dir/file.txt&#39;)
 // returns
 {
     root : &quot;/&quot;,
@@ -277,7 +279,7 @@ On Windows backslashes are used.
 <p>An example on Windows:
 
 </p>
-<pre><code>path.parse(&#39;C:\\path\\dir\\index.html&#39;)
+<pre><code class="js">path.parse(&#39;C:\\path\\dir\\index.html&#39;)
 // returns
 {
     root : &quot;C:\\&quot;,
@@ -300,11 +302,11 @@ path from one to the other.  This is actually the reverse transform of
 <code>path.resolve</code>, which means we see that:
 
 </p>
-<pre><code>path.resolve(from, path.relative(from, to)) == path.resolve(to)</code></pre>
+<pre><code class="js">path.resolve(from, path.relative(from, to)) == path.resolve(to)</code></pre>
 <p>Examples:
 
 </p>
-<pre><code>path.relative(&#39;C:\\orandea\\test\\aaa&#39;, &#39;C:\\orandea\\impl\\bbb&#39;)
+<pre><code class="js">path.relative(&#39;C:\\orandea\\test\\aaa&#39;, &#39;C:\\orandea\\impl\\bbb&#39;)
 // returns
 &#39;..\\..\\impl\\bbb&#39;
 
@@ -330,7 +332,7 @@ gets resolved to the root directory. Non-string <code>from</code> arguments are 
 <p>Another way to think of it is as a sequence of <code>cd</code> commands in a shell.
 
 </p>
-<pre><code>path.resolve(&#39;foo/bar&#39;, &#39;/tmp/file/&#39;, &#39;..&#39;, &#39;a/../subfile&#39;)</code></pre>
+<pre><code class="js">path.resolve(&#39;foo/bar&#39;, &#39;/tmp/file/&#39;, &#39;..&#39;, &#39;a/../subfile&#39;)</code></pre>
 <p>Is similar to:
 
 </p>
@@ -346,7 +348,7 @@ files.
 <p>Examples:
 
 </p>
-<pre><code>path.resolve(&#39;/foo/bar&#39;, &#39;./baz&#39;)
+<pre><code class="js">path.resolve(&#39;/foo/bar&#39;, &#39;./baz&#39;)
 // returns
 &#39;/foo/bar/baz&#39;
 
@@ -368,13 +370,13 @@ path.resolve(&#39;wwwroot&#39;, &#39;static_files/png/&#39;, &#39;../gif/image.g
 <p>An example on *nix:
 
 </p>
-<pre><code>&#39;foo/bar/baz&#39;.split(path.sep)
+<pre><code class="js">&#39;foo/bar/baz&#39;.split(path.sep)
 // returns
 [&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;]</code></pre>
 <p>An example on Windows:
 
 </p>
-<pre><code>&#39;foo\\bar\\baz&#39;.split(path.sep)
+<pre><code class="js">&#39;foo\\bar\\baz&#39;.split(path.sep)
 // returns
 [&#39;foo&#39;, &#39;bar&#39;, &#39;baz&#39;]</code></pre>
 <h2>path.win32<span><a class="mark" href="#path_path_win32" id="path_path_win32">#</a></span></h2>

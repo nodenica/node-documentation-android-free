@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>File System Node.js v5.5.0 Manual &amp; Documentation</title>
+  <title>File System Node.js v5.6.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,12 +11,13 @@
 <body class="alt apidoc" id="api-section-fs">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div id="intro" class="interior">
-        <a href="/" title="Go back to the home page">
-          Node.js (1)
-        </a>
-      </div>
-      <ul>
+      <div class="no-scrollbar">
+        <div id="intro" class="interior">
+          <a href="/" title="Go back to the home page">
+            Node.js (1)
+          </a>
+        </div>
+        <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -57,11 +58,12 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
+      </div>
     </div>
 
     <div id="column1" data-id="fs" class="interior">
       <header>
-        <h1>Node.js v5.5.0 Documentation</h1>
+        <h1>Node.js v5.6.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -203,7 +205,7 @@ You can use try/catch to handle exceptions or allow them to bubble up.
 <p>Here is an example of the asynchronous version:
 
 </p>
-<pre><code>const fs = require(&#39;fs&#39;);
+<pre><code class="js">const fs = require(&#39;fs&#39;);
 
 fs.unlink(&#39;/tmp/hello&#39;, (err) =&gt; {
   if (err) throw err;
@@ -212,7 +214,7 @@ fs.unlink(&#39;/tmp/hello&#39;, (err) =&gt; {
 <p>Here is the synchronous version:
 
 </p>
-<pre><code>const fs = require(&#39;fs&#39;);
+<pre><code class="js">const fs = require(&#39;fs&#39;);
 
 fs.unlinkSync(&#39;/tmp/hello&#39;);
 console.log(&#39;successfully deleted /tmp/hello&#39;);</code></pre>
@@ -220,7 +222,7 @@ console.log(&#39;successfully deleted /tmp/hello&#39;);</code></pre>
 following is prone to error:
 
 </p>
-<pre><code>fs.rename(&#39;/tmp/hello&#39;, &#39;/tmp/world&#39;, (err) =&gt; {
+<pre><code class="js">fs.rename(&#39;/tmp/hello&#39;, &#39;/tmp/world&#39;, (err) =&gt; {
   if (err) throw err;
   console.log(&#39;renamed complete&#39;);
 });
@@ -232,7 +234,7 @@ fs.stat(&#39;/tmp/world&#39;, (err, stats) =&gt; {
 The correct way to do this is to chain the callbacks.
 
 </p>
-<pre><code>fs.rename(&#39;/tmp/hello&#39;, &#39;/tmp/world&#39;, (err) =&gt; {
+<pre><code class="js">fs.rename(&#39;/tmp/hello&#39;, &#39;/tmp/world&#39;, (err) =&gt; {
   if (err) throw err;
   fs.stat(&#39;/tmp/world&#39;, (err, stats) =&gt; {
     if (err) throw err;
@@ -327,7 +329,8 @@ synchronous counterparts are of this type.
 similar to this:
 
 </p>
-<pre><code>{ dev: 2114,
+<pre><code class="js">{
+  dev: 2114,
   ino: 48064969,
   mode: 33188,
   nlink: 1,
@@ -340,7 +343,8 @@ similar to this:
   atime: Mon, 10 Oct 2011 23:24:11 GMT,
   mtime: Mon, 10 Oct 2011 23:24:11 GMT,
   ctime: Mon, 10 Oct 2011 23:24:11 GMT,
-  birthtime: Mon, 10 Oct 2011 23:24:11 GMT }</code></pre>
+  birthtime: Mon, 10 Oct 2011 23:24:11 GMT
+}</code></pre>
 <p>Please note that <code>atime</code>, <code>mtime</code>, <code>birthtime</code>, and <code>ctime</code> are
 instances of <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date"><code>Date</code></a> object and to compare the values of
 these objects you should use appropriate methods. For most general
@@ -420,7 +424,7 @@ argument will be populated. The following example checks if the file
 <code>/etc/passwd</code> can be read and written by the current process.
 
 </p>
-<pre><code>fs.access(&#39;/etc/passwd&#39;, fs.R_OK | fs.W_OK, function (err) {
+<pre><code class="js">fs.access(&#39;/etc/passwd&#39;, fs.R_OK | fs.W_OK, (err) =&gt; {
   console.log(err ? &#39;no access!&#39; : &#39;can read/write&#39;);
 });</code></pre>
 <h2>fs.accessSync(path[, mode])<span><a class="mark" href="#fs_fs_accesssync_path_mode" id="fs_fs_accesssync_path_mode">#</a></span></h2>
@@ -447,14 +451,14 @@ fail, and does nothing otherwise.
 <p>Example:
 
 </p>
-<pre><code>fs.appendFile(&#39;message.txt&#39;, &#39;data to append&#39;, (err) =&gt; {
+<pre><code class="js">fs.appendFile(&#39;message.txt&#39;, &#39;data to append&#39;, (err) =&gt; {
   if (err) throw err;
   console.log(&#39;The &quot;data to append&quot; was appended to file!&#39;);
 });</code></pre>
 <p>If <code>options</code> is a string, then it specifies the encoding. Example:
 
 </p>
-<pre><code>fs.appendFile(&#39;message.txt&#39;, &#39;data to append&#39;, &#39;utf8&#39;, callback);</code></pre>
+<pre><code class="js">fs.appendFile(&#39;message.txt&#39;, &#39;data to append&#39;, &#39;utf8&#39;, callback);</code></pre>
 <p>Any specified file descriptor has to have been opened for appending.
 
 </p>
@@ -504,7 +508,8 @@ default value of 64 kb for the same parameter.
 <p><code>options</code> is an object or string with the following defaults:
 
 </p>
-<pre><code>{ flags: &#39;r&#39;,
+<pre><code class="js">{
+  flags: &#39;r&#39;,
   encoding: null,
   fd: null,
   mode: 0o666,
@@ -535,7 +540,7 @@ file was created.
 <p>An example to read the last 10 bytes of a file which is 100 bytes long:
 
 </p>
-<pre><code>fs.createReadStream(&#39;sample.txt&#39;, {start: 90, end: 99});</code></pre>
+<pre><code class="js">fs.createReadStream(&#39;sample.txt&#39;, {start: 90, end: 99});</code></pre>
 <p>If <code>options</code> is a string, then it specifies the encoding.
 
 </p>
@@ -546,11 +551,13 @@ file was created.
 <p><code>options</code> is an object or string with the following defaults:
 
 </p>
-<pre><code>{ flags: &#39;w&#39;,
+<pre><code class="js">{
+  flags: &#39;w&#39;,
   defaultEncoding: &#39;utf8&#39;,
   fd: null,
   mode: 0o666,
-  autoClose: true }</code></pre>
+  autoClose: true
+}</code></pre>
 <p><code>options</code> may also include a <code>start</code> option to allow writing data at
 some position past the beginning of the file.  Modifying a file rather
 than replacing it may require a <code>flags</code> mode of <code>r+</code> rather than the
@@ -578,7 +585,7 @@ there&#39;s no file descriptor leak.
 Then call the <code>callback</code> argument with either true or false.  Example:
 
 </p>
-<pre><code>fs.exists(&#39;/etc/passwd&#39;, (exists) =&gt; {
+<pre><code class="js">fs.exists(&#39;/etc/passwd&#39;, (exists) =&gt; {
   console.log(exists ? &#39;it\&#39;s there&#39; : &#39;no passwd!&#39;);
 });</code></pre>
 <p><code>fs.exists()</code> should not be used to check if a file exists before calling
@@ -742,7 +749,7 @@ The file is created if it does not exist.</p>
 </li>
 </ul>
 <p><code>mode</code> sets the file mode (permission and sticky bits), but only if the file was
-created. It defaults to <code>0666</code>, readable and writeable.
+created. It defaults to <code>0666</code>, readable and writable.
 
 </p>
 <p>The callback gets two arguments <code>(err, fd)</code>.
@@ -814,7 +821,7 @@ the names of the files in the directory excluding <code>&#39;.&#39;</code> and <
 <p>Asynchronously reads the entire contents of a file. Example:
 
 </p>
-<pre><code>fs.readFile(&#39;/etc/passwd&#39;, (err, data) =&gt; {
+<pre><code class="js">fs.readFile(&#39;/etc/passwd&#39;, (err, data) =&gt; {
   if (err) throw err;
   console.log(data);
 });</code></pre>
@@ -828,7 +835,7 @@ contents of the file.
 <p>If <code>options</code> is a string, then it specifies the encoding. Example:
 
 </p>
-<pre><code>fs.readFile(&#39;/etc/passwd&#39;, &#39;utf8&#39;, callback);</code></pre>
+<pre><code class="js">fs.readFile(&#39;/etc/passwd&#39;, &#39;utf8&#39;, callback);</code></pre>
 <p>Any specified file descriptor has to support reading.
 
 </p>
@@ -862,7 +869,7 @@ resolution or avoid additional <code>fs.stat</code> calls for known real paths.
 <p>Example:
 
 </p>
-<pre><code>var cache = {&#39;/etc&#39;:&#39;/private/etc&#39;};
+<pre><code class="js">var cache = {&#39;/etc&#39;:&#39;/private/etc&#39;};
 fs.realpath(&#39;/etc/passwd&#39;, cache, (err, resolvedPath) =&gt; {
   if (err) throw err;
   console.log(resolvedPath);
@@ -917,7 +924,7 @@ Note that Windows junction points require the destination path to be absolute.  
 <p>Here is an example below:
 
 </p>
-<pre><code>fs.symlink(&#39;./foo&#39;, &#39;./new-port&#39;);</code></pre>
+<pre><code class="js">fs.symlink(&#39;./foo&#39;, &#39;./new-port&#39;);</code></pre>
 <p>It would create a symlic link named with &quot;new-port&quot; that points to &quot;foo&quot;.
 
 </p>
@@ -1041,7 +1048,7 @@ be provided. Therefore, don&#39;t assume that <code>filename</code> argument is 
 provided in the callback, and have some fallback logic if it is null.
 
 </p>
-<pre><code>fs.watch(&#39;somedir&#39;, (event, filename) =&gt; {
+<pre><code class="js">fs.watch(&#39;somedir&#39;, (event, filename) =&gt; {
   console.log(`event is: ${event}`);
   if (filename) {
     console.log(`filename provided: ${filename}`);
@@ -1066,7 +1073,7 @@ target should be polled in milliseconds. The default is
 stat object:
 
 </p>
-<pre><code>fs.watchFile(&#39;message.text&#39;, (curr, prev) =&gt; {
+<pre><code class="js">fs.watchFile(&#39;message.text&#39;, (curr, prev) =&gt; {
   console.log(`the current mtime is: ${curr.mtime}`);
   console.log(`the previous mtime was: ${prev.mtime}`);
 });</code></pre>
@@ -1171,14 +1178,14 @@ to <code>&#39;utf8&#39;</code>.
 <p>Example:
 
 </p>
-<pre><code>fs.writeFile(&#39;message.txt&#39;, &#39;Hello Node.js&#39;, (err) =&gt; {
+<pre><code class="js">fs.writeFile(&#39;message.txt&#39;, &#39;Hello Node.js&#39;, (err) =&gt; {
   if (err) throw err;
   console.log(&#39;It\&#39;s saved!&#39;);
 });</code></pre>
 <p>If <code>options</code> is a string, then it specifies the encoding. Example:
 
 </p>
-<pre><code>fs.writeFile(&#39;message.txt&#39;, &#39;Hello Node.js&#39;, &#39;utf8&#39;, callback);</code></pre>
+<pre><code class="js">fs.writeFile(&#39;message.txt&#39;, &#39;Hello Node.js&#39;, &#39;utf8&#39;, callback);</code></pre>
 <p>Any specified file descriptor has to support writing.
 
 </p>

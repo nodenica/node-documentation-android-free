@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Events Node.js v5.5.0 Manual &amp; Documentation</title>
+  <title>Events Node.js v5.6.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,12 +11,13 @@
 <body class="alt apidoc" id="api-section-events">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div id="intro" class="interior">
-        <a href="/" title="Go back to the home page">
-          Node.js (1)
-        </a>
-      </div>
-      <ul>
+      <div class="no-scrollbar">
+        <div id="intro" class="interior">
+          <a href="/" title="Go back to the home page">
+            Node.js (1)
+          </a>
+        </div>
+        <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -57,11 +58,12 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
+      </div>
     </div>
 
     <div id="column1" data-id="events" class="interior">
       <header>
-        <h1>Node.js v5.5.0 Documentation</h1>
+        <h1>Node.js v5.6.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -135,7 +137,7 @@ listener. The <code>eventEmitter.on()</code> method is used to register listener
 the <code>eventEmitter.emit()</code> method is used to trigger the event.
 
 </p>
-<pre><code>const EventEmitter = require(&#39;events&#39;);
+<pre><code class="js">const EventEmitter = require(&#39;events&#39;);
 const util = require(&#39;util&#39;);
 
 function MyEmitter() {
@@ -144,7 +146,7 @@ function MyEmitter() {
 util.inherits(MyEmitter, EventEmitter);
 
 const myEmitter = new MyEmitter();
-myEmitter.on(&#39;event&#39;, function() {
+myEmitter.on(&#39;event&#39;, () =&gt; {
   console.log(&#39;an event occurred!&#39;);
 });
 myEmitter.emit(&#39;event&#39;);</code></pre>
@@ -154,12 +156,12 @@ the <code>util.inherits()</code> method. It is, however, possible to use ES6 cla
 well:
 
 </p>
-<pre><code>const EventEmitter = require(&#39;events&#39;);
+<pre><code class="js">const EventEmitter = require(&#39;events&#39;);
 
 class MyEmitter extends EventEmitter {}
 
 const myEmitter = new MyEmitter();
-myEmitter.on(&#39;event&#39;, function() {
+myEmitter.on(&#39;event&#39;, () =&gt; {
   console.log(&#39;an event occurred!&#39;);
 });
 myEmitter.emit(&#39;event&#39;);</code></pre>
@@ -171,7 +173,7 @@ keyword is intentionally set to reference the <code>EventEmitter</code> to which
 listener is attached.
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 myEmitter.on(&#39;event&#39;, function(a, b) {
   console.log(a, b, this);
     // Prints:
@@ -186,7 +188,7 @@ myEmitter.emit(&#39;event&#39;, &#39;a&#39;, &#39;b&#39;);</code></pre>
 the <code>this</code> keyword will no longer reference the <code>EventEmitter</code> instance:
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 myEmitter.on(&#39;event&#39;, (a, b) =&gt; {
   console.log(a, b, this);
     // Prints: a b {}
@@ -200,7 +202,7 @@ listener functions can switch to an asynchronous mode of operation using
 the <code>setImmediate()</code> or <code>process.nextTick()</code> methods:
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 myEmitter.on(&#39;event&#39;, (a, b) =&gt; {
   setImmediate(() =&gt; {
     console.log(&#39;this happens asynchronously&#39;);
@@ -212,7 +214,7 @@ myEmitter.emit(&#39;event&#39;, &#39;a&#39;, &#39;b&#39;);</code></pre>
 listener will be invoked <em>every time</em> the named event is emitted.
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 var m = 0;
 myEmitter.on(&#39;event&#39;, () =&gt; {
   console.log(++m);
@@ -225,7 +227,7 @@ myEmitter.emit(&#39;event&#39;);
 that is immediately unregistered after it is called.
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 var m = 0;
 myEmitter.once(&#39;event&#39;, () =&gt; {
   console.log(++m);
@@ -245,7 +247,7 @@ within Node.js.
 stack trace is printed, and the Node.js process exits.
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 myEmitter.emit(&#39;error&#39;, new Error(&#39;whoops!&#39;));
   // Throws and crashes Node.js</code></pre>
 <p>To guard against crashing the Node.js process, developers can either register
@@ -254,7 +256,7 @@ a listener for the <code>process.on(&#39;uncaughtException&#39;)</code> event or
 deprecated</em>).
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 
 process.on(&#39;uncaughtException&#39;, (err) =&gt; {
   console.log(&#39;whoops! there was an error&#39;);
@@ -266,7 +268,7 @@ myEmitter.emit(&#39;error&#39;, new Error(&#39;whoops!&#39;));
 <code>&#39;error&#39;</code> event:
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 myEmitter.on(&#39;error&#39;, (err) =&gt; {
   console.log(&#39;whoops! there was an error&#39;);
 });
@@ -276,7 +278,7 @@ myEmitter.emit(&#39;error&#39;, new Error(&#39;whoops!&#39;));
 <p>The <code>EventEmitter</code> class is defined and exposed by the <code>events</code> module:
 
 </p>
-<pre><code>const EventEmitter = require(&#39;events&#39;);</code></pre>
+<pre><code class="js">const EventEmitter = require(&#39;events&#39;);</code></pre>
 <p>All EventEmitters emit the event <code>&#39;newListener&#39;</code> when new listeners are
 added and <code>&#39;removeListener&#39;</code> when a listener is removed.
 
@@ -300,7 +302,7 @@ but important side effect: any <em>additional</em> listeners registered to the s
 listener that is in the process of being added.
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 // Only do this once so we don&#39;t loop forever
 myEmitter.once(&#39;newListener&#39;, (event, listener) =&gt; {
   if (event === &#39;event&#39;) {
@@ -330,7 +332,7 @@ myEmitter.emit(&#39;event&#39;);
 registered on the given <code>emitter</code>.
 
 </p>
-<pre><code>const myEmitter = new MyEmitter();
+<pre><code class="js">const myEmitter = new MyEmitter();
 myEmitter.on(&#39;event&#39;, () =&gt; {});
 myEmitter.on(&#39;event&#39;, () =&gt; {});
 console.log(EventEmitter.listenerCount(myEmitter, &#39;event&#39;));
@@ -356,7 +358,7 @@ that a <code>possible EventEmitter memory leak</code> has been detected. For any
 methods can be used to temporarily avoid this warning:
 
 </p>
-<pre><code>emitter.setMaxListeners(emitter.getMaxListeners() + 1);
+<pre><code class="js">emitter.setMaxListeners(emitter.getMaxListeners() + 1);
 emitter.once(&#39;event&#39;, () =&gt; {
   // do stuff
   emitter.setMaxListeners(Math.max(emitter.getMaxListeners() - 1, 0));
@@ -390,7 +392,7 @@ set by <a href="#events_emitter_setmaxlisteners_n"><code>emitter.setMaxListeners
 <p>Returns a copy of the array of listeners for the specified <code>event</code>.
 
 </p>
-<pre><code>server.on(&#39;connection&#39;, (stream) =&gt; {
+<pre><code class="js">server.on(&#39;connection&#39;, (stream) =&gt; {
   console.log(&#39;someone connected!&#39;);
 });
 console.log(util.inspect(server.listeners(&#39;connection&#39;)));
@@ -403,7 +405,7 @@ been added. Multiple calls passing the same combination of <code>event</code> an
 times.
 
 </p>
-<pre><code>server.on(&#39;connection&#39;, (stream) =&gt; {
+<pre><code class="js">server.on(&#39;connection&#39;, (stream) =&gt; {
   console.log(&#39;someone connected!&#39;);
 });</code></pre>
 <p>Returns a reference to the <code>EventEmitter</code> so calls can be chained.
@@ -414,7 +416,7 @@ times.
 invoked only the next time <code>event</code> is triggered, after which it is removed.
 
 </p>
-<pre><code>server.once(&#39;connection&#39;, (stream) =&gt; {
+<pre><code class="js">server.once(&#39;connection&#39;, (stream) =&gt; {
   console.log(&#39;Ah, we have our first user!&#39;);
 });</code></pre>
 <p>Returns a reference to the <code>EventEmitter</code> so calls can be chained.
@@ -437,7 +439,7 @@ component or module (e.g. sockets or file streams).
 <code>event</code>.
 
 </p>
-<pre><code>var callback = function(stream) {
+<pre><code class="js">var callback = (stream) =&gt; {
   console.log(&#39;someone connected!&#39;);
 };
 server.on(&#39;connection&#39;, callback);

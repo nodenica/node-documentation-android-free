@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>REPL Node.js v5.5.0 Manual &amp; Documentation</title>
+  <title>REPL Node.js v5.6.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,12 +11,13 @@
 <body class="alt apidoc" id="api-section-repl">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div id="intro" class="interior">
-        <a href="/" title="Go back to the home page">
-          Node.js (1)
-        </a>
-      </div>
-      <ul>
+      <div class="no-scrollbar">
+        <div id="intro" class="interior">
+          <a href="/" title="Go back to the home page">
+            Node.js (1)
+          </a>
+        </div>
+        <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -57,11 +58,12 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
+      </div>
     </div>
 
     <div id="column1" data-id="repl" class="interior">
       <header>
-        <h1>Node.js v5.5.0 Documentation</h1>
+        <h1>Node.js v5.6.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -111,11 +113,11 @@ just trying things out.
 dropped into the REPL. It has simplistic emacs line-editing.
 
 </p>
-<pre><code>mjr:~$ node
+<pre><code>$ node
 Type &#39;.help&#39; for options.
 &gt; a = [ 1, 2, 3];
 [ 1, 2, 3 ]
-&gt; a.forEach(function (v) {
+&gt; a.forEach((v) =&gt; {
 ...   console.log(v);
 ...   });
 1
@@ -186,7 +188,7 @@ a variable to the REPL explicitly by assigning it to the <code>context</code> ob
 associated with each <code>REPLServer</code>.  For example:
 
 </p>
-<pre><code>// repl_test.js
+<pre><code class="js">// repl_test.js
 const repl = require(&#39;repl&#39;);
 var msg = &#39;message&#39;;
 
@@ -194,7 +196,7 @@ repl.start(&#39;&gt; &#39;).context.m = msg;</code></pre>
 <p>Things in the <code>context</code> object appear as local within the REPL:
 
 </p>
-<pre><code>mjr:~$ node repl_test.js
+<pre><code>$ node repl_test.js
 &gt; m
 &#39;message&#39;</code></pre>
 <p>There are a few special REPL commands:
@@ -235,17 +237,17 @@ command.  Press twice on a blank line to forcibly exit.</li>
 <p>For example, if you have defined an <code>inspect()</code> function on an object, like this:
 
 </p>
-<pre><code>&gt; var obj = { foo: &#39;this will not show up in the inspect() output&#39; };
+<pre><code>&gt; var obj = {foo: &#39;this will not show up in the inspect() output&#39;};
 undefined
-&gt; obj.inspect = function() {
-...   return { bar: &#39;baz&#39; };
+&gt; obj.inspect = () =&gt; {
+...   return {bar: &#39;baz&#39;};
 ... };
 [Function]</code></pre>
 <p>and try to print <code>obj</code> in REPL, it will invoke the custom <code>inspect()</code> function:
 
 </p>
 <pre><code>&gt; obj
-{ bar: &#39;baz&#39; }</code></pre>
+{bar: &#39;baz&#39;}</code></pre>
 <h2>Class: REPLServer<span><a class="mark" href="#repl_class_replserver" id="repl_class_replserver">#</a></span></h2>
 <p>This inherits from <a href="readline.html#readline_class_interface">Readline Interface</a> with the following events:
 
@@ -262,7 +264,7 @@ to signal <code>&#39;end&#39;</code> on the <code>input</code> stream.
 <p>Example of listening for <code>exit</code>:
 
 </p>
-<pre><code>replServer.on(&#39;exit&#39;, () =&gt; {
+<pre><code class="js">replServer.on(&#39;exit&#39;, () =&gt; {
   console.log(&#39;Got &quot;exit&quot; event from repl!&#39;);
   process.exit();
 });</code></pre>
@@ -278,7 +280,7 @@ be emitted.
 <p>Example of listening for <code>reset</code>:
 
 </p>
-<pre><code>// Extend the initial repl context.
+<pre><code class="js">// Extend the initial repl context.
 var replServer = repl.start({ options ... });
 someExtension.extend(r.context);
 
@@ -308,14 +310,14 @@ when the command is invoked, bound to the REPLServer instance (Required).</li>
 <p>Example of defining a command:
 
 </p>
-<pre><code>// repl_test.js
+<pre><code class="js">// repl_test.js
 const repl = require(&#39;repl&#39;);
 
 var replServer = repl.start();
 replServer.defineCommand(&#39;sayhello&#39;, {
   help: &#39;Say hello&#39;,
   action: function(name) {
-    this.write(`Hello, ${name}!\n&#39;);
+    this.write(`Hello, ${name}!\n`);
     this.displayPrompt();
   }
 });</code></pre>
@@ -397,7 +399,7 @@ will share the same global object but will have unique I/O.
 <p>Here is an example that starts a REPL on stdin, a Unix socket, and a TCP socket:
 
 </p>
-<pre><code>const net = require(&#39;net&#39;);
+<pre><code class="js">const net = require(&#39;net&#39;);
 const repl = require(&#39;repl&#39;);
 var connections = 0;
 

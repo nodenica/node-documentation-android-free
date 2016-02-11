@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Modules Node.js v5.5.0 Manual &amp; Documentation</title>
+  <title>Modules Node.js v5.6.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,12 +11,13 @@
 <body class="alt apidoc" id="api-section-modules">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div id="intro" class="interior">
-        <a href="/" title="Go back to the home page">
-          Node.js (1)
-        </a>
-      </div>
-      <ul>
+      <div class="no-scrollbar">
+        <div id="intro" class="interior">
+          <a href="/" title="Go back to the home page">
+            Node.js (1)
+          </a>
+        </div>
+        <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -57,11 +58,12 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
+      </div>
     </div>
 
     <div id="column1" data-id="modules" class="interior">
       <header>
-        <h1>Node.js v5.5.0 Documentation</h1>
+        <h1>Node.js v5.6.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -120,20 +122,16 @@ in one-to-one correspondence.  As an example, <code>foo.js</code> loads the modu
 <p>The contents of <code>foo.js</code>:
 
 </p>
-<pre><code>const circle = require(&#39;./circle.js&#39;);
+<pre><code class="js">const circle = require(&#39;./circle.js&#39;);
 console.log( `The area of a circle of radius 4 is ${circle.area(4)}`);</code></pre>
 <p>The contents of <code>circle.js</code>:
 
 </p>
-<pre><code>const PI = Math.PI;
+<pre><code class="js">const PI = Math.PI;
 
-exports.area = function (r) {
-  return PI * r * r;
-};
+exports.area = (r) =&gt; PI * r * r;
 
-exports.circumference = function (r) {
-  return 2 * PI * r;
-};</code></pre>
+exports.circumference = (r) =&gt; 2 * PI * r;</code></pre>
 <p>The module <code>circle.js</code> has exported the functions <code>area()</code> and
 <code>circumference()</code>.  To add functions and objects to the root of your module,
 you can add them to the special <code>exports</code> object.
@@ -152,18 +150,16 @@ instead of <code>exports</code>.
 <p>Below, <code>bar.js</code> makes use of the <code>square</code> module, which exports a constructor:
 
 </p>
-<pre><code>const square = require(&#39;./square.js&#39;);
+<pre><code class="js">const square = require(&#39;./square.js&#39;);
 var mySquare = square(2);
 console.log(`The area of my square is ${mySquare.area()}`);</code></pre>
 <p>The <code>square</code> module is defined in <code>square.js</code>:
 
 </p>
-<pre><code>// assigning to exports will not modify module, must use module.exports
-module.exports = function(width) {
+<pre><code class="js">// assigning to exports will not modify module, must use module.exports
+module.exports = (width) =&gt; {
   return {
-    area: function() {
-      return width * width;
-    }
+    area: () =&gt; width * width
   };
 }</code></pre>
 <p>The module system is implemented in the <code>require(&quot;module&quot;)</code> module.
@@ -177,7 +173,7 @@ module.exports = function(width) {
 directly by testing
 
 </p>
-<pre><code>require.main === module</code></pre>
+<pre><code class="js">require.main === module</code></pre>
 <p>For a file <code>foo.js</code>, this will be <code>true</code> if run via <code>node foo.js</code>, but
 <code>false</code> if run by <code>require(&#39;./foo&#39;)</code>.
 
@@ -578,7 +574,7 @@ which is probably not what you want to do.
 <p>For example suppose we were making a module called <code>a.js</code>
 
 </p>
-<pre><code>const EventEmitter = require(&#39;events&#39;);
+<pre><code class="js">const EventEmitter = require(&#39;events&#39;);
 
 module.exports = new EventEmitter();
 
@@ -590,7 +586,7 @@ setTimeout(() =&gt; {
 <p>Then in another file we could do
 
 </p>
-<pre><code>const a = require(&#39;./a&#39;);
+<pre><code class="js">const a = require(&#39;./a&#39;);
 a.on(&#39;ready&#39;, () =&gt; {
   console.log(&#39;module a is ready&#39;);
 });</code></pre>
@@ -601,13 +597,13 @@ done in any callbacks.  This does not work:
 <p>x.js:
 
 </p>
-<pre><code>setTimeout(() =&gt; {
+<pre><code class="js">setTimeout(() =&gt; {
   module.exports = { a: &#39;hello&#39; };
 }, 0);</code></pre>
 <p>y.js:
 
 </p>
-<pre><code>const x = require(&#39;./x&#39;);
+<pre><code class="js">const x = require(&#39;./x&#39;);
 console.log(x.a);</code></pre>
 <h4>exports alias<span><a class="mark" href="#modules_exports_alias" id="modules_exports_alias">#</a></span></h4>
 <p>The <code>exports</code> variable that is available within a module starts as a reference
@@ -619,14 +615,14 @@ is no longer bound to the previous value.
 <code>require()</code>:
 
 </p>
-<pre><code>function require(...) {
+<pre><code class="js">function require(...) {
   // ...
-  function (module, exports) {
+  ((module, exports) =&gt; {
     // Your module code here
     exports = some_func;        // re-assigns exports, exports is no longer
                                 // a shortcut, and nothing is exported.
     module.exports = some_func; // makes your module export 0
-  } (module, module.exports);
+  })(module, module.exports);
   return module;
 }</code></pre>
 <p>As a guideline, if the relationship between <code>exports</code> and <code>module.exports</code>
