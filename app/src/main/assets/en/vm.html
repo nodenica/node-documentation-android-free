@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Executing JavaScript Node.js v5.6.0 Manual &amp; Documentation</title>
+  <title>Executing JavaScript Node.js v5.7.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,13 +11,12 @@
 <body class="alt apidoc" id="api-section-vm">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div class="no-scrollbar">
-        <div id="intro" class="interior">
-          <a href="/" title="Go back to the home page">
-            Node.js (1)
-          </a>
-        </div>
-        <ul>
+      <div id="intro" class="interior">
+        <a href="/" title="Go back to the home page">
+          Node.js (1)
+        </a>
+      </div>
+      <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -58,12 +57,11 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
-      </div>
     </div>
 
     <div id="column1" data-id="vm" class="interior">
       <header>
-        <h1>Node.js v5.6.0 Documentation</h1>
+        <h1>Node.js v5.7.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -99,7 +97,7 @@
 
       <div id="apicontent">
         <h1>Executing JavaScript<span><a class="mark" href="#vm_executing_javascript" id="vm_executing_javascript">#</a></span></h1>
-<pre class="api_stability_2">Stability: 2 - Stable</pre><!--name=vm-->
+<pre class="api_stability api_stability_2">Stability: 2 - Stable</pre><!--name=vm-->
 
 <p>You can access this module with:
 
@@ -136,6 +134,15 @@ Applies only to syntax errors compiling the code; errors while running the
 code are controlled by the options to the script&#39;s methods.</li>
 <li><code>timeout</code>: a number of milliseconds to execute <code>code</code> before terminating
 execution. If execution is terminated, an <a href="errors.html#errors_class_error"><code>Error</code></a> will be thrown.</li>
+<li><code>cachedData</code>: an optional <code>Buffer</code> with V8&#39;s code cache data for the supplied
+source. When supplied <code>cachedDataRejected</code> value will be set to either
+<code>true</code> or <code>false</code> depending on acceptance of the data by V8.</li>
+<li><code>produceCachedData</code>: if <code>true</code> and no <code>cachedData</code> is present - V8 tries to
+produce code cache data for <code>code</code>. Upon success, a <code>Buffer</code> with V8&#39;s code
+cache data will be produced and stored in <code>cachedData</code> property of the
+returned <code>vm.Script</code> instance. <code>cachedDataProduced</code> value will be set to
+either <code>true</code> or <code>false</code> depending on whether code cache data is produced
+successfully.</li>
 </ul>
 <h3>script.runInContext(contextifiedSandbox[, options])<span><a class="mark" href="#vm_script_runincontext_contextifiedsandbox_options" id="vm_script_runincontext_contextifiedsandbox_options">#</a></span></h3>
 <p>Similar to <a href="#vm_vm_runincontext_code_contextifiedsandbox_options"><code>vm.runInContext()</code></a> but a method of a precompiled <code>Script</code>

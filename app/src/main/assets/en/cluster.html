@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Cluster Node.js v5.6.0 Manual &amp; Documentation</title>
+  <title>Cluster Node.js v5.7.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,13 +11,12 @@
 <body class="alt apidoc" id="api-section-cluster">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div class="no-scrollbar">
-        <div id="intro" class="interior">
-          <a href="/" title="Go back to the home page">
-            Node.js (1)
-          </a>
-        </div>
-        <ul>
+      <div id="intro" class="interior">
+        <a href="/" title="Go back to the home page">
+          Node.js (1)
+        </a>
+      </div>
+      <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -58,12 +57,11 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
-      </div>
     </div>
 
     <div id="column1" data-id="cluster" class="interior">
       <header>
-        <h1>Node.js v5.6.0 Documentation</h1>
+        <h1>Node.js v5.7.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -120,7 +118,7 @@
 
       <div id="apicontent">
         <h1>Cluster<span><a class="mark" href="#cluster_cluster" id="cluster_cluster">#</a></span></h1>
-<pre class="api_stability_2">Stability: 2 - Stable</pre><p>A single instance of Node.js runs in a single thread. To take advantage of
+<pre class="api_stability api_stability_2">Stability: 2 - Stable</pre><p>A single instance of Node.js runs in a single thread. To take advantage of
 multi-core systems the user will sometimes want to launch a cluster of Node.js
 processes to handle the load.
 
@@ -253,8 +251,8 @@ it can be obtained using <code>cluster.worker</code>.
 </p>
 <h3>Event: &#39;exit&#39;<span><a class="mark" href="#cluster_event_exit" id="cluster_event_exit">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>code</code> <span class="type">Number</span> the exit code, if it exited normally.</li>
-<li><code>signal</code> <span class="type">String</span> the name of the signal (eg. <code>&#39;SIGHUP&#39;</code>) that caused
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> the exit code, if it exited normally.</li>
+<li><code>signal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> the name of the signal (eg. <code>&#39;SIGHUP&#39;</code>) that caused
 the process to be killed.</li>
 </div></ul>
 <p>Similar to the <code>cluster.on(&#39;exit&#39;)</code> event, but specific to this worker.
@@ -272,7 +270,7 @@ worker.on(&#39;exit&#39;, (code, signal) =&gt; {
 });</code></pre>
 <h3>Event: &#39;listening&#39;<span><a class="mark" href="#cluster_event_listening" id="cluster_event_listening">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>address</code> <span class="type">Object</span></li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
 </div></ul>
 <p>Similar to the <code>cluster.on(&#39;listening&#39;)</code> event, but specific to this worker.
 
@@ -285,7 +283,7 @@ worker.on(&#39;exit&#39;, (code, signal) =&gt; {
 </p>
 <h3>Event: &#39;message&#39;<span><a class="mark" href="#cluster_event_message" id="cluster_event_message">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>message</code> <span class="type">Object</span></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
 </div></ul>
 <p>Similar to the <code>cluster.on(&#39;message&#39;)</code> event, but specific to this worker.
 
@@ -415,7 +413,7 @@ the <code>&#39;disconnect&#39;</code> event has not been emitted after some time
 }</code></pre>
 <h3>worker.id<span><a class="mark" href="#cluster_worker_id" id="cluster_worker_id">#</a></span></h3>
 <div class="signature"><ul>
-<li><span class="type">Number</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a></li>
 </div></ul>
 <p>Each new worker is given its own unique id, this id is stored in the
 <code>id</code>.
@@ -438,7 +436,7 @@ because of exiting or being signaled). Otherwise, it returns <code>false</code>.
 </p>
 <h3>worker.kill([signal=&#39;SIGTERM&#39;])<span><a class="mark" href="#cluster_worker_kill_signal_sigterm" id="cluster_worker_kill_signal_sigterm">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>signal</code> <span class="type">String</span> Name of the kill signal to send to the worker
+<li><code>signal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> Name of the kill signal to send to the worker
 process.</li>
 </div></ul>
 <p>This function will kill the worker. In the master, it does this by disconnecting
@@ -458,7 +456,7 @@ it is <a href="process.html#process_process_kill_pid_signal"><code>kill</code></
 </p>
 <h3>worker.process<span><a class="mark" href="#cluster_worker_process" id="cluster_worker_process">#</a></span></h3>
 <div class="signature"><ul>
-<li><span class="type">ChildProcess object</span></li>
+<li><a href="child_process.html#child_process_class_childprocess" class="type">&lt;ChildProcess&gt;</a></li>
 </div></ul>
 <p>All workers are created using <a href="child_process.html#child_process_child_process_fork_modulepath_args_options"><code>child_process.fork()</code></a>, the returned object
 from this function is stored as <code>.process</code>. In a worker, the global <code>process</code>
@@ -475,9 +473,9 @@ disconnection.
 </p>
 <h3>worker.send(message[, sendHandle][, callback])<span><a class="mark" href="#cluster_worker_send_message_sendhandle_callback" id="cluster_worker_send_message_sendhandle_callback">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>message</code> <span class="type">Object</span></li>
-<li><code>sendHandle</code> <span class="type">Handle object</span></li>
-<li><code>callback</code> <span class="type">Function</span></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
+<li><code>sendHandle</code> <a href="net.html#net_server_listen_handle_backlog_callback" class="type">&lt;Handle&gt;</a></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="type">&lt;Function&gt;</a></li>
 <li>Return: Boolean</li>
 </div></ul>
 <p>Send a message to a worker or master, optionally with a handle.
@@ -505,7 +503,7 @@ disconnection.
 }</code></pre>
 <h3>worker.suicide<span><a class="mark" href="#cluster_worker_suicide" id="cluster_worker_suicide">#</a></span></h3>
 <div class="signature"><ul>
-<li><span class="type">Boolean</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" class="type">&lt;Boolean&gt;</a></li>
 </div></ul>
 <p>Set by calling <code>.kill()</code> or <code>.disconnect()</code>, until then it is <code>undefined</code>.
 
@@ -524,7 +522,7 @@ exit, the master may choose not to respawn a worker based on this value.
 worker.kill();</code></pre>
 <h2>Event: &#39;disconnect&#39;<span><a class="mark" href="#cluster_event_disconnect_1" id="cluster_event_disconnect_1">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>worker</code> <span class="type">Worker object</span></li>
+<li><code>worker</code> <a href="cluster.html#cluster_class_worker" class="type">&lt;cluster.Worker&gt;</a></li>
 </div></ul>
 <p>Emitted after the worker IPC channel has disconnected. This can occur when a
 worker exits gracefully, is killed, or is disconnected manually (such as with
@@ -541,9 +539,9 @@ long-living connections.
 });</code></pre>
 <h2>Event: &#39;exit&#39;<span><a class="mark" href="#cluster_event_exit_1" id="cluster_event_exit_1">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>worker</code> <span class="type">Worker object</span></li>
-<li><code>code</code> <span class="type">Number</span> the exit code, if it exited normally.</li>
-<li><code>signal</code> <span class="type">String</span> the name of the signal (eg. <code>&#39;SIGHUP&#39;</code>) that caused
+<li><code>worker</code> <a href="cluster.html#cluster_class_worker" class="type">&lt;cluster.Worker&gt;</a></li>
+<li><code>code</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> the exit code, if it exited normally.</li>
+<li><code>signal</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> the name of the signal (eg. <code>&#39;SIGHUP&#39;</code>) that caused
 the process to be killed.</li>
 </div></ul>
 <p>When any of the workers die the cluster module will emit the <code>&#39;exit&#39;</code> event.
@@ -562,7 +560,7 @@ the process to be killed.</li>
 </p>
 <h2>Event: &#39;fork&#39;<span><a class="mark" href="#cluster_event_fork" id="cluster_event_fork">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>worker</code> <span class="type">Worker object</span></li>
+<li><code>worker</code> <a href="cluster.html#cluster_class_worker" class="type">&lt;cluster.Worker&gt;</a></li>
 </div></ul>
 <p>When a new worker is forked the cluster module will emit a <code>&#39;fork&#39;</code> event.
 This can be used to log worker activity, and create your own timeout.
@@ -585,8 +583,8 @@ cluster.on(&#39;exit&#39;, (worker, code, signal) =&gt; {
 });</code></pre>
 <h2>Event: &#39;listening&#39;<span><a class="mark" href="#cluster_event_listening_1" id="cluster_event_listening_1">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>worker</code> <span class="type">Worker object</span></li>
-<li><code>address</code> <span class="type">Object</span></li>
+<li><code>worker</code> <a href="cluster.html#cluster_class_worker" class="type">&lt;cluster.Worker&gt;</a></li>
+<li><code>address</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
 </div></ul>
 <p>After calling <code>listen()</code> from a worker, when the <code>&#39;listening&#39;</code> event is emitted on
 the server, a <code>&#39;listening&#39;</code> event will also be emitted on <code>cluster</code> in the master.
@@ -613,8 +611,8 @@ on more than one address.
 </ul>
 <h2>Event: &#39;message&#39;<span><a class="mark" href="#cluster_event_message_1" id="cluster_event_message_1">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>worker</code> <span class="type">Worker object</span></li>
-<li><code>message</code> <span class="type">Object</span></li>
+<li><code>worker</code> <a href="cluster.html#cluster_class_worker" class="type">&lt;cluster.Worker&gt;</a></li>
+<li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
 </div></ul>
 <p>Emitted when any worker receives a message.
 
@@ -624,7 +622,7 @@ on more than one address.
 </p>
 <h2>Event: &#39;online&#39;<span><a class="mark" href="#cluster_event_online_1" id="cluster_event_online_1">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>worker</code> <span class="type">Worker object</span></li>
+<li><code>worker</code> <a href="cluster.html#cluster_class_worker" class="type">&lt;cluster.Worker&gt;</a></li>
 </div></ul>
 <p>After forking a new worker, the worker should respond with an online message.
 When the master receives an online message it will emit this event.
@@ -637,7 +635,7 @@ master forks a worker, and &#39;online&#39; is emitted when the worker is runnin
 });</code></pre>
 <h2>Event: &#39;setup&#39;<span><a class="mark" href="#cluster_event_setup" id="cluster_event_setup">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>settings</code> <span class="type">Object</span></li>
+<li><code>settings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
 </div></ul>
 <p>Emitted every time <code>.setupMaster()</code> is called.
 
@@ -652,7 +650,7 @@ master forks a worker, and &#39;online&#39; is emitted when the worker is runnin
 </p>
 <h2>cluster.disconnect([callback])<span><a class="mark" href="#cluster_cluster_disconnect_callback" id="cluster_cluster_disconnect_callback">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>callback</code> <span class="type">Function</span> called when all workers are disconnected and handles are
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="type">&lt;Function&gt;</a> called when all workers are disconnected and handles are
 closed</li>
 </div></ul>
 <p>Calls <code>.disconnect()</code> on each worker in <code>cluster.workers</code>.
@@ -670,8 +668,8 @@ master process to die gracefully if no other event is waiting.
 </p>
 <h2>cluster.fork([env])<span><a class="mark" href="#cluster_cluster_fork_env" id="cluster_cluster_fork_env">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>env</code> <span class="type">Object</span> Key/value pairs to add to worker process environment.</li>
-<li>return <span class="type">Worker object</span></li>
+<li><code>env</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a> Key/value pairs to add to worker process environment.</li>
+<li>return <a href="cluster.html#cluster_class_worker" class="type">&lt;cluster.Worker&gt;</a></li>
 </div></ul>
 <p>Spawn a new worker process.
 
@@ -681,7 +679,7 @@ master process to die gracefully if no other event is waiting.
 </p>
 <h2>cluster.isMaster<span><a class="mark" href="#cluster_cluster_ismaster" id="cluster_cluster_ismaster">#</a></span></h2>
 <div class="signature"><ul>
-<li><span class="type">Boolean</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" class="type">&lt;Boolean&gt;</a></li>
 </div></ul>
 <p>True if the process is a master. This is determined
 by the <code>process.env.NODE_UNIQUE_ID</code>. If <code>process.env.NODE_UNIQUE_ID</code> is
@@ -690,7 +688,7 @@ undefined, then <code>isMaster</code> is <code>true</code>.
 </p>
 <h2>cluster.isWorker<span><a class="mark" href="#cluster_cluster_isworker" id="cluster_cluster_isworker">#</a></span></h2>
 <div class="signature"><ul>
-<li><span class="type">Boolean</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" class="type">&lt;Boolean&gt;</a></li>
 </div></ul>
 <p>True if the process is not a master (it is the negation of <code>cluster.isMaster</code>).
 
@@ -714,16 +712,16 @@ values are <code>&quot;rr&quot;</code> and <code>&quot;none&quot;</code>.
 </p>
 <h2>cluster.settings<span><a class="mark" href="#cluster_cluster_settings" id="cluster_cluster_settings">#</a></span></h2>
 <div class="signature"><ul>
-<li><span class="type">Object</span><ul>
-<li><code>execArgv</code> <span class="type">Array</span> list of string arguments passed to the Node.js
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a><ul>
+<li><code>execArgv</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="type">&lt;Array&gt;</a> list of string arguments passed to the Node.js
 executable. (Default=<code>process.execArgv</code>)</li>
-<li><code>exec</code> <span class="type">String</span> file path to worker file.  (Default=<code>process.argv[1]</code>)</li>
-<li><code>args</code> <span class="type">Array</span> string arguments passed to worker.
+<li><code>exec</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> file path to worker file.  (Default=<code>process.argv[1]</code>)</li>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="type">&lt;Array&gt;</a> string arguments passed to worker.
 (Default=<code>process.argv.slice(2)</code>)</li>
-<li><code>silent</code> <span class="type">Boolean</span> whether or not to send output to parent&#39;s stdio.
+<li><code>silent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" class="type">&lt;Boolean&gt;</a> whether or not to send output to parent&#39;s stdio.
 (Default=<code>false</code>)</li>
-<li><code>uid</code> <span class="type">Number</span> Sets the user identity of the process. (See setuid(2).)</li>
-<li><code>gid</code> <span class="type">Number</span> Sets the group identity of the process. (See setgid(2).)</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Sets the user identity of the process. (See setuid(2).)</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Sets the group identity of the process. (See setgid(2).)</li>
 </ul>
 </li>
 </div></ul>
@@ -740,11 +738,11 @@ only be called once.
 </p>
 <h2>cluster.setupMaster([settings])<span><a class="mark" href="#cluster_cluster_setupmaster_settings" id="cluster_cluster_setupmaster_settings">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>settings</code> <span class="type">Object</span><ul>
-<li><code>exec</code> <span class="type">String</span> file path to worker file.  (Default=<code>process.argv[1]</code>)</li>
-<li><code>args</code> <span class="type">Array</span> string arguments passed to worker.
+<li><code>settings</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a><ul>
+<li><code>exec</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> file path to worker file.  (Default=<code>process.argv[1]</code>)</li>
+<li><code>args</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="type">&lt;Array&gt;</a> string arguments passed to worker.
 (Default=<code>process.argv.slice(2)</code>)</li>
-<li><code>silent</code> <span class="type">Boolean</span> whether or not to send output to parent&#39;s stdio.
+<li><code>silent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" class="type">&lt;Boolean&gt;</a> whether or not to send output to parent&#39;s stdio.
 (Default=<code>false</code>)</li>
 </ul>
 </li>
@@ -783,7 +781,7 @@ cluster.fork(); // http worker</code></pre>
 </p>
 <h2>cluster.worker<span><a class="mark" href="#cluster_cluster_worker" id="cluster_cluster_worker">#</a></span></h2>
 <div class="signature"><ul>
-<li><span class="type">Object</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
 </div></ul>
 <p>A reference to the current worker object. Not available in the master process.
 
@@ -799,7 +797,7 @@ if (cluster.isMaster) {
 }</code></pre>
 <h2>cluster.workers<span><a class="mark" href="#cluster_cluster_workers" id="cluster_cluster_workers">#</a></span></h2>
 <div class="signature"><ul>
-<li><span class="type">Object</span></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
 </div></ul>
 <p>A hash that stores the active worker objects, keyed by <code>id</code> field. Makes it
 easy to loop through all the workers. It is only available in the master
