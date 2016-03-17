@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Addons Node.js v5.7.0 Manual &amp; Documentation</title>
+  <title>Addons Node.js v5.9.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="addons" class="interior">
       <header>
-        <h1>Node.js v5.7.0 Documentation</h1>
+        <h1>Node.js v5.9.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -316,7 +316,7 @@ changes but there is little that Node.js can do currently to ensure stability
 of the V8 APIs.
 
 </p>
-<p>The <a href="https://github.com/nodejs/nan">Native Abstrations for Node.js</a> (or <code>nan</code>) provide a set of tools that
+<p>The <a href="https://github.com/nodejs/nan">Native Abstractions for Node.js</a> (or <code>nan</code>) provide a set of tools that
 Addon developers are recommended to use to keep compatibility between past and
 future releases of V8 and Node.js. See the <code>nan</code> <a href="https://github.com/nodejs/nan/tree/master/examples/">examples</a> for an
 illustration of how it can be used.
@@ -419,7 +419,7 @@ NODE_MODULE(addon, Init)
 <pre><code class="js">// test.js
 const addon = require(&#39;./build/Release/addon&#39;);
 
-console.log(&#39;This should be eight:&#39;, addon.add(3,5));</code></pre>
+console.log(&#39;This should be eight:&#39;, addon.add(3, 5));</code></pre>
 <h3>Callbacks<span><a class="mark" href="#addons_callbacks" id="addons_callbacks">#</a></span></h3>
 <p>It is common practice within Addons to pass JavaScript functions to a C++
 function and execute them from there. The following example illustrates how
@@ -515,7 +515,7 @@ const addon = require(&#39;./build/Release/addon&#39;);
 
 var obj1 = addon(&#39;hello&#39;);
 var obj2 = addon(&#39;world&#39;);
-console.log(obj1.msg+&#39; &#39;+obj2.msg); // &#39;hello world&#39;</code></pre>
+console.log(obj1.msg + &#39; &#39; + obj2.msg); // &#39;hello world&#39;</code></pre>
 <h3>Function factory<span><a class="mark" href="#addons_function_factory" id="addons_function_factory">#</a></span></h3>
 <p>Another common scenario is creating JavaScript functions that wrap C++
 functions and returning those back to JavaScript:
@@ -712,9 +712,9 @@ void MyObject::PlusOne(const FunctionCallbackInfo&lt;Value&gt;&amp; args) {
 const addon = require(&#39;./build/Release/addon&#39;);
 
 var obj = new addon.MyObject(10);
-console.log( obj.plusOne() ); // 11
-console.log( obj.plusOne() ); // 12
-console.log( obj.plusOne() ); // 13</code></pre>
+console.log(obj.plusOne()); // 11
+console.log(obj.plusOne()); // 12
+console.log(obj.plusOne()); // 13</code></pre>
 <h3>Factory of wrapped objects<span><a class="mark" href="#addons_factory_of_wrapped_objects" id="addons_factory_of_wrapped_objects">#</a></span></h3>
 <p>Alternatively, it is possible to use a factory pattern to avoid explicitly
 creating object instances using the JavaScript <code>new</code> operator:
@@ -885,14 +885,14 @@ void MyObject::PlusOne(const FunctionCallbackInfo&lt;Value&gt;&amp; args) {
 const createObject = require(&#39;./build/Release/addon&#39;);
 
 var obj = createObject(10);
-console.log( obj.plusOne() ); // 11
-console.log( obj.plusOne() ); // 12
-console.log( obj.plusOne() ); // 13
+console.log(obj.plusOne()); // 11
+console.log(obj.plusOne()); // 12
+console.log(obj.plusOne()); // 13
 
 var obj2 = createObject(20);
-console.log( obj2.plusOne() ); // 21
-console.log( obj2.plusOne() ); // 22
-console.log( obj2.plusOne() ); // 23</code></pre>
+console.log(obj2.plusOne()); // 21
+console.log(obj2.plusOne()); // 22
+console.log(obj2.plusOne()); // 23</code></pre>
 <h3>Passing wrapped objects around<span><a class="mark" href="#addons_passing_wrapped_objects_around" id="addons_passing_wrapped_objects_around">#</a></span></h3>
 <p>In addition to wrapping and returning C++ objects, it is possible to pass
 wrapped objects around by unwrapping them with the Node.js helper function

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Console Node.js v5.7.0 Manual &amp; Documentation</title>
+  <title>Console Node.js v5.9.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="console" class="interior">
       <header>
-        <h1>Node.js v5.7.0 Documentation</h1>
+        <h1>Node.js v5.9.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -143,8 +143,8 @@ const name = &#39;Will Robinson&#39;;
 myConsole.warn(`Danger ${name}! Danger!`);
   // Prints: Danger Will Robinson! Danger!, to err</code></pre>
 <p>While the API for the <code>Console</code> class is designed fundamentally around the
-Web browser <code>console</code> object, the <code>Console</code> in Node.js is <em>not</em> intended to
-duplicate the browsers functionality exactly.
+browser <code>console</code> object, the <code>Console</code> in Node.js is <em>not</em> intended to
+duplicate the browser&#39;s functionality exactly.
 
 </p>
 <h2>Asynchronous vs Synchronous Consoles<span><a class="mark" href="#console_asynchronous_vs_synchronous_consoles" id="console_asynchronous_vs_synchronous_consoles">#</a></span></h2>
@@ -167,8 +167,8 @@ const Console = console.Console;</code></pre>
 <h3>new Console(stdout[, stderr])<span><a class="mark" href="#console_new_console_stdout_stderr" id="console_new_console_stdout_stderr">#</a></span></h3>
 <p>Creates a new <code>Console</code> by passing one or two writable stream instances.
 <code>stdout</code> is a writable stream to print log or info output. <code>stderr</code>
-is used for warning or error output. If <code>stderr</code> isn&#39;t passed, the warning
-and error output will be sent to the <code>stdout</code>.
+is used for warning or error output. If <code>stderr</code> isn&#39;t passed, warning and error
+output will be sent to <code>stdout</code>.
 
 </p>
 <pre><code class="js">const output = fs.createWriteStream(&#39;./stdout.log&#39;);

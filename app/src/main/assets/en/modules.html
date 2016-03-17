@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Modules Node.js v5.7.0 Manual &amp; Documentation</title>
+  <title>Modules Node.js v5.9.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="modules" class="interior">
       <header>
-        <h1>Node.js v5.7.0 Documentation</h1>
+        <h1>Node.js v5.9.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -149,7 +149,7 @@ instead of <code>exports</code>.
 
 </p>
 <pre><code class="js">const square = require(&#39;./square.js&#39;);
-var mySquare = square(2);
+var mySquare = &lt;a href=&quot;http://man7.org/linux/man-pages/man2/square.2.html&quot;&gt;square(2)&lt;/a&gt;;
 console.log(`The area of my square is ${mySquare.area()}`);</code></pre>
 <p>The <code>square</code> module is defined in <code>square.js</code>:
 
@@ -322,6 +322,13 @@ resolve to a different filename based on the location of the calling
 module (loading from <code>node_modules</code> folders), it is not a <em>guarantee</em>
 that <code>require(&#39;foo&#39;)</code> will always return the exact same object, if it
 would resolve to different files.
+
+</p>
+<p>Additionally, on case-insensitive file systems or operating systems, different
+resolved filenames can point to the same file, but the cache will still treat
+them as different modules and will reload the file multiple times. For example,
+<code>require(&#39;./foo&#39;)</code> and <code>require(&#39;./FOO&#39;)</code> return two different objects,
+irrespective of whether or not <code>./foo</code> and <code>./FOO</code> are the same file.
 
 </p>
 <h2>Core Modules<span><a class="mark" href="#modules_core_modules" id="modules_core_modules">#</a></span></h2>

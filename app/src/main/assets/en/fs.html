@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>File System Node.js v5.6.0 Manual &amp; Documentation</title>
+  <title>File System Node.js v5.9.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,13 +11,12 @@
 <body class="alt apidoc" id="api-section-fs">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div class="no-scrollbar">
-        <div id="intro" class="interior">
-          <a href="/" title="Go back to the home page">
-            Node.js (1)
-          </a>
-        </div>
-        <ul>
+      <div id="intro" class="interior">
+        <a href="/" title="Go back to the home page">
+          Node.js (1)
+        </a>
+      </div>
+      <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -58,12 +57,11 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
-      </div>
     </div>
 
     <div id="column1" data-id="fs" class="interior">
       <header>
-        <h1>Node.js v5.6.0 Documentation</h1>
+        <h1>Node.js v5.9.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -117,6 +115,8 @@
 <li><a href="#fs_fs_fchmodsync_fd_mode">fs.fchmodSync(fd, mode)</a></li>
 <li><a href="#fs_fs_fchown_fd_uid_gid_callback">fs.fchown(fd, uid, gid, callback)</a></li>
 <li><a href="#fs_fs_fchownsync_fd_uid_gid">fs.fchownSync(fd, uid, gid)</a></li>
+<li><a href="#fs_fs_fdatasync_fd_callback">fs.fdatasync(fd, callback)</a></li>
+<li><a href="#fs_fs_fdatasyncsync_fd">fs.fdatasyncSync(fd)</a></li>
 <li><a href="#fs_fs_fstat_fd_callback">fs.fstat(fd, callback)</a></li>
 <li><a href="#fs_fs_fstatsync_fd">fs.fstatSync(fd)</a></li>
 <li><a href="#fs_fs_fsync_fd_callback">fs.fsync(fd, callback)</a></li>
@@ -185,7 +185,7 @@
 
       <div id="apicontent">
         <h1>File System<span><a class="mark" href="#fs_file_system" id="fs_file_system">#</a></span></h1>
-<pre class="api_stability_2">Stability: 2 - Stable</pre><!--name=fs-->
+<pre class="api_stability api_stability_2">Stability: 2 - Stable</pre><!--name=fs-->
 
 <p>File I/O is provided by simple wrappers around standard POSIX functions.  To
 use this module do <code>require(&#39;fs&#39;)</code>. All the methods have asynchronous and
@@ -278,8 +278,8 @@ Error: EISDIR, read
 </p>
 <h3>Event: &#39;change&#39;<span><a class="mark" href="#fs_event_change" id="fs_event_change">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>event</code> <span class="type">String</span> The type of fs change</li>
-<li><code>filename</code> <span class="type">String</span> The filename that changed (if relevant/available)</li>
+<li><code>event</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> The type of fs change</li>
+<li><code>filename</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> The filename that changed (if relevant/available)</li>
 </div></ul>
 <p>Emitted when something changes in a watched directory or file.
 See more details in <a href="#fs_fs_watch_filename_options_listener"><code>fs.watch()</code></a>.
@@ -287,7 +287,7 @@ See more details in <a href="#fs_fs_watch_filename_options_listener"><code>fs.wa
 </p>
 <h3>Event: &#39;error&#39;<span><a class="mark" href="#fs_event_error" id="fs_event_error">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>error</code> <span class="type">Error object</span></li>
+<li><code>error</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" class="type">&lt;Error&gt;</a></li>
 </div></ul>
 <p>Emitted when an error occurs.
 
@@ -302,7 +302,7 @@ See more details in <a href="#fs_fs_watch_filename_options_listener"><code>fs.wa
 </p>
 <h3>Event: &#39;open&#39;<span><a class="mark" href="#fs_event_open" id="fs_event_open">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>fd</code> <span class="type">Integer</span> file descriptor used by the ReadStream.</li>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Integer file descriptor used by the ReadStream.</li>
 </div></ul>
 <p>Emitted when the ReadStream&#39;s file is opened.
 
@@ -372,10 +372,11 @@ Changed by the <code>mknod(2)</code>, <code>utimes(2)</code>, and <code>write(2)
 <li><code>birthtime</code> &quot;Birth Time&quot; -  Time of file creation. Set once when the
 file is created.  On filesystems where birthtime is not available,
 this field may instead hold either the <code>ctime</code> or
-<code>1970-01-01T00:00Z</code> (ie, unix epoch timestamp <code>0</code>).  On Darwin and
-other FreeBSD variants, also set if the <code>atime</code> is explicitly set to
-an earlier value than the current <code>birthtime</code> using the <code>utimes(2)</code>
-system call.</li>
+<code>1970-01-01T00:00Z</code> (ie, unix epoch timestamp <code>0</code>). Note that this
+value may be greater than <code>atime</code> or <code>mtime</code> in this case. On Darwin
+and other FreeBSD variants, also set if the <code>atime</code> is explicitly
+set to an earlier value than the current <code>birthtime</code> using the
+<code>utimes(2)</code> system call.</li>
 </ul>
 <p>Prior to Node v0.12, the <code>ctime</code> held the <code>birthtime</code> on Windows
 systems.  Note that as of v0.12, <code>ctime</code> is not &quot;creation time&quot;, and
@@ -388,7 +389,7 @@ on Unix systems, it never was.
 </p>
 <h3>Event: &#39;open&#39;<span><a class="mark" href="#fs_event_open_1" id="fs_event_open_1">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>fd</code> <span class="type">Integer</span> file descriptor used by the WriteStream.</li>
+<li><code>fd</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Integer file descriptor used by the WriteStream.</li>
 </div></ul>
 <p>Emitted when the WriteStream&#39;s file is opened.
 
@@ -434,15 +435,15 @@ fail, and does nothing otherwise.
 </p>
 <h2>fs.appendFile(file, data[, options], callback)<span><a class="mark" href="#fs_fs_appendfile_file_data_options_callback" id="fs_fs_appendfile_file_data_options_callback">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>file</code> <span class="type">String | Integer</span> filename or file descriptor</li>
-<li><code>data</code> <span class="type">String | Buffer</span></li>
-<li><code>options</code> <span class="type">Object | String</span><ul>
-<li><code>encoding</code> <span class="type">String | Null</span> default = <code>&#39;utf8&#39;</code></li>
-<li><code>mode</code> <span class="type">Number</span> default = <code>0o666</code></li>
-<li><code>flag</code> <span class="type">String</span> default = <code>&#39;a&#39;</code></li>
+<li><code>file</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> filename or file descriptor</li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <a href="buffer.html#buffer_class_buffer" class="type">&lt;Buffer&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a><ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" class="type">&lt;Null&gt;</a> default = <code>&#39;utf8&#39;</code></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> default = <code>0o666</code></li>
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> default = <code>&#39;a&#39;</code></li>
 </ul>
 </li>
-<li><code>callback</code> <span class="type">Function</span></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="type">&lt;Function&gt;</a></li>
 </div></ul>
 <p>Asynchronously append data to a file, creating the file if it does not yet exist.
 <code>data</code> can be a string or a buffer.
@@ -470,30 +471,30 @@ fail, and does nothing otherwise.
 
 </p>
 <h2>fs.chmod(path, mode, callback)<span><a class="mark" href="#fs_fs_chmod_path_mode_callback" id="fs_fs_chmod_path_mode_callback">#</a></span></h2>
-<p>Asynchronous chmod(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/chmod.2.html">chmod(2)</a>. No arguments other than a possible exception are given
 to the completion callback.
 
 </p>
 <h2>fs.chmodSync(path, mode)<span><a class="mark" href="#fs_fs_chmodsync_path_mode" id="fs_fs_chmodsync_path_mode">#</a></span></h2>
-<p>Synchronous chmod(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/chmod.2.html">chmod(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.chown(path, uid, gid, callback)<span><a class="mark" href="#fs_fs_chown_path_uid_gid_callback" id="fs_fs_chown_path_uid_gid_callback">#</a></span></h2>
-<p>Asynchronous chown(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/chown.2.html">chown(2)</a>. No arguments other than a possible exception are given
 to the completion callback.
 
 </p>
 <h2>fs.chownSync(path, uid, gid)<span><a class="mark" href="#fs_fs_chownsync_path_uid_gid" id="fs_fs_chownsync_path_uid_gid">#</a></span></h2>
-<p>Synchronous chown(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/chown.2.html">chown(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.close(fd, callback)<span><a class="mark" href="#fs_fs_close_fd_callback" id="fs_fs_close_fd_callback">#</a></span></h2>
-<p>Asynchronous close(2).  No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/close.2.html">close(2)</a>.  No arguments other than a possible exception are given
 to the completion callback.
 
 </p>
 <h2>fs.closeSync(fd)<span><a class="mark" href="#fs_fs_closesync_fd" id="fs_fs_closesync_fd">#</a></span></h2>
-<p>Synchronous close(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/close.2.html">close(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.createReadStream(path[, options])<span><a class="mark" href="#fs_fs_createreadstream_path_options" id="fs_fs_createreadstream_path_options">#</a></span></h2>
@@ -567,7 +568,7 @@ default mode <code>w</code>. The <code>defaultEncoding</code> can be any one of 
 <p>If <code>autoClose</code> is set to true (default behavior) on <code>error</code> or <code>end</code>
 the file descriptor will be closed automatically. If <code>autoClose</code> is false,
 then the file descriptor won&#39;t be closed, even if there&#39;s an error.
-It is your responsiblity to close it and make sure
+It is your responsibility to close it and make sure
 there&#39;s no file descriptor leak.
 
 </p>
@@ -581,7 +582,7 @@ there&#39;s no file descriptor leak.
 
 </p>
 <h2>fs.exists(path, callback)<span><a class="mark" href="#fs_fs_exists_path_callback" id="fs_fs_exists_path_callback">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="#fs_fs_stat_path_callback"><code>fs.stat()</code></a> or <a href="#fs_fs_access_path_mode_callback"><code>fs.access()</code></a> instead.</pre><p>Test whether or not the given path exists by checking with the file system.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated: Use <a href="#fs_fs_stat_path_callback"><code>fs.stat()</code></a> or <a href="#fs_fs_access_path_mode_callback"><code>fs.access()</code></a> instead.</pre><p>Test whether or not the given path exists by checking with the file system.
 Then call the <code>callback</code> argument with either true or false.  Example:
 
 </p>
@@ -596,54 +597,63 @@ non-existent.
 
 </p>
 <h2>fs.existsSync(path)<span><a class="mark" href="#fs_fs_existssync_path" id="fs_fs_existssync_path">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="#fs_fs_statsync_path"><code>fs.statSync()</code></a> or <a href="#fs_fs_accesssync_path_mode"><code>fs.accessSync()</code></a> instead.</pre><p>Synchronous version of <a href="fs.html#fs_fs_exists_path_callback"><code>fs.exists()</code></a>.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated: Use <a href="#fs_fs_statsync_path"><code>fs.statSync()</code></a> or <a href="#fs_fs_accesssync_path_mode"><code>fs.accessSync()</code></a> instead.</pre><p>Synchronous version of <a href="fs.html#fs_fs_exists_path_callback"><code>fs.exists()</code></a>.
 Returns <code>true</code> if the file exists, <code>false</code> otherwise.
 
 </p>
 <h2>fs.fchmod(fd, mode, callback)<span><a class="mark" href="#fs_fs_fchmod_fd_mode_callback" id="fs_fs_fchmod_fd_mode_callback">#</a></span></h2>
-<p>Asynchronous fchmod(2). No arguments other than a possible exception
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/fchmod.2.html">fchmod(2)</a>. No arguments other than a possible exception
 are given to the completion callback.
 
 </p>
 <h2>fs.fchmodSync(fd, mode)<span><a class="mark" href="#fs_fs_fchmodsync_fd_mode" id="fs_fs_fchmodsync_fd_mode">#</a></span></h2>
-<p>Synchronous fchmod(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/fchmod.2.html">fchmod(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.fchown(fd, uid, gid, callback)<span><a class="mark" href="#fs_fs_fchown_fd_uid_gid_callback" id="fs_fs_fchown_fd_uid_gid_callback">#</a></span></h2>
-<p>Asynchronous fchown(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/fchown.2.html">fchown(2)</a>. No arguments other than a possible exception are given
 to the completion callback.
 
 </p>
 <h2>fs.fchownSync(fd, uid, gid)<span><a class="mark" href="#fs_fs_fchownsync_fd_uid_gid" id="fs_fs_fchownsync_fd_uid_gid">#</a></span></h2>
-<p>Synchronous fchown(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/fchown.2.html">fchown(2)</a>. Returns <code>undefined</code>.
+
+</p>
+<h2>fs.fdatasync(fd, callback)<span><a class="mark" href="#fs_fs_fdatasync_fd_callback" id="fs_fs_fdatasync_fd_callback">#</a></span></h2>
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/fdatasync.2.html">fdatasync(2)</a>. No arguments other than a possible exception are
+given to the completion callback.
+
+</p>
+<h2>fs.fdatasyncSync(fd)<span><a class="mark" href="#fs_fs_fdatasyncsync_fd" id="fs_fs_fdatasyncsync_fd">#</a></span></h2>
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/fdatasync.2.html">fdatasync(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.fstat(fd, callback)<span><a class="mark" href="#fs_fs_fstat_fd_callback" id="fs_fs_fstat_fd_callback">#</a></span></h2>
-<p>Asynchronous fstat(2). The callback gets two arguments <code>(err, stats)</code> where
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/fstat.2.html">fstat(2)</a>. The callback gets two arguments <code>(err, stats)</code> where
 <code>stats</code> is a <code>fs.Stats</code> object. <code>fstat()</code> is identical to <a href="fs.html#fs_fs_stat_path_callback"><code>stat()</code></a>, except that
 the file to be stat-ed is specified by the file descriptor <code>fd</code>.
 
 </p>
 <h2>fs.fstatSync(fd)<span><a class="mark" href="#fs_fs_fstatsync_fd" id="fs_fs_fstatsync_fd">#</a></span></h2>
-<p>Synchronous fstat(2). Returns an instance of <code>fs.Stats</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/fstat.2.html">fstat(2)</a>. Returns an instance of <code>fs.Stats</code>.
 
 </p>
 <h2>fs.fsync(fd, callback)<span><a class="mark" href="#fs_fs_fsync_fd_callback" id="fs_fs_fsync_fd_callback">#</a></span></h2>
-<p>Asynchronous fsync(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/fsync.2.html">fsync(2)</a>. No arguments other than a possible exception are given
 to the completion callback.
 
 </p>
 <h2>fs.fsyncSync(fd)<span><a class="mark" href="#fs_fs_fsyncsync_fd" id="fs_fs_fsyncsync_fd">#</a></span></h2>
-<p>Synchronous fsync(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/fsync.2.html">fsync(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.ftruncate(fd, len, callback)<span><a class="mark" href="#fs_fs_ftruncate_fd_len_callback" id="fs_fs_ftruncate_fd_len_callback">#</a></span></h2>
-<p>Asynchronous ftruncate(2). No arguments other than a possible exception are
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/ftruncate.2.html">ftruncate(2)</a>. No arguments other than a possible exception are
 given to the completion callback.
 
 </p>
 <h2>fs.ftruncateSync(fd, len)<span><a class="mark" href="#fs_fs_ftruncatesync_fd_len" id="fs_fs_ftruncatesync_fd_len">#</a></span></h2>
-<p>Synchronous ftruncate(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/ftruncate.2.html">ftruncate(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.futimes(fd, atime, mtime, callback)<span><a class="mark" href="#fs_fs_futimes_fd_atime_mtime_callback" id="fs_fs_futimes_fd_atime_mtime_callback">#</a></span></h2>
@@ -656,7 +666,7 @@ descriptor.
 
 </p>
 <h2>fs.lchmod(path, mode, callback)<span><a class="mark" href="#fs_fs_lchmod_path_mode_callback" id="fs_fs_lchmod_path_mode_callback">#</a></span></h2>
-<p>Asynchronous lchmod(2). No arguments other than a possible exception
+<p>Asynchronous <a href="https://www.freebsd.org/cgi/man.cgi?query=lchmod&sektion=2">lchmod(2)</a>. No arguments other than a possible exception
 are given to the completion callback.
 
 </p>
@@ -664,49 +674,49 @@ are given to the completion callback.
 
 </p>
 <h2>fs.lchmodSync(path, mode)<span><a class="mark" href="#fs_fs_lchmodsync_path_mode" id="fs_fs_lchmodsync_path_mode">#</a></span></h2>
-<p>Synchronous lchmod(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="https://www.freebsd.org/cgi/man.cgi?query=lchmod&sektion=2">lchmod(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.lchown(path, uid, gid, callback)<span><a class="mark" href="#fs_fs_lchown_path_uid_gid_callback" id="fs_fs_lchown_path_uid_gid_callback">#</a></span></h2>
-<p>Asynchronous lchown(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/lchown.2.html">lchown(2)</a>. No arguments other than a possible exception are given
 to the completion callback.
 
 </p>
 <h2>fs.lchownSync(path, uid, gid)<span><a class="mark" href="#fs_fs_lchownsync_path_uid_gid" id="fs_fs_lchownsync_path_uid_gid">#</a></span></h2>
-<p>Synchronous lchown(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/lchown.2.html">lchown(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.link(srcpath, dstpath, callback)<span><a class="mark" href="#fs_fs_link_srcpath_dstpath_callback" id="fs_fs_link_srcpath_dstpath_callback">#</a></span></h2>
-<p>Asynchronous link(2). No arguments other than a possible exception are given to
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/link.2.html">link(2)</a>. No arguments other than a possible exception are given to
 the completion callback.
 
 </p>
 <h2>fs.linkSync(srcpath, dstpath)<span><a class="mark" href="#fs_fs_linksync_srcpath_dstpath" id="fs_fs_linksync_srcpath_dstpath">#</a></span></h2>
-<p>Synchronous link(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/link.2.html">link(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.lstat(path, callback)<span><a class="mark" href="#fs_fs_lstat_path_callback" id="fs_fs_lstat_path_callback">#</a></span></h2>
-<p>Asynchronous lstat(2). The callback gets two arguments <code>(err, stats)</code> where
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/lstat.2.html">lstat(2)</a>. The callback gets two arguments <code>(err, stats)</code> where
 <code>stats</code> is a <code>fs.Stats</code> object. <code>lstat()</code> is identical to <code>stat()</code>, except that if
 <code>path</code> is a symbolic link, then the link itself is stat-ed, not the file that it
 refers to.
 
 </p>
 <h2>fs.lstatSync(path)<span><a class="mark" href="#fs_fs_lstatsync_path" id="fs_fs_lstatsync_path">#</a></span></h2>
-<p>Synchronous lstat(2). Returns an instance of <code>fs.Stats</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/lstat.2.html">lstat(2)</a>. Returns an instance of <code>fs.Stats</code>.
 
 </p>
 <h2>fs.mkdir(path[, mode], callback)<span><a class="mark" href="#fs_fs_mkdir_path_mode_callback" id="fs_fs_mkdir_path_mode_callback">#</a></span></h2>
-<p>Asynchronous mkdir(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/mkdir.2.html">mkdir(2)</a>. No arguments other than a possible exception are given
 to the completion callback. <code>mode</code> defaults to <code>0o777</code>.
 
 </p>
 <h2>fs.mkdirSync(path[, mode])<span><a class="mark" href="#fs_fs_mkdirsync_path_mode" id="fs_fs_mkdirsync_path_mode">#</a></span></h2>
-<p>Synchronous mkdir(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/mkdir.2.html">mkdir(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.open(path, flags[, mode], callback)<span><a class="mark" href="#fs_fs_open_path_flags_mode_callback" id="fs_fs_open_path_flags_mode_callback">#</a></span></h2>
-<p>Asynchronous file open. See open(2). <code>flags</code> can be:
+<p>Asynchronous file open. See <a href="http://man7.org/linux/man-pages/man2/open.2.html">open(2)</a>. <code>flags</code> can be:
 
 </p>
 <ul>
@@ -755,13 +765,13 @@ created. It defaults to <code>0666</code>, readable and writable.
 <p>The callback gets two arguments <code>(err, fd)</code>.
 
 </p>
-<p>The exclusive flag <code>&#39;x&#39;</code> (<code>O_EXCL</code> flag in open(2)) ensures that <code>path</code> is newly
+<p>The exclusive flag <code>&#39;x&#39;</code> (<code>O_EXCL</code> flag in <a href="http://man7.org/linux/man-pages/man2/open.2.html">open(2)</a>) ensures that <code>path</code> is newly
 created. On POSIX systems, <code>path</code> is considered to exist even if it is a symlink
 to a non-existent file. The exclusive flag may or may not work with network file
 systems.
 
 </p>
-<p><code>flags</code> can also be a number as documented by open(2); commonly used constants
+<p><code>flags</code> can also be a number as documented by <a href="http://man7.org/linux/man-pages/man2/open.2.html">open(2)</a>; commonly used constants
 are available from <code>require(&#39;constants&#39;)</code>.  On Windows, flags are translated to
 their equivalent ones where applicable, e.g. <code>O_WRONLY</code> to <code>FILE_GENERIC_WRITE</code>,
 or <code>O_EXCL|O_CREAT</code> to <code>CREATE_NEW</code>, as accepted by CreateFileW.
@@ -798,25 +808,25 @@ If <code>position</code> is <code>null</code>, data will be read from the curren
 
 </p>
 <h2>fs.readdir(path, callback)<span><a class="mark" href="#fs_fs_readdir_path_callback" id="fs_fs_readdir_path_callback">#</a></span></h2>
-<p>Asynchronous readdir(3).  Reads the contents of a directory.
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man3/readdir.3.html">readdir(3)</a>.  Reads the contents of a directory.
 The callback gets two arguments <code>(err, files)</code> where <code>files</code> is an array of
 the names of the files in the directory excluding <code>&#39;.&#39;</code> and <code>&#39;..&#39;</code>.
 
 </p>
 <h2>fs.readdirSync(path)<span><a class="mark" href="#fs_fs_readdirsync_path" id="fs_fs_readdirsync_path">#</a></span></h2>
-<p>Synchronous readdir(3). Returns an array of filenames excluding <code>&#39;.&#39;</code> and
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man3/readdir.3.html">readdir(3)</a>. Returns an array of filenames excluding <code>&#39;.&#39;</code> and
 <code>&#39;..&#39;</code>.
 
 </p>
 <h2>fs.readFile(file[, options], callback)<span><a class="mark" href="#fs_fs_readfile_file_options_callback" id="fs_fs_readfile_file_options_callback">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>file</code> <span class="type">String | Integer</span> filename or file descriptor</li>
-<li><code>options</code> <span class="type">Object | String</span><ul>
-<li><code>encoding</code> <span class="type">String | Null</span> default = <code>null</code></li>
-<li><code>flag</code> <span class="type">String</span> default = <code>&#39;r&#39;</code></li>
+<li><code>file</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <span class="type">&lt;Integer&gt;</span> filename or file descriptor</li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a><ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" class="type">&lt;Null&gt;</a> default = <code>null</code></li>
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> default = <code>&#39;r&#39;</code></li>
 </ul>
 </li>
-<li><code>callback</code> <span class="type">Function</span></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="type">&lt;Function&gt;</a></li>
 </div></ul>
 <p>Asynchronously reads the entire contents of a file. Example:
 
@@ -851,16 +861,16 @@ string. Otherwise it returns a buffer.
 
 </p>
 <h2>fs.readlink(path, callback)<span><a class="mark" href="#fs_fs_readlink_path_callback" id="fs_fs_readlink_path_callback">#</a></span></h2>
-<p>Asynchronous readlink(2). The callback gets two arguments <code>(err,
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/readlink.2.html">readlink(2)</a>. The callback gets two arguments <code>(err,
 linkString)</code>.
 
 </p>
 <h2>fs.readlinkSync(path)<span><a class="mark" href="#fs_fs_readlinksync_path" id="fs_fs_readlinksync_path">#</a></span></h2>
-<p>Synchronous readlink(2). Returns the symbolic link&#39;s string value.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/readlink.2.html">readlink(2)</a>. Returns the symbolic link&#39;s string value.
 
 </p>
 <h2>fs.realpath(path[, cache], callback)<span><a class="mark" href="#fs_fs_realpath_path_cache_callback" id="fs_fs_realpath_path_cache_callback">#</a></span></h2>
-<p>Asynchronous realpath(2). The <code>callback</code> gets two arguments <code>(err,
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/realpath.2.html">realpath(2)</a>. The <code>callback</code> gets two arguments <code>(err,
 resolvedPath)</code>. May use <code>process.cwd</code> to resolve relative paths. <code>cache</code> is an
 object literal of mapped paths that can be used to force a specific path
 resolution or avoid additional <code>fs.stat</code> calls for known real paths.
@@ -879,41 +889,41 @@ fs.realpath(&#39;/etc/passwd&#39;, cache, (err, resolvedPath) =&gt; {
 
 </p>
 <h2>fs.realpathSync(path[, cache])<span><a class="mark" href="#fs_fs_realpathsync_path_cache" id="fs_fs_realpathsync_path_cache">#</a></span></h2>
-<p>Synchronous realpath(2). Returns the resolved path. <code>cache</code> is an
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/realpath.2.html">realpath(2)</a>. Returns the resolved path. <code>cache</code> is an
 object literal of mapped paths that can be used to force a specific path
 resolution or avoid additional <code>fs.stat</code> calls for known real paths.
 
 </p>
 <h2>fs.rename(oldPath, newPath, callback)<span><a class="mark" href="#fs_fs_rename_oldpath_newpath_callback" id="fs_fs_rename_oldpath_newpath_callback">#</a></span></h2>
-<p>Asynchronous rename(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/rename.2.html">rename(2)</a>. No arguments other than a possible exception are given
 to the completion callback.
 
 </p>
 <h2>fs.renameSync(oldPath, newPath)<span><a class="mark" href="#fs_fs_renamesync_oldpath_newpath" id="fs_fs_renamesync_oldpath_newpath">#</a></span></h2>
-<p>Synchronous rename(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/rename.2.html">rename(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.rmdir(path, callback)<span><a class="mark" href="#fs_fs_rmdir_path_callback" id="fs_fs_rmdir_path_callback">#</a></span></h2>
-<p>Asynchronous rmdir(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/rmdir.2.html">rmdir(2)</a>. No arguments other than a possible exception are given
 to the completion callback.
 
 </p>
 <h2>fs.rmdirSync(path)<span><a class="mark" href="#fs_fs_rmdirsync_path" id="fs_fs_rmdirsync_path">#</a></span></h2>
-<p>Synchronous rmdir(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/rmdir.2.html">rmdir(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.stat(path, callback)<span><a class="mark" href="#fs_fs_stat_path_callback" id="fs_fs_stat_path_callback">#</a></span></h2>
-<p>Asynchronous stat(2). The callback gets two arguments <code>(err, stats)</code> where
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/stat.2.html">stat(2)</a>. The callback gets two arguments <code>(err, stats)</code> where
 <code>stats</code> is a <a href="#fs_class_fs_stats"><code>fs.Stats</code></a> object.  See the <a href="#fs_class_fs_stats"><code>fs.Stats</code></a> section for more
 information.
 
 </p>
 <h2>fs.statSync(path)<span><a class="mark" href="#fs_fs_statsync_path" id="fs_fs_statsync_path">#</a></span></h2>
-<p>Synchronous stat(2). Returns an instance of <a href="#fs_class_fs_stats"><code>fs.Stats</code></a>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/stat.2.html">stat(2)</a>. Returns an instance of <a href="#fs_class_fs_stats"><code>fs.Stats</code></a>.
 
 </p>
 <h2>fs.symlink(target, path[, type], callback)<span><a class="mark" href="#fs_fs_symlink_target_path_type_callback" id="fs_fs_symlink_target_path_type_callback">#</a></span></h2>
-<p>Asynchronous symlink(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/symlink.2.html">symlink(2)</a>. No arguments other than a possible exception are given
 to the completion callback.
 The <code>type</code> argument can be set to <code>&#39;dir&#39;</code>, <code>&#39;file&#39;</code>, or <code>&#39;junction&#39;</code> (default
 is <code>&#39;file&#39;</code>) and is only available on Windows (ignored on other platforms).
@@ -925,30 +935,30 @@ Note that Windows junction points require the destination path to be absolute.  
 
 </p>
 <pre><code class="js">fs.symlink(&#39;./foo&#39;, &#39;./new-port&#39;);</code></pre>
-<p>It would create a symlic link named with &quot;new-port&quot; that points to &quot;foo&quot;.
+<p>It creates a symbolic link named &quot;new-port&quot; that points to &quot;foo&quot;.
 
 </p>
 <h2>fs.symlinkSync(target, path[, type])<span><a class="mark" href="#fs_fs_symlinksync_target_path_type" id="fs_fs_symlinksync_target_path_type">#</a></span></h2>
-<p>Synchronous symlink(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/symlink.2.html">symlink(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.truncate(path, len, callback)<span><a class="mark" href="#fs_fs_truncate_path_len_callback" id="fs_fs_truncate_path_len_callback">#</a></span></h2>
-<p>Asynchronous truncate(2). No arguments other than a possible exception are
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/truncate.2.html">truncate(2)</a>. No arguments other than a possible exception are
 given to the completion callback. A file descriptor can also be passed as the
 first argument. In this case, <code>fs.ftruncate()</code> is called.
 
 </p>
 <h2>fs.truncateSync(path, len)<span><a class="mark" href="#fs_fs_truncatesync_path_len" id="fs_fs_truncatesync_path_len">#</a></span></h2>
-<p>Synchronous truncate(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/truncate.2.html">truncate(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.unlink(path, callback)<span><a class="mark" href="#fs_fs_unlink_path_callback" id="fs_fs_unlink_path_callback">#</a></span></h2>
-<p>Asynchronous unlink(2). No arguments other than a possible exception are given
+<p>Asynchronous <a href="http://man7.org/linux/man-pages/man2/unlink.2.html">unlink(2)</a>. No arguments other than a possible exception are given
 to the completion callback.
 
 </p>
 <h2>fs.unlinkSync(path)<span><a class="mark" href="#fs_fs_unlinksync_path" id="fs_fs_unlinksync_path">#</a></span></h2>
-<p>Synchronous unlink(2). Returns <code>undefined</code>.
+<p>Synchronous <a href="http://man7.org/linux/man-pages/man2/unlink.2.html">unlink(2)</a>. Returns <code>undefined</code>.
 
 </p>
 <h2>fs.unwatchFile(filename[, listener])<span><a class="mark" href="#fs_fs_unwatchfile_filename_listener" id="fs_fs_unwatchfile_filename_listener">#</a></span></h2>
@@ -1105,7 +1115,7 @@ when possible.</em>
 </p>
 <p><code>position</code> refers to the offset from the beginning of the file where this data
 should be written. If <code>typeof position !== &#39;number&#39;</code>, the data will be written
-at the current position. See pwrite(2).
+at the current position. See <a href="http://man7.org/linux/man-pages/man2/pwrite.2.html">pwrite(2)</a>.
 
 </p>
 <p>The callback will be given three arguments <code>(err, written, buffer)</code> where
@@ -1129,7 +1139,7 @@ then the value will be coerced to a string.
 </p>
 <p><code>position</code> refers to the offset from the beginning of the file where this data
 should be written. If <code>typeof position !== &#39;number&#39;</code> the data will be written at
-the current position. See pwrite(2).
+the current position. See <a href="http://man7.org/linux/man-pages/man2/pwrite.2.html">pwrite(2)</a>.
 
 </p>
 <p><code>encoding</code> is the expected string encoding.
@@ -1157,15 +1167,15 @@ the end of the file.
 </p>
 <h2>fs.writeFile(file, data[, options], callback)<span><a class="mark" href="#fs_fs_writefile_file_data_options_callback" id="fs_fs_writefile_file_data_options_callback">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>file</code> <span class="type">String | Integer</span> filename or file descriptor</li>
-<li><code>data</code> <span class="type">String | Buffer</span></li>
-<li><code>options</code> <span class="type">Object | String</span><ul>
-<li><code>encoding</code> <span class="type">String | Null</span> default = <code>&#39;utf8&#39;</code></li>
-<li><code>mode</code> <span class="type">Number</span> default = <code>0o666</code></li>
-<li><code>flag</code> <span class="type">String</span> default = <code>&#39;w&#39;</code></li>
+<li><code>file</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <span class="type">&lt;Integer&gt;</span> filename or file descriptor</li>
+<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <a href="buffer.html#buffer_class_buffer" class="type">&lt;Buffer&gt;</a></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a><ul>
+<li><code>encoding</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Null_type" class="type">&lt;Null&gt;</a> default = <code>&#39;utf8&#39;</code></li>
+<li><code>mode</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> default = <code>0o666</code></li>
+<li><code>flag</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> default = <code>&#39;w&#39;</code></li>
 </ul>
 </li>
-<li><code>callback</code> <span class="type">Function</span></li>
+<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="type">&lt;Function&gt;</a></li>
 </div></ul>
 <p>Asynchronously writes data to a file, replacing the file if it already exists.
 <code>data</code> can be a string or a buffer.

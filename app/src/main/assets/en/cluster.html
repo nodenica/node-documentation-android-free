@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Cluster Node.js v5.7.0 Manual &amp; Documentation</title>
+  <title>Cluster Node.js v5.9.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="cluster" class="interior">
       <header>
-        <h1>Node.js v5.7.0 Documentation</h1>
+        <h1>Node.js v5.9.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -362,7 +362,7 @@ those servers, and then disconnect the IPC channel.
 <p>Note that after a server is closed, it will no longer accept new connections,
 but connections may be accepted by any other listening worker. Existing
 connections will be allowed to close as usual. When no more connections exist,
-see [server.close()][], the IPC channel to the worker will close allowing it to
+see <a href="net.html#net_event_close"><code>server.close()</code></a>, the IPC channel to the worker will close allowing it to
 die gracefully.
 
 </p>
@@ -720,8 +720,8 @@ executable. (Default=<code>process.execArgv</code>)</li>
 (Default=<code>process.argv.slice(2)</code>)</li>
 <li><code>silent</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" class="type">&lt;Boolean&gt;</a> whether or not to send output to parent&#39;s stdio.
 (Default=<code>false</code>)</li>
-<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Sets the user identity of the process. (See setuid(2).)</li>
-<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Sets the group identity of the process. (See setgid(2).)</li>
+<li><code>uid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Sets the user identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/setuid.2.html">setuid(2)</a>.)</li>
+<li><code>gid</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Sets the group identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/setgid.2.html">setgid(2)</a>.)</li>
 </ul>
 </li>
 </div></ul>
@@ -773,6 +773,7 @@ cluster.setupMaster({
 });
 cluster.fork(); // https worker
 cluster.setupMaster({
+  exec: &#39;worker.js&#39;,
   args: [&#39;--use&#39;, &#39;http&#39;]
 });
 cluster.fork(); // http worker</code></pre>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Assert Node.js v5.7.0 Manual &amp; Documentation</title>
+  <title>Assert Node.js v5.9.0 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -61,7 +61,7 @@
 
     <div id="column1" data-id="assert" class="interior">
       <header>
-        <h1>Node.js v5.7.0 Documentation</h1>
+        <h1>Node.js v5.9.0 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -180,8 +180,9 @@ parameter is undefined, a default error message is assigned.
 
 </p>
 <h2>assert.deepStrictEqual(actual, expected[, message])<span><a class="mark" href="#assert_assert_deepstrictequal_actual_expected_message" id="assert_assert_deepstrictequal_actual_expected_message">#</a></span></h2>
-<p>Generally identical to <a href="#assert_assert_deepequal_actual_expected_message"><code>assert.deepEqual()</code></a> with the exception that primitive
-values are compared using the strict equality operator ( <code>===</code> ).
+<p>Generally identical to <code>assert.deepEqual()</code> with two exceptions. First,
+primitive values are compared using the strict equality operator ( <code>===</code> ).
+Second, object comparisons include a strict equality check of their prototypes.
 
 </p>
 <pre><code class="js">const assert = require(&#39;assert&#39;);
