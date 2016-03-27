@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>UDP / Datagram Sockets Node.js v5.7.0 Manual &amp; Documentation</title>
+  <title>UDP / Datagram Sockets Node.js v5.9.1 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -24,6 +24,7 @@
 <li><a class="nav-addons" href="addons.html">C/C++ Addons</a></li>
 <li><a class="nav-child_process" href="child_process.html">Child Processes</a></li>
 <li><a class="nav-cluster" href="cluster.html">Cluster</a></li>
+<li><a class="nav-cli" href="cli.html">Command Line Options</a></li>
 <li><a class="nav-console" href="console.html">Console</a></li>
 <li><a class="nav-crypto" href="crypto.html">Crypto</a></li>
 <li><a class="nav-debugger" href="debugger.html">Debugger</a></li>
@@ -61,7 +62,7 @@
 
     <div id="column1" data-id="dgram" class="interior">
       <header>
-        <h1>Node.js v5.7.0 Documentation</h1>
+        <h1>Node.js v5.9.1 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -300,7 +301,7 @@ drop membership on all valid interfaces.
 </p>
 <h3>socket.send(msg, [offset, length,] port, address[, callback])<span><a class="mark" href="#dgram_socket_send_msg_offset_length_port_address_callback" id="dgram_socket_send_msg_offset_length_port_address_callback">#</a></span></h3>
 <div class="signature"><ul>
-<li><code>buf</code> <a href="buffer.html#buffer_class_buffer" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="type">&lt;Array&gt;</a> Message to be sent</li>
+<li><code>msg</code> <a href="buffer.html#buffer_class_buffer" class="type">&lt;Buffer&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" class="type">&lt;Array&gt;</a> Message to be sent</li>
 <li><code>offset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Integer. Optional. Offset in the buffer where the message starts.</li>
 <li><code>length</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Integer. Optional. Number of bytes in the message.</li>
 <li><code>port</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type" class="type">&lt;Number&gt;</a> Integer. Destination port.</li>
@@ -311,12 +312,12 @@ drop membership on all valid interfaces.
 be specified.
 
 </p>
-<p>The <code>msg</code> argument containins the message to be sent.
+<p>The <code>msg</code> argument contains the message to be sent.
 Depending on its type, different behavior can apply. If <code>msg</code> is a <code>Buffer</code>,
 the <code>offset</code> and <code>length</code> specify the offset within the <code>Buffer</code> where the
 message begins and the number of bytes in the message, respectively.
 If <code>msg</code> is a <code>String</code>, then it is automatically converted to a <code>Buffer</code>
-with <code>&#39;utf8&#39;</code> enecoding. With messages that
+with <code>&#39;utf8&#39;</code> encoding. With messages that
 contain  multi-byte characters, <code>offset</code> and <code>length</code> will be calculated with
 respect to <a href="buffer.html#buffer_class_method_buffer_bytelength_string_encoding">byte length</a> and not the character position.
 If <code>msg</code> is an array, <code>offset</code> and <code>length</code> must not be specified.
@@ -324,10 +325,7 @@ If <code>msg</code> is an array, <code>offset</code> and <code>length</code> mu
 </p>
 <p>The <code>address</code> argument is a string. If the value of <code>address</code> is a host name,
 DNS will be used to resolve the address of the host. If the <code>address</code> is not
-specified or is an empty string, <code>&#39;0.0.0.0&#39;</code> or <code>&#39;::0&#39;</code> will be used instead.
-It is possible, depending on the network configuration, that these defaults
-may not work; accordingly, it is best to be explicit about the destination
-address.
+specified or is an empty string, <code>&#39;127.0.0.1&#39;</code> or <code>&#39;::1&#39;</code> will be used instead.
 
 </p>
 <p>If the socket has not been previously bound with a call to <code>bind</code>, the socket

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Query String Node.js v5.7.0 Manual &amp; Documentation</title>
+  <title>Query String Node.js v5.9.1 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -24,6 +24,7 @@
 <li><a class="nav-addons" href="addons.html">C/C++ Addons</a></li>
 <li><a class="nav-child_process" href="child_process.html">Child Processes</a></li>
 <li><a class="nav-cluster" href="cluster.html">Cluster</a></li>
+<li><a class="nav-cli" href="cli.html">Command Line Options</a></li>
 <li><a class="nav-console" href="console.html">Console</a></li>
 <li><a class="nav-crypto" href="crypto.html">Crypto</a></li>
 <li><a class="nav-debugger" href="debugger.html">Debugger</a></li>
@@ -61,7 +62,7 @@
 
     <div id="column1" data-id="querystring" class="interior">
       <header>
-        <h1>Node.js v5.7.0 Documentation</h1>
+        <h1>Node.js v5.9.1 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -117,15 +118,13 @@ it can be used to decode a <code>non-utf8</code> encoding string if necessary.
 
 </p>
 <pre><code class="js">querystring.parse(&#39;foo=bar&amp;baz=qux&amp;baz=quux&amp;corge&#39;)
-// returns
-{ foo: &#39;bar&#39;, baz: [&#39;qux&#39;, &#39;quux&#39;], corge: &#39;&#39; }
+// returns { foo: &#39;bar&#39;, baz: [&#39;qux&#39;, &#39;quux&#39;], corge: &#39;&#39; }
 
 // Suppose gbkDecodeURIComponent function already exists,
 // it can decode `gbk` encoding string
 querystring.parse(&#39;w=%D6%D0%CE%C4&amp;foo=bar&#39;, null, null,
   { decodeURIComponent: gbkDecodeURIComponent })
-// returns
-{ w: &#39;中文&#39;, foo: &#39;bar&#39; }</code></pre>
+// returns { w: &#39;中文&#39;, foo: &#39;bar&#39; }</code></pre>
 <h2>querystring.stringify(obj[, sep][, eq][, options])<span><a class="mark" href="#querystring_querystring_stringify_obj_sep_eq_options" id="querystring_querystring_stringify_obj_sep_eq_options">#</a></span></h2>
 <p>Serialize an object to a query string.
 Optionally override the default separator (<code>&#39;&amp;&#39;</code>) and assignment (<code>&#39;=&#39;</code>)
@@ -140,19 +139,16 @@ it can be used to encode string with <code>non-utf8</code> encoding if necessary
 
 </p>
 <pre><code class="js">querystring.stringify({ foo: &#39;bar&#39;, baz: [&#39;qux&#39;, &#39;quux&#39;], corge: &#39;&#39; })
-// returns
-&#39;foo=bar&amp;baz=qux&amp;baz=quux&amp;corge=&#39;
+// returns &#39;foo=bar&amp;baz=qux&amp;baz=quux&amp;corge=&#39;
 
 querystring.stringify({foo: &#39;bar&#39;, baz: &#39;qux&#39;}, &#39;;&#39;, &#39;:&#39;)
-// returns
-&#39;foo:bar;baz:qux&#39;
+// returns &#39;foo:bar;baz:qux&#39;
 
 // Suppose gbkEncodeURIComponent function already exists,
 // it can encode string with `gbk` encoding
 querystring.stringify({ w: &#39;中文&#39;, foo: &#39;bar&#39; }, null, null,
   { encodeURIComponent: gbkEncodeURIComponent })
-// returns
-&#39;w=%D6%D0%CE%C4&amp;foo=bar&#39;</code></pre>
+// returns &#39;w=%D6%D0%CE%C4&amp;foo=bar&#39;</code></pre>
 <h2>querystring.unescape<span><a class="mark" href="#querystring_querystring_unescape" id="querystring_querystring_unescape">#</a></span></h2>
 <p>The unescape function used by <code>querystring.parse</code>,
 provided so that it could be overridden if necessary.

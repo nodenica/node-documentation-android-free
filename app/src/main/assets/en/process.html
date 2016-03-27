@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>process Node.js v5.7.0 Manual &amp; Documentation</title>
+  <title>process Node.js v5.9.1 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -24,6 +24,7 @@
 <li><a class="nav-addons" href="addons.html">C/C++ Addons</a></li>
 <li><a class="nav-child_process" href="child_process.html">Child Processes</a></li>
 <li><a class="nav-cluster" href="cluster.html">Cluster</a></li>
+<li><a class="nav-cli" href="cli.html">Command Line Options</a></li>
 <li><a class="nav-console" href="console.html">Console</a></li>
 <li><a class="nav-crypto" href="crypto.html">Crypto</a></li>
 <li><a class="nav-debugger" href="debugger.html">Debugger</a></li>
@@ -61,7 +62,7 @@
 
     <div id="column1" data-id="process" class="interior">
       <header>
-        <h1>Node.js v5.7.0 Documentation</h1>
+        <h1>Node.js v5.9.1 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -80,7 +81,10 @@
 <li><a href="#process_event_exit">Event: &#39;exit&#39;</a></li>
 <li><a href="#process_event_message">Event: &#39;message&#39;</a></li>
 <li><a href="#process_event_rejectionhandled">Event: &#39;rejectionHandled&#39;</a></li>
-<li><a href="#process_event_uncaughtexception">Event: &#39;uncaughtException&#39;</a></li>
+<li><a href="#process_event_uncaughtexception">Event: &#39;uncaughtException&#39;</a><ul>
+<li><a href="#process_warning_using_uncaughtexception_correctly">Warning: Using <code>&#39;uncaughtException&#39;</code> correctly</a></li>
+</ul>
+</li>
 <li><a href="#process_event_unhandledrejection">Event: &#39;unhandledRejection&#39;</a></li>
 <li><a href="#process_exit_codes">Exit Codes</a></li>
 <li><a href="#process_signal_events">Signal Events</a></li>
@@ -111,7 +115,7 @@
 <li><a href="#process_process_pid">process.pid</a></li>
 <li><a href="#process_process_platform">process.platform</a></li>
 <li><a href="#process_process_release">process.release</a></li>
-<li><a href="#process_process_send_message_sendhandle_callback">process.send(message[, sendHandle][, callback])</a></li>
+<li><a href="#process_process_send_message_sendhandle_options_callback">process.send(message[, sendHandle[, options]][, callback])</a></li>
 <li><a href="#process_process_setegid_id">process.setegid(id)</a></li>
 <li><a href="#process_process_seteuid_id">process.seteuid(id)</a></li>
 <li><a href="#process_process_setgid_id">process.setgid(id)</a></li>
@@ -140,13 +144,14 @@ It is an instance of <a href="events.html#events_class_events_eventemitter"><cod
 
 </p>
 <h2>Event: &#39;beforeExit&#39;<span><a class="mark" href="#process_event_beforeexit" id="process_event_beforeexit">#</a></span></h2>
-<p>This event is emitted when Node.js empties its event loop and has nothing else to
-schedule. Normally, Node.js exits when there is no work scheduled, but a listener
-for <code>&#39;beforeExit&#39;</code> can make asynchronous calls, and cause Node.js to continue.
+<p>This event is emitted when Node.js empties its event loop and has nothing else 
+to schedule. Normally, Node.js exits when there is no work scheduled, but a 
+listener for <code>&#39;beforeExit&#39;</code> can make asynchronous calls, and cause Node.js to 
+continue.
 
 </p>
-<p><code>&#39;beforeExit&#39;</code> is not emitted for conditions causing explicit termination, such as
-<a href="#process_process_exit_code"><code>process.exit()</code></a> or uncaught exceptions, and should not be used as an
+<p><code>&#39;beforeExit&#39;</code> is not emitted for conditions causing explicit termination, such 
+as <a href="#process_process_exit_code"><code>process.exit()</code></a> or uncaught exceptions, and should not be used as an
 alternative to the <code>&#39;exit&#39;</code> event unless the intention is to schedule more work.
 
 </p>
@@ -227,12 +232,13 @@ indefinitely) or upon process exit (more convenient for scripts).
 
 </p>
 <h2>Event: &#39;uncaughtException&#39;<span><a class="mark" href="#process_event_uncaughtexception" id="process_event_uncaughtexception">#</a></span></h2>
-<p>Emitted when an exception bubbles all the way back to the event loop. If a
-listener is added for this exception, the default action (which is to print
-a stack trace and exit) will not occur.
+<p>The <code>&#39;uncaughtException&#39;</code> event is emitted when an exception bubbles all the
+way back to the event loop. By default, Node.js handles such exceptions by 
+printing the stack trace to stderr and exiting. Adding a handler for the
+<code>&#39;uncaughtException&#39;</code> event overrides this default behavior.
 
 </p>
-<p>Example of listening for <code>&#39;uncaughtException&#39;</code>:
+<p>For example:
 
 </p>
 <pre><code class="js">process.on(&#39;uncaughtException&#39;, (err) =&gt; {
@@ -246,13 +252,13 @@ setTimeout(() =&gt; {
 // Intentionally cause an exception, but don&#39;t catch it.
 nonexistentFunc();
 console.log(&#39;This will not run.&#39;);</code></pre>
-<p>Note that <code>&#39;uncaughtException&#39;</code> is a very crude mechanism for exception
-handling.
-
-</p>
-<p>Do <em>not</em> use it as the Node.js equivalent of <code>On Error Resume Next</code>. An
-unhandled exception means your application - and by extension Node.js itself -
-is in an undefined state. Blindly resuming means <em>anything</em> could happen.
+<h3>Warning: Using <code>&#39;uncaughtException&#39;</code> correctly<span><a class="mark" href="#process_warning_using_uncaughtexception_correctly" id="process_warning_using_uncaughtexception_correctly">#</a></span></h3>
+<p>Note that <code>&#39;uncaughtException&#39;</code> is a crude mechanism for exception handling
+intended to be used only as a last resort. The event <em>should not</em> be used as
+an equivalent to <code>On Error Resume Next</code>. Unhandled exceptions inherently mean
+that an application is in an undefined state. Attempting to resume application
+code without properly recovering from the exception can cause additional
+unforeseen and unpredictable issues.
 
 </p>
 <p>Exceptions thrown from within the event handler will not be caught. Instead the
@@ -260,17 +266,15 @@ process will exit with a non zero exit code and the stack trace will be printed.
 This is to avoid infinite recursion.
 
 </p>
-<p>Think of resuming as pulling the power cord when you are upgrading your system.
-Nine out of ten times nothing happens - but the 10th time, your system is bust.
+<p>Attempting to resume normally after an uncaught exception can be similar to
+pulling out of the power cord when upgrading a computer -- nine out of ten
+times nothing happens - but the 10th time, the system becomes corrupted.
 
 </p>
-<p><code>&#39;uncaughtException&#39;</code> should be used to perform synchronous cleanup before
-shutting down the process. It is not safe to resume normal operation after
-<code>&#39;uncaughtException&#39;</code>. If you do use it, restart your application after every
-unhandled exception!
-
-</p>
-<p>You have been warned.
+<p>The correct use of <code>&#39;uncaughtException&#39;</code> is to perform synchronous cleanup
+of allocated resources (e.g. file descriptors, handles, etc) before shutting
+down the process. It is not safe to resume normal operation after
+<code>&#39;uncaughtException&#39;</code>.
 
 </p>
 <h2>Event: &#39;unhandledRejection&#39;<span><a class="mark" href="#process_event_unhandledrejection" id="process_event_unhandledrejection">#</a></span></h2>
@@ -284,8 +288,8 @@ is emitted with the following arguments:
 
 </p>
 <ul>
-<li><code>reason</code> the object with which the promise was rejected (usually an <a href="errors.html#errors_class_error"><code>Error</code></a>
-instance).</li>
+<li><code>reason</code> the object with which the promise was rejected (usually an 
+<a href="errors.html#errors_class_error"><code>Error</code></a> instance).</li>
 <li><code>p</code> the promise that was rejected.</li>
 </ul>
 <p>Here is an example that logs every unhandled rejection to the console
@@ -300,7 +304,7 @@ event:
 
 </p>
 <pre><code class="js">somePromise.then((res) =&gt; {
-  return reportToUser(JSON.parse(res)); // note the typo
+  return reportToUser(JSON.pasre(res)); // note the typo (`pasre`)
 }); // no `.catch` or `.then`</code></pre>
 <p>Here is an example of a coding pattern that will also trigger
 <code>&#39;unhandledRejection&#39;</code>:
@@ -370,7 +374,7 @@ the high-order bit, and then contain the value of the signal code.</li>
 <!--type=event-->
 <!--name=SIGINT, SIGHUP, etc.-->
 
-<p>Emitted when the processes receives a signal. See sigaction(2) for a list of
+<p>Emitted when the processes receives a signal. See <a href="http://man7.org/linux/man-pages/man2/sigaction.2.html">sigaction(2)</a> for a list of
 standard POSIX signal names such as <code>SIGINT</code>, <code>SIGHUP</code>, etc.
 
 </p>
@@ -393,13 +397,13 @@ programs.
 <ul>
 <li><code>SIGUSR1</code> is reserved by Node.js to start the debugger.  It&#39;s possible to
 install a listener but that won&#39;t stop the debugger from starting.</li>
-<li><code>SIGTERM</code> and <code>SIGINT</code> have default handlers on non-Windows platforms that resets
-the terminal mode before exiting with code <code>128 + signal number</code>. If one of
-these signals has a listener installed, its default behavior will be removed
-(Node.js will no longer exit).</li>
+<li><code>SIGTERM</code> and <code>SIGINT</code> have default handlers on non-Windows platforms that 
+resets the terminal mode before exiting with code <code>128 + signal number</code>. If 
+one of these signals has a listener installed, its default behavior will be 
+removed (Node.js will no longer exit).</li>
 <li><code>SIGPIPE</code> is ignored by default. It can have a listener installed.</li>
 <li><code>SIGHUP</code> is generated on Windows when the console window is closed, and on other
-platforms under various similar conditions, see signal(7). It can have a
+platforms under various similar conditions, see <a href="http://man7.org/linux/man-pages/man7/signal.7.html">signal(7)</a>. It can have a
 listener installed, however Node.js will be unconditionally terminated by
 Windows about 10 seconds later. On non-Windows platforms, the default
 behavior of <code>SIGHUP</code> is to terminate Node.js, but once a listener has been
@@ -408,11 +412,12 @@ installed its default behavior will be removed.</li>
 <li><code>SIGINT</code> from the terminal is supported on all platforms, and can usually be
 generated with <code>CTRL+C</code> (though this may be configurable). It is not generated
 when terminal raw mode is enabled.</li>
-<li><code>SIGBREAK</code> is delivered on Windows when <code>CTRL+BREAK</code> is pressed, on non-Windows
+<li><code>SIGBREAK</code> is delivered on Windows when <code>CTRL+BREAK</code> is pressed, on 
+non-Windows
 platforms it can be listened on, but there is no way to send or generate it.</li>
-<li><code>SIGWINCH</code> is delivered when the console has been resized. On Windows, this will
-only happen on write to the console when the cursor is being moved, or when a
-readable tty is used in raw mode.</li>
+<li><code>SIGWINCH</code> is delivered when the console has been resized. On Windows, this 
+will only happen on write to the console when the cursor is being moved, or 
+when a readable tty is used in raw mode.</li>
 <li><code>SIGKILL</code> cannot have a listener installed, it will unconditionally terminate
 Node.js on all platforms.</li>
 <li><code>SIGSTOP</code> cannot have a listener installed.</li>
@@ -523,7 +528,7 @@ undefined.
 
 </p>
 <h2>process.env<span><a class="mark" href="#process_process_env" id="process_process_env">#</a></span></h2>
-<p>An object containing the user environment. See environ(7).
+<p>An object containing the user environment. See <a href="http://man7.org/linux/man-pages/man7/environ.7.html">environ(7)</a>.
 
 </p>
 <p>An example of this object looks like:
@@ -630,7 +635,7 @@ setting of <code>process.exitCode</code>.
 Android)
 
 </p>
-<p>Gets the effective group identity of the process. (See getegid(2).)
+<p>Gets the effective group identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/getegid.2.html">getegid(2)</a>.)
 This is the numerical group id, not the group name.
 
 </p>
@@ -642,7 +647,7 @@ This is the numerical group id, not the group name.
 Android)
 
 </p>
-<p>Gets the effective user identity of the process. (See geteuid(2).)
+<p>Gets the effective user identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/geteuid.2.html">geteuid(2)</a>.)
 This is the numerical userid, not the username.
 
 </p>
@@ -654,7 +659,7 @@ This is the numerical userid, not the username.
 Android)
 
 </p>
-<p>Gets the group identity of the process. (See getgid(2).)
+<p>Gets the group identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/getgid.2.html">getgid(2)</a>.)
 This is the numerical group id, not the group name.
 
 </p>
@@ -675,7 +680,7 @@ if the effective group ID is included but Node.js ensures it always is.
 Android)
 
 </p>
-<p>Gets the user identity of the process. (See getuid(2).)
+<p>Gets the user identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/getuid.2.html">getuid(2)</a>.)
 This is the numerical userid, not the username.
 
 </p>
@@ -728,7 +733,7 @@ console.log(process.getgroups());         // [ 27, 30, 46, 1000 ]</code></pre>
 <p>Send a signal to a process. <code>pid</code> is the process id and <code>signal</code> is the
 string describing the signal to send.  Signal names are strings like
 <code>SIGINT</code> or <code>SIGHUP</code>.  If omitted, the signal will be <code>SIGTERM</code>.
-See <a href="#process_signal_events">Signal Events</a> and kill(2) for more information.
+See <a href="#process_signal_events">Signal Events</a> and <a href="http://man7.org/linux/man-pages/man2/kill.2.html">kill(2)</a> for more information.
 
 </p>
 <p>Will throw an error if target does not exist, and as a special case, a signal
@@ -910,16 +915,20 @@ builds of Node.js and will be missing on all other platforms.</em></li>
 relied upon to exist.
 
 </p>
-<h2>process.send(message[, sendHandle][, callback])<span><a class="mark" href="#process_process_send_message_sendhandle_callback" id="process_process_send_message_sendhandle_callback">#</a></span></h2>
+<h2>process.send(message[, sendHandle[, options]][, callback])<span><a class="mark" href="#process_process_send_message_sendhandle_options_callback" id="process_process_send_message_sendhandle_options_callback">#</a></span></h2>
 <div class="signature"><ul>
 <li><code>message</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
 <li><code>sendHandle</code> <span class="type">&lt;Handle object&gt;</span></li>
+<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" class="type">&lt;Object&gt;</a></li>
 <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="type">&lt;Function&gt;</a></li>
 <li>Return: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type" class="type">&lt;Boolean&gt;</a></li>
 </div></ul>
 <p>When Node.js is spawned with an IPC channel attached, it can send messages to its
 parent process using <code>process.send()</code>. Each will be received as a
 <a href="child_process.html#child_process_event_message"><code>&#39;message&#39;</code></a> event on the parent&#39;s <code>ChildProcess</code> object.
+
+</p>
+<p><em>Note: this function uses <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify"><code>JSON.stringify()</code></a> internally to serialize the <code>message</code>.</em>
 
 </p>
 <p>If Node.js was not spawned with an IPC channel, <code>process.send()</code> will be undefined.
@@ -930,7 +939,7 @@ parent process using <code>process.send()</code>. Each will be received as a
 Android)
 
 </p>
-<p>Sets the effective group identity of the process. (See setegid(2).)
+<p>Sets the effective group identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/setegid.2.html">setegid(2)</a>.)
 This accepts either a numerical ID or a groupname string. If a groupname
 is specified, this method blocks while resolving it to a numerical ID.
 
@@ -950,7 +959,7 @@ is specified, this method blocks while resolving it to a numerical ID.
 Android)
 
 </p>
-<p>Sets the effective user identity of the process. (See seteuid(2).)
+<p>Sets the effective user identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/seteuid.2.html">seteuid(2)</a>.)
 This accepts either a numerical ID or a username string.  If a username
 is specified, this method blocks while resolving it to a numerical ID.
 
@@ -970,7 +979,7 @@ is specified, this method blocks while resolving it to a numerical ID.
 Android)
 
 </p>
-<p>Sets the group identity of the process. (See setgid(2).)  This accepts either
+<p>Sets the group identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/setgid.2.html">setgid(2)</a>.)  This accepts either
 a numerical ID or a groupname string. If a groupname is specified, this method
 blocks while resolving it to a numerical ID.
 
@@ -1002,7 +1011,7 @@ need to be root or have the <code>CAP_SETGID</code> capability.
 Android)
 
 </p>
-<p>Sets the user identity of the process. (See setuid(2).)  This accepts either
+<p>Sets the user identity of the process. (See <a href="http://man7.org/linux/man-pages/man2/setuid.2.html">setuid(2)</a>.)  This accepts either
 a numerical ID or a username string.  If a username is specified, this method
 blocks while resolving it to a numerical ID.
 

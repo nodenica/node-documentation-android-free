@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>util Node.js v5.6.0 Manual &amp; Documentation</title>
+  <title>util Node.js v5.9.1 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -11,13 +11,12 @@
 <body class="alt apidoc" id="api-section-util">
   <div id="content" class="clearfix">
     <div id="column2" class="interior">
-      <div class="no-scrollbar">
-        <div id="intro" class="interior">
-          <a href="/" title="Go back to the home page">
-            Node.js (1)
-          </a>
-        </div>
-        <ul>
+      <div id="intro" class="interior">
+        <a href="/" title="Go back to the home page">
+          Node.js (1)
+        </a>
+      </div>
+      <ul>
 <li><a class="nav-documentation" href="documentation.html">About these Docs</a></li>
 <li><a class="nav-synopsis" href="synopsis.html">Synopsis</a></li>
 <li><a class="nav-assert" href="assert.html">Assertion Testing</a></li>
@@ -25,6 +24,7 @@
 <li><a class="nav-addons" href="addons.html">C/C++ Addons</a></li>
 <li><a class="nav-child_process" href="child_process.html">Child Processes</a></li>
 <li><a class="nav-cluster" href="cluster.html">Cluster</a></li>
+<li><a class="nav-cli" href="cli.html">Command Line Options</a></li>
 <li><a class="nav-console" href="console.html">Console</a></li>
 <li><a class="nav-crypto" href="crypto.html">Crypto</a></li>
 <li><a class="nav-debugger" href="debugger.html">Debugger</a></li>
@@ -58,12 +58,11 @@
 <li><a class="nav-zlib" href="zlib.html">ZLIB</a></li>
 </ul>
 
-      </div>
     </div>
 
     <div id="column1" data-id="util" class="interior">
       <header>
-        <h1>Node.js v5.6.0 Documentation</h1>
+        <h1>Node.js v5.9.1 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -116,7 +115,7 @@
 
       <div id="apicontent">
         <h1>util<span><a class="mark" href="#util_util" id="util_util">#</a></span></h1>
-<pre class="api_stability_2">Stability: 2 - Stable</pre><p>These functions are in the module <code>&#39;util&#39;</code>. Use <code>require(&#39;util&#39;)</code> to
+<pre class="api_stability api_stability_2">Stability: 2 - Stable</pre><p>These functions are in the module <code>&#39;util&#39;</code>. Use <code>require(&#39;util&#39;)</code> to
 access them.
 
 </p>
@@ -129,13 +128,13 @@ are unnecessary for Node.js&#39;s internal functionality.
 
 </p>
 <h2>util.debug(string)<span><a class="mark" href="#util_util_debug_string" id="util_util_debug_string">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="console.html#console_console_error_data"><code>console.error()</code></a> instead.</pre><p>Deprecated predecessor of <code>console.error</code>.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated: Use <a href="console.html#console_console_error_data"><code>console.error()</code></a> instead.</pre><p>Deprecated predecessor of <code>console.error</code>.
 
 </p>
 <h2>util.debuglog(section)<span><a class="mark" href="#util_util_debuglog_section" id="util_util_debuglog_section">#</a></span></h2>
 <div class="signature"><ul>
-<li><code>section</code> <span class="type">String</span> The section of the program to be debugged</li>
-<li>Returns: <span class="type">Function</span> The logging function</li>
+<li><code>section</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type" class="type">&lt;String&gt;</a> The section of the program to be debugged</li>
+<li>Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" class="type">&lt;Function&gt;</a> The logging function</li>
 </div></ul>
 <p>This is used to create a function which conditionally writes to stderr
 based on the existence of a <code>NODE_DEBUG</code> environment variable.  If the
@@ -197,7 +196,7 @@ when the deprecated API is used.  Configurable at run-time through the
 
 </p>
 <h2>util.error([...])<span><a class="mark" href="#util_util_error" id="util_util_error">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="console.html#console_console_error_data"><code>console.error()</code></a> instead.</pre><p>Deprecated predecessor of <code>console.error</code>.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated: Use <a href="console.html#console_console_error_data"><code>console.error()</code></a> instead.</pre><p>Deprecated predecessor of <code>console.error</code>.
 
 </p>
 <h2>util.format(format[, ...])<span><a class="mark" href="#util_util_format_format" id="util_util_format_format">#</a></span></h2>
@@ -355,10 +354,10 @@ obj.inspect = function(depth) {
 util.inspect(obj);
   // &quot;{ bar: &#39;baz&#39; }&quot;</code></pre>
 <h2>util.isArray(object)<span><a class="mark" href="#util_util_isarray_object" id="util_util_isarray_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Internal alias for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray"><code>Array.isArray</code></a>.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Internal alias for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray"><code>Array.isArray</code></a>.
 
 </p>
-<p>Returns <code>true</code> if the given &quot;object&quot; is an <code>Array</code>. <code>false</code> otherwise.
+<p>Returns <code>true</code> if the given &quot;object&quot; is an <code>Array</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -370,7 +369,7 @@ util.isArray(new Array)
 util.isArray({})
   // false</code></pre>
 <h2>util.isBoolean(object)<span><a class="mark" href="#util_util_isboolean_object" id="util_util_isboolean_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Boolean</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Boolean</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -382,7 +381,7 @@ util.isBoolean(0)
 util.isBoolean(false)
   // true</code></pre>
 <h2>util.isBuffer(object)<span><a class="mark" href="#util_util_isbuffer_object" id="util_util_isbuffer_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="buffer.html#buffer_class_method_buffer_isbuffer_obj"><code>Buffer.isBuffer()</code></a> instead.</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Buffer</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated: Use <a href="buffer.html#buffer_class_method_buffer_isbuffer_obj"><code>Buffer.isBuffer()</code></a> instead.</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Buffer</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -394,7 +393,7 @@ util.isBuffer([])
 util.isBuffer(new Buffer(&#39;hello world&#39;))
   // true</code></pre>
 <h2>util.isDate(object)<span><a class="mark" href="#util_util_isdate_object" id="util_util_isdate_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Date</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Date</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -406,7 +405,8 @@ util.isDate(Date())
 util.isDate({})
   // false</code></pre>
 <h2>util.isError(object)<span><a class="mark" href="#util_util_iserror_object" id="util_util_iserror_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is an <a href="errors.html#errors_class_error"><code>Error</code></a>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is an <a href="errors.html#errors_class_error"><code>Error</code></a>. Otherwise, returns
+<code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -417,8 +417,23 @@ util.isError(new TypeError())
   // true
 util.isError({ name: &#39;Error&#39;, message: &#39;an error occurred&#39; })
   // false</code></pre>
+<p>Note that this method relies on <code>Object.prototype.toString()</code> behavior. It is
+possible to obtain an incorrect result when the <code>object</code> argument manipulates
+<code>@@toStringTag</code>.
+
+</p>
+<pre><code class="js">// This example requires the `--harmony-tostring` flag
+const util = require(&#39;util&#39;);
+const obj = { name: &#39;Error&#39;, message: &#39;an error occurred&#39; };
+
+util.isError(obj);
+  // false
+obj[Symbol.toStringTag] = &#39;Error&#39;;
+util.isError(obj);
+  // true</code></pre>
 <h2>util.isFunction(object)<span><a class="mark" href="#util_util_isfunction_object" id="util_util_isfunction_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Function</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Function</code>. Otherwise, returns
+<code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -433,7 +448,8 @@ util.isFunction(Foo)
 util.isFunction(Bar)
   // true</code></pre>
 <h2>util.isNull(object)<span><a class="mark" href="#util_util_isnull_object" id="util_util_isnull_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is strictly <code>null</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is strictly <code>null</code>. Otherwise, returns
+<code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -445,7 +461,8 @@ util.isNull(undefined)
 util.isNull(null)
   // true</code></pre>
 <h2>util.isNullOrUndefined(object)<span><a class="mark" href="#util_util_isnullorundefined_object" id="util_util_isnullorundefined_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is <code>null</code> or <code>undefined</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is <code>null</code> or <code>undefined</code>. Otherwise,
+returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -457,7 +474,7 @@ util.isNullOrUndefined(undefined)
 util.isNullOrUndefined(null)
   // true</code></pre>
 <h2>util.isNumber(object)<span><a class="mark" href="#util_util_isnumber_object" id="util_util_isnumber_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Number</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Number</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -471,8 +488,8 @@ util.isNumber(0)
 util.isNumber(NaN)
   // true</code></pre>
 <h2>util.isObject(object)<span><a class="mark" href="#util_util_isobject_object" id="util_util_isobject_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is strictly an <code>Object</code> <strong>and</strong> not a
-<code>Function</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is strictly an <code>Object</code> <strong>and</strong> not a
+<code>Function</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -486,7 +503,8 @@ util.isObject({})
 util.isObject(function(){})
   // false</code></pre>
 <h2>util.isPrimitive(object)<span><a class="mark" href="#util_util_isprimitive_object" id="util_util_isprimitive_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a primitive type. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a primitive type. Otherwise, returns
+<code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -510,7 +528,7 @@ util.isPrimitive(/^$/)
 util.isPrimitive(new Date())
   // false</code></pre>
 <h2>util.isRegExp(object)<span><a class="mark" href="#util_util_isregexp_object" id="util_util_isregexp_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>RegExp</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>RegExp</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -522,7 +540,7 @@ util.isRegExp(new RegExp(&#39;another regexp&#39;))
 util.isRegExp({})
   // false</code></pre>
 <h2>util.isString(object)<span><a class="mark" href="#util_util_isstring_object" id="util_util_isstring_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>String</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>String</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -536,7 +554,7 @@ util.isString(String(&#39;foo&#39;))
 util.isString(5)
   // false</code></pre>
 <h2>util.isSymbol(object)<span><a class="mark" href="#util_util_issymbol_object" id="util_util_issymbol_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Symbol</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is a <code>Symbol</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -548,7 +566,7 @@ util.isSymbol(&#39;foo&#39;)
 util.isSymbol(Symbol(&#39;foo&#39;))
   // true</code></pre>
 <h2>util.isUndefined(object)<span><a class="mark" href="#util_util_isundefined_object" id="util_util_isundefined_object">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is <code>undefined</code>. <code>false</code> otherwise.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated</pre><p>Returns <code>true</code> if the given &quot;object&quot; is <code>undefined</code>. Otherwise, returns <code>false</code>.
 
 </p>
 <pre><code class="js">const util = require(&#39;util&#39;);
@@ -566,15 +584,15 @@ util.isUndefined(null)
 </p>
 <pre><code>require(&#39;util&#39;).log(&#39;Timestamped message.&#39;);</code></pre>
 <h2>util.print([...])<span><a class="mark" href="#util_util_print" id="util_util_print">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="console.html#console_console_log_data"><code>console.log()</code></a> instead.</pre><p>Deprecated predecessor of <code>console.log</code>.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated: Use <a href="console.html#console_console_log_data"><code>console.log()</code></a> instead.</pre><p>Deprecated predecessor of <code>console.log</code>.
 
 </p>
 <h2>util.pump(readableStream, writableStream[, callback])<span><a class="mark" href="#util_util_pump_readablestream_writablestream_callback" id="util_util_pump_readablestream_writablestream_callback">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use readableStream.pipe(writableStream)</pre><p>Deprecated predecessor of <code>stream.pipe()</code>.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated: Use readableStream.pipe(writableStream)</pre><p>Deprecated predecessor of <code>stream.pipe()</code>.
 
 </p>
 <h2>util.puts([...])<span><a class="mark" href="#util_util_puts" id="util_util_puts">#</a></span></h2>
-<pre class="api_stability_0">Stability: 0 - Deprecated: Use <a href="console.html#console_console_log_data"><code>console.log()</code></a> instead.</pre><p>Deprecated predecessor of <code>console.log</code>.
+<pre class="api_stability api_stability_0">Stability: 0 - Deprecated: Use <a href="console.html#console_console_log_data"><code>console.log()</code></a> instead.</pre><p>Deprecated predecessor of <code>console.log</code>.
 
 </p>
 

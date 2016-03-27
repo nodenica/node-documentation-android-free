@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Timers Node.js v5.9.0 Manual &amp; Documentation</title>
+  <title>Timers Node.js v5.9.1 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -24,6 +24,7 @@
 <li><a class="nav-addons" href="addons.html">C/C++ Addons</a></li>
 <li><a class="nav-child_process" href="child_process.html">Child Processes</a></li>
 <li><a class="nav-cluster" href="cluster.html">Cluster</a></li>
+<li><a class="nav-cli" href="cli.html">Command Line Options</a></li>
 <li><a class="nav-console" href="console.html">Console</a></li>
 <li><a class="nav-crypto" href="crypto.html">Crypto</a></li>
 <li><a class="nav-debugger" href="debugger.html">Debugger</a></li>
@@ -61,7 +62,7 @@
 
     <div id="column1" data-id="timers" class="interior">
       <header>
-        <h1>Node.js v5.9.0 Documentation</h1>
+        <h1>Node.js v5.9.1 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -97,19 +98,19 @@ this module in order to use them.
 
 </p>
 <h2>clearImmediate(immediateObject)<span><a class="mark" href="#timers_clearimmediate_immediateobject" id="timers_clearimmediate_immediateobject">#</a></span></h2>
-<p>Stops an immediate from triggering.
+<p>Stops an <code>immediateObject</code>, as created by <a href="timers.html#timers_setimmediate_callback_arg"><code>setImmediate</code></a>, from triggering.
 
 </p>
 <h2>clearInterval(intervalObject)<span><a class="mark" href="#timers_clearinterval_intervalobject" id="timers_clearinterval_intervalobject">#</a></span></h2>
-<p>Stops an interval from triggering.
+<p>Stops an <code>intervalObject</code>, as created by <a href="timers.html#timers_setinterval_callback_delay_arg"><code>setInterval</code></a>, from triggering.
 
 </p>
 <h2>clearTimeout(timeoutObject)<span><a class="mark" href="#timers_cleartimeout_timeoutobject" id="timers_cleartimeout_timeoutobject">#</a></span></h2>
-<p>Prevents a timeout from triggering.
+<p>Prevents a <code>timeoutObject</code>, as created by <a href="timers.html#timers_settimeout_callback_delay_arg"><code>setTimeout</code></a>, from triggering.
 
 </p>
 <h2>ref()<span><a class="mark" href="#timers_ref" id="timers_ref">#</a></span></h2>
-<p>If you had previously <code>unref()</code>d a timer you can call <code>ref()</code> to explicitly
+<p>If a timer was previously <code>unref()</code>d, then <code>ref()</code> can be called to explicitly
 request the timer hold the program open. If the timer is already <code>ref</code>d calling
 <code>ref</code> again will have no effect.
 
@@ -118,22 +119,23 @@ request the timer hold the program open. If the timer is already <code>ref</code
 
 </p>
 <h2>setImmediate(callback[, arg][, ...])<span><a class="mark" href="#timers_setimmediate_callback_arg" id="timers_setimmediate_callback_arg">#</a></span></h2>
-<p>To schedule the &quot;immediate&quot; execution of <code>callback</code> after I/O events
-callbacks and before <a href="timers.html#timers_settimeout_callback_delay_arg"><code>setTimeout</code></a> and <a href="timers.html#timers_setinterval_callback_delay_arg"><code>setInterval</code></a>. Returns an
-<code>immediateObject</code> for possible use with <code>clearImmediate()</code>. Optionally you
-can also pass arguments to the callback.
+<p>To schedule the &quot;immediate&quot; execution of <code>callback</code> after I/O events&#39;
+callbacks and before timers set by <a href="timers.html#timers_settimeout_callback_delay_arg"><code>setTimeout</code></a> and <a href="timers.html#timers_setinterval_callback_delay_arg"><code>setInterval</code></a> are
+triggered. Returns an <code>immediateObject</code> for possible use with
+<a href="timers.html#timers_clearimmediate_immediateobject"><code>clearImmediate</code></a>. Additional optional arguments may be passed to the
+callback.
 
 </p>
 <p>Callbacks for immediates are queued in the order in which they were created.
-The entire callback queue is processed every event loop iteration. If you queue
-an immediate from inside an executing callback, that immediate won&#39;t fire
+The entire callback queue is processed every event loop iteration. If an
+immediate is queued from inside an executing callback, that immediate won&#39;t fire
 until the next event loop iteration.
 
 </p>
 <h2>setInterval(callback, delay[, arg][, ...])<span><a class="mark" href="#timers_setinterval_callback_delay_arg" id="timers_setinterval_callback_delay_arg">#</a></span></h2>
 <p>To schedule the repeated execution of <code>callback</code> every <code>delay</code> milliseconds.
-Returns a <code>intervalObject</code> for possible use with <code>clearInterval()</code>. Optionally
-you can also pass arguments to the callback.
+Returns a <code>intervalObject</code> for possible use with <a href="timers.html#timers_clearinterval_intervalobject"><code>clearInterval</code></a>. Additional
+optional arguments may be passed to the callback.
 
 </p>
 <p>To follow browser behavior, when using delays larger than 2147483647
@@ -143,8 +145,8 @@ milliseconds (approximately 25 days) or less than 1, Node.js will use 1 as the
 </p>
 <h2>setTimeout(callback, delay[, arg][, ...])<span><a class="mark" href="#timers_settimeout_callback_delay_arg" id="timers_settimeout_callback_delay_arg">#</a></span></h2>
 <p>To schedule execution of a one-time <code>callback</code> after <code>delay</code> milliseconds.
-Returns a <code>timeoutObject</code> for possible use with <code>clearTimeout()</code>. Optionally you
-can also pass arguments to the callback.
+Returns a <code>timeoutObject</code> for possible use with <a href="timers.html#timers_cleartimeout_timeoutobject"><code>clearTimeout</code></a>. Additional
+optional arguments may be passed to the callback.
 
 </p>
 <p>The callback will likely not be invoked in precisely <code>delay</code> milliseconds.
@@ -160,15 +162,15 @@ immediately, as if the <code>delay</code> was set to 1.
 </p>
 <h2>unref()<span><a class="mark" href="#timers_unref" id="timers_unref">#</a></span></h2>
 <p>The opaque value returned by <a href="timers.html#timers_settimeout_callback_delay_arg"><code>setTimeout</code></a> and <a href="timers.html#timers_setinterval_callback_delay_arg"><code>setInterval</code></a> also has the
-method <code>timer.unref()</code> which will allow you to create a timer that is active but
+method <code>timer.unref()</code> which allows the creation of a timer that is active but
 if it is the only item left in the event loop, it won&#39;t keep the program
 running. If the timer is already <code>unref</code>d calling <code>unref</code> again will have no
 effect.
 
 </p>
-<p>In the case of <code>setTimeout</code> when you <code>unref</code> you create a separate timer that
-will wakeup the event loop, creating too many of these may adversely effect
-event loop performance -- use wisely.
+<p>In the case of <a href="timers.html#timers_settimeout_callback_delay_arg"><code>setTimeout</code></a>, <code>unref</code> creates a separate timer that will
+wakeup the event loop, creating too many of these may adversely effect event
+loop performance -- use wisely.
 
 </p>
 <p>Returns the timer.

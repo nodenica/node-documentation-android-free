@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Modules Node.js v5.9.0 Manual &amp; Documentation</title>
+  <title>Modules Node.js v5.9.1 Manual &amp; Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/sh.css">
@@ -24,6 +24,7 @@
 <li><a class="nav-addons" href="addons.html">C/C++ Addons</a></li>
 <li><a class="nav-child_process" href="child_process.html">Child Processes</a></li>
 <li><a class="nav-cluster" href="cluster.html">Cluster</a></li>
+<li><a class="nav-cli" href="cli.html">Command Line Options</a></li>
 <li><a class="nav-console" href="console.html">Console</a></li>
 <li><a class="nav-crypto" href="crypto.html">Crypto</a></li>
 <li><a class="nav-debugger" href="debugger.html">Debugger</a></li>
@@ -61,7 +62,7 @@
 
     <div id="column1" data-id="modules" class="interior">
       <header>
-        <h1>Node.js v5.9.0 Documentation</h1>
+        <h1>Node.js v5.9.1 Documentation</h1>
         <div id="gtoc">
           <p>
             <a href="index.html" name="toc">Index</a> |
@@ -149,7 +150,7 @@ instead of <code>exports</code>.
 
 </p>
 <pre><code class="js">const square = require(&#39;./square.js&#39;);
-var mySquare = &lt;a href=&quot;http://man7.org/linux/man-pages/man2/square.2.html&quot;&gt;square(2)&lt;/a&gt;;
+var mySquare = square(2);
 console.log(`The area of my square is ${mySquare.area()}`);</code></pre>
 <p>The <code>square</code> module is defined in <code>square.js</code>:
 
@@ -461,6 +462,12 @@ look like this:
 <p>This is the extent of Node.js&#39;s awareness of package.json files.
 
 </p>
+<p>Note: If the file specified by the <code>&quot;main&quot;</code> entry of <code>package.json</code> is missing
+and can not be resolved, Node.js will report the entire module as missing with
+the default error:
+
+</p>
+<pre><code>Error: Cannot find module &#39;some-library&#39;</code></pre>
 <p>If there is no package.json file present in the directory, then Node.js
 will attempt to load an <code>index.js</code> or <code>index.node</code> file out of that
 directory.  For example, if there was no package.json file in the above
