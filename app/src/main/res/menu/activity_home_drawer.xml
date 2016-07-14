@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_api"
+            android:icon="@drawable/ic_menu_api"
+            android:title="@string/menu_api"
+            />
+    </group>
+    <item android:title="@string/menu_sub_communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_share" />
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/ic_menu_rate"
+                android:title="@string/menu_rate" />
+            <item
+                android:id="@+id/nav_ads"
+                android:icon="@drawable/ic_menu_ads"
+                android:title="@string/menu_ads" />
+        </menu>
+    </item>
+
+</menu>

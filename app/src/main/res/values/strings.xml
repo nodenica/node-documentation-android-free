@@ -1,5 +1,39 @@
 <resources>
     <string name="app_name">Node.js Documentation Free</string>
-    <string name="action_settings">Remove Ad</string>
     <string name="banner_ad_unit_id">ca-app-pub-2015513932539714/8188095420</string>
+
+    <!-- chocoyo labs -->
+    <string name="chocoyo_labs_splash_class_name">com.mc.nad.ui.activities.HomeActivity</string>
+
+    <!-- home -->
+    <string name="title_activity_home">Node.js Documentation Free</string>
+    <string name="activity_home_sync_finish_message">Node.js %s</string>
+    <string name="activity_home_sync_error_message">Error when trying to communicate with the server</string>
+    <string name="activity_home_action_share_text">Download Node.js Documentation Free https://play.google.com/store/apps/details?id=com.mc.nad</string>
+
+
+    <!-- modules -->
+    <string name="title_activity_module">ModuleActivity</string>
+
+    <!-- progress -->
+    <string name="progress_sync">Check for updates</string>
+    <string name="progress_loading_module_page">Loading module page</string>
+
+    <!-- navigation drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- menu action -->
+    <string name="action_sync">Check for updates</string>
+    <string name="action_ads">Remove ads</string>
+
+    <!-- menu -->
+    <string name="menu_api">API</string>
+    <string name="menu_sub_communicate">Communicate</string>
+    <string name="menu_rate">Rate</string>
+    <string name="menu_ads">Remove Ads</string>
+    <string name="menu_share">Share</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
