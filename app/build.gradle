@@ -10,8 +10,8 @@ android {
         applicationId "com.mc.nad"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 63000
-        versionName "6.3.0"
+        versionCode 63001
+        versionName "3.0.0"
     }
     buildTypes {
         release {
